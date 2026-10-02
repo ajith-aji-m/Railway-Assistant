@@ -1,0 +1,252 @@
+{
+  "success": true,
+  "data": {
+    "station": {
+      "code": "MAS",
+      "name": "MGR Chennai Central",
+      "city": "Chennai",
+      "elevation_m": 3,
+      "lat": 13.083847,
+      "lng": 80.275512
+    },
+    "window": {
+      "from": "08:50",
+      "to": "18:50",
+      "hoursBack": 2,
+      "hoursAhead": 8
+    },
+    "trains": [
+      {
+        "train": {
+          "number": "12028",
+          "name": "KSR Bengaluru - Chennai Central Shatabdi Express",
+          "type": "Shatabdi Express",
+          "source": "SBC",
+          "destination": "MAS",
+          "runDays": [
+            "mon",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 76,
+          "arrival": "11:00",
+          "departure": null,
+          "day": 1,
+          "distance": 358.1,
+          "isHalt": true,
+          "platform": "2"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-02",
+          "expectedArrivalTime": "2026-10-02T11:00:00+05:30",
+          "delayMinutes": 0
+        }
+      },
+      {
+        "train": {
+          "number": "22159",
+          "name": "MGR Chennai Central SF Express",
+          "type": "Superfast Express",
+          "source": "CSMT",
+          "destination": "MAS",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 213,
+          "arrival": "10:45",
+          "departure": null,
+          "day": 2,
+          "distance": 1279.2,
+          "isHalt": true,
+          "platform": "11"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-01",
+          "expectedArrivalTime": "2026-10-02T11:35:00+05:30",
+          "delayMinutes": 50
+        }
+      },
+      {
+        "train": {
+          "number": "22160",
+          "name": "Mumbai CSMT SF Express",
+          "type": "Superfast Express",
+          "source": "MAS",
+          "destination": "CSMT",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 1,
+          "arrival": null,
+          "departure": "13:15",
+          "day": 1,
+          "distance": 0,
+          "isHalt": true,
+          "platform": "6"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-02",
+          "expectedDepartureTime": "2026-10-02T13:15:00+05:30",
+          "delayMinutes": 0
+        }
+      },
+      {
+        "train": {
+          "number": "22637",
+          "name": "West Coast SF Express",
+          "type": "Superfast Express",
+          "source": "MAS",
+          "destination": "MAQ",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 1,
+          "arrival": null,
+          "departure": "13:25",
+          "day": 1,
+          "distance": 0,
+          "isHalt": true,
+          "platform": "8"
+        },
+        "live": {
+          "type": "not-started",
+          "startDate": "2026-10-02",
+          "expectedDepartureTime": "2026-10-02T13:25:00+05:30",
+          "delayMinutes": 0
+        }
+      },
+      {
+        "train": {
+          "number": "12969",
+          "name": "Jaipur SF Express",
+          "type": "Superfast Express",
+          "source": "CBE",
+          "destination": "JP",
+          "runDays": [
+            "fri"
+          ]
+        },
+        "stop": {
+          "sequence": 95,
+          "arrival": "17:10",
+          "departure": "17:40",
+          "day": 1,
+          "distance": 494.1,
+          "isHalt": true,
+          "platform": "8"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-02",
+          "expectedArrivalTime": "2026-10-02T17:15:00+05:30",
+          "expectedDepartureTime": "2026-10-02T17:45:00+05:30",
+          "delayMinutes": 5
+        }
+      },
+      {
+        "train": {
+          "number": "12841",
+          "name": "Coromandel Express",
+          "type": "Superfast Express",
+          "source": "HWH",
+          "destination": "MAS",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 289,
+          "arrival": "17:00",
+          "departure": null,
+          "day": 2,
+          "distance": 1662,
+          "isHalt": true,
+          "platform": "4"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-01",
+          "expectedArrivalTime": "2026-10-02T19:36:00+05:30",
+          "delayMinutes": 156
+        }
+      },
+      {
+        "train": {
+          "number": "67789",
+          "name": "MGR Chennai Central - Arrakonnam MEMU",
+          "type": "MEMU",
+          "source": "MAS",
+          "destination": "AJJ",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri"
+          ]
+        },
+        "stop": {
+          "sequence": 1,
+          "arrival": null,
+          "departure": "10:30",
+          "day": 1,
+          "distance": 0,
+          "isHalt": true,
+          "platform": "11"
+        },
+        "live": {
+          "type": "departed",
+          "startDate": "2026-10-02",
+          "departedAt": "2026-10-02T10:36:00+05:30",
+          "expectedDepartureTime": "2026-10-02T10:36:00+05:30",
+          "delayMinutes": 6
+        }
+      }
+    ],
+    "count": 7
+  },
+  "meta": {
+    "timestamp": "2026-10-02T10:50:24+05:30",
+    "traceId": "11a68369-5e35-4572-b498-422915b93ce5",
+    "source": "hybrid",
+    "executionTime": 42
+  }
+}

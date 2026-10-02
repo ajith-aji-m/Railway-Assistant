@@ -1,0 +1,157 @@
+{
+    "_comment": "Mock timetable. stops: [stationCode, arrival, departure, platform, distanceKm, liveDelayMinutes, dayOffset]. Numbers/names are real Indian Railways services; times are realistic approximations for the prototype.",
+    "trains": [
+        {
+            "number": "12675", "name": "Kovai Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MAS", null, "06:10", "3", 0, 0, 0],
+                ["AJJ", "07:08", "07:10", "1", 69, 2, 0],
+                ["KPD", "07:50", "07:52", "1", 130, 2, 0],
+                ["JTJ", "08:55", "08:57", "2", 214, 7, 0],
+                ["SA", "10:20", "10:25", "4", 334, 0, 0],
+                ["ED", "11:20", "11:25", "2", 395, 0, 0],
+                ["TUP", "12:00", "12:02", "1", 445, 0, 0],
+                ["CBE", "12:55", null, "1", 495, 0, 0]
+            ]
+        },
+        {
+            "number": "12243", "name": "Shatabdi Express", "type": "Shatabdi", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MAS", null, "07:15", "5", 0, 7, 0],
+                ["KPD", "08:38", "08:40", "2", 130, 7, 0],
+                ["SA", "10:55", "10:58", "3", 334, 5, 0],
+                ["ED", "11:53", "11:55", "1", 395, 5, 0],
+                ["TUP", "12:33", "12:35", "2", 445, 3, 0],
+                ["CBE", "13:35", null, "2", 495, 0, 0]
+            ]
+        },
+        {
+            "number": "12007", "name": "Mysuru Shatabdi Express", "type": "Shatabdi", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MAS", null, "06:00", "6", 0, 0, 0],
+                ["KPD", "07:23", "07:25", "3", 130, 0, 0],
+                ["SBC", "11:00", null, "8", 362, 0, 0]
+            ]
+        },
+        {
+            "number": "12639", "name": "Brindavan Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "lost" },
+            "stops": [
+                ["MAS", null, "07:50", "7", 0, 0, 0],
+                ["AJJ", "08:48", "08:50", "2", 69, 4, 0],
+                ["KPD", "09:28", "09:30", "1", 130, 4, 0],
+                ["JTJ", "10:43", "10:45", "3", 214, 2, 0],
+                ["SBC", "13:55", null, "5", 362, 0, 0]
+            ]
+        },
+        {
+            "number": "12028", "name": "Chennai Shatabdi Express", "type": "Shatabdi", "pantry": true, "zone": "SWR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["SBC", null, "06:00", "1", 0, 0, 0],
+                ["KPD", "09:13", "09:15", "2", 232, 8, 0],
+                ["AJJ", "09:58", "10:00", "1", 293, 10, 0],
+                ["MAS", "11:00", null, "11", 362, 10, 0]
+            ]
+        },
+        {
+            "number": "12673", "name": "Cheran Express", "type": "Superfast Express", "pantry": false, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["CBE", null, "22:20", "1", 0, 0, 0],
+                ["TUP", "23:03", "23:05", "1", 50, 0, 0],
+                ["ED", "23:45", "23:50", "2", 100, 3, 0],
+                ["SA", "00:55", "01:00", "3", 161, 3, 1],
+                ["JTJ", "02:43", "02:45", "1", 281, 0, 1],
+                ["KPD", "03:58", "04:00", "2", 365, 0, 1],
+                ["AJJ", "04:48", "04:50", "3", 426, 0, 1],
+                ["MAS", "06:05", null, "9", 495, 0, 1]
+            ]
+        },
+        {
+            "number": "12839", "name": "Howrah Mail", "type": "Mail Express", "pantry": true, "zone": "SER",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["HWH", null, "23:55", "21", 0, 0, 0],
+                ["BBS", "06:30", "06:45", "4", 440, 0, 1],
+                ["VSKP", "13:55", "14:15", "1", 879, 0, 1],
+                ["BZA", "00:45", "01:00", "6", 1229, 0, 2],
+                ["NLR", "04:13", "04:15", "2", 1491, 0, 2],
+                ["GDR", "05:03", "05:05", "1", 1529, 0, 2],
+                ["MAS", "07:10", null, "10", 1661, 0, 2]
+            ]
+        },
+        {
+            "number": "12676", "name": "Kovai Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["CBE", null, "15:15", "1", 0, 0, 0],
+                ["TUP", "15:58", "16:00", "2", 50, 0, 0],
+                ["ED", "16:40", "16:45", "1", 100, 0, 0],
+                ["SA", "17:45", "17:50", "2", 161, 0, 0],
+                ["JTJ", "19:13", "19:15", "1", 281, 0, 0],
+                ["KPD", "20:23", "20:25", "2", 365, 0, 0],
+                ["AJJ", "21:05", "21:07", "1", 426, 0, 0],
+                ["MAS", "22:15", null, "4", 495, 0, 0]
+            ]
+        },
+        {
+            "number": "16057", "name": "Sapthagiri Express", "type": "Express", "pantry": false, "zone": "SR",
+            "live": { "status": "cancelled", "gps": "active" },
+            "stops": [
+                ["MAS", null, "16:25", "8", 0, 0, 0],
+                ["AJJ", "17:28", "17:30", "2", 69, 0, 0],
+                ["TPTY", "19:15", null, "1", 147, 0, 0]
+            ]
+        },
+        {
+            "number": "12635", "name": "Vaigai Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MS", null, "13:50", "4", 0, 0, 0],
+                ["TBM", "14:23", "14:25", "5", 26, 0, 0],
+                ["CGL", "14:53", "14:55", "3", 56, 0, 0],
+                ["VM", "15:58", "16:00", "2", 159, 0, 0],
+                ["TPJ", "18:15", "18:20", "1", 337, 0, 0],
+                ["MDU", "21:05", null, "2", 497, 0, 0]
+            ]
+        },
+        {
+            "number": "12636", "name": "Vaigai Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MDU", null, "07:00", "1", 0, 0, 0],
+                ["TPJ", "09:05", "09:10", "2", 160, 4, 0],
+                ["VM", "11:18", "11:20", "1", 338, 4, 0],
+                ["CGL", "12:20", "12:22", "2", 441, 2, 0],
+                ["TBM", "12:48", "12:50", "4", 471, 0, 0],
+                ["MS", "13:25", null, "5", 497, 0, 0]
+            ]
+        },
+        {
+            "number": "40525", "name": "Beach - Tambaram Local", "type": "EMU Local", "pantry": false, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MSB", null, "08:05", "1", 0, 0, 0],
+                ["MS", "08:12", "08:13", "10", 3, 0, 0],
+                ["MBM", "08:25", "08:26", "1", 10, 1, 0],
+                ["GDY", "08:31", "08:32", "2", 13, 1, 0],
+                ["TBM", "08:58", null, "3", 29, 0, 0]
+            ]
+        },
+        {
+            "number": "40546", "name": "Tambaram - Beach Local", "type": "EMU Local", "pantry": false, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["TBM", null, "08:20", "2", 0, 0, 0],
+                ["GDY", "08:44", "08:45", "1", 16, 0, 0],
+                ["MBM", "08:50", "08:51", "2", 19, 0, 0],
+                ["MS", "09:03", "09:04", "9", 26, 0, 0],
+                ["MSB", "09:12", null, "2", 29, 0, 0]
+            ]
+        }
+    ]
+}
