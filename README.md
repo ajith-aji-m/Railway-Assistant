@@ -48,6 +48,10 @@ On every start the container caches config/routes/views, runs migrations and the
 `.env.production` is read at container start, so `docker compose up -d` applies changes;
 `VITE_*` values are baked in at build time (build args in `docker-compose.yml`).
 
+Health check: `GET /api/health` returns JSON with database and cache checks (`200` when
+healthy, `503` otherwise) and is used by the Docker `HEALTHCHECK`. It never calls the railway
+provider, so probes don't use the RailRadar quota. `GET /up` is Laravel's plain liveness ping.
+
 Put the container behind a TLS-terminating reverse proxy (Caddy, Nginx, Traefik) —
 geolocation only works over HTTPS. All proxies are trusted by default; restrict with
 `TRUSTED_PROXIES` (comma-separated IPs/CIDRs) if the port is reachable directly.

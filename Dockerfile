@@ -59,7 +59,7 @@ VOLUME ["/var/www/html/storage"]
 EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-    CMD curl -fsS http://127.0.0.1/up || exit 1
+    CMD curl -fsS http://127.0.0.1/api/health || exit 1
 
 ENTRYPOINT ["entrypoint"]
 CMD ["apache2-foreground"]
