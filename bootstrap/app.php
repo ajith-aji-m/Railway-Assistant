@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // In Docker the app sits behind a reverse proxy that terminates TLS; trust its
+        // X-Forwarded-* headers so generated URLs use https (needed for geolocation).
+        $middleware->trustProxies(at: env('TRUSTED_PROXIES', '*'));
+
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
