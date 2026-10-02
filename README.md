@@ -56,10 +56,31 @@ Put the container behind a TLS-terminating reverse proxy (Caddy, Nginx, Traefik)
 geolocation only works over HTTPS. All proxies are trusted by default; restrict with
 `TRUSTED_PROXIES` (comma-separated IPs/CIDRs) if the port is reachable directly.
 
+## Station directory
+
+Nearby-station ranking and mock station search use the local `stations` table — never an
+API request. It is seeded from:
+
+- `database/data/station_directory.json` — ~8,700 Indian Railways stations (code, name,
+  state, zone, coordinates) built from the
+  [DataMeet Indian Railways dataset](https://github.com/datameet/railways) (CC0, 2016 data;
+  version and filters recorded in the file's `_source`). Rebuild it with
+  `php artisan railway:import-stations [source] --source-version=<commit>`; it keeps only
+  stations with a real code and Point coordinates inside India, and drops duplicate codes,
+  stations sharing identical coordinates (town-level geocodes) and stations far outside
+  their own state. No RailRadar request is made.
+- `database/data/station_overrides.json` — curated corrections by code: official code
+  changes (e.g. CSTM → CSMT; the old code stays searchable), names, search aliases
+  (e.g. Thoothukudi for TN) and `"active": false` for stations without passenger service.
+
+Load or refresh with `php artisan db:seed` (idempotent upsert by station code; the mock
+network's richer rows in `stations.json` take precedence for its 25 stations). The
+directory has no city, platform or facility data — those show as unknown.
+
 ## Mock railway data
 
 - Network: `database/data/stations.json` (25 stations, real coordinates) and
-  `database/data/trains.json` (13 trains). Re-seed with `php artisan migrate:fresh --seed`.
+  `database/data/trains.json` (14 trains). Re-seed with `php artisan migrate:fresh --seed`.
 - Live status is **simulated** from the timetable plus per-stop mock delays
   (`App\Railway\Mock\JourneySimulator`): position, speed, next stop, board statuses.
 - Demo clock: `RAILWAY_MOCK_CLOCK=08:00` (default) makes the simulated time start at 08:00

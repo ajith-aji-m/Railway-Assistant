@@ -101,6 +101,32 @@ class RailRadarLiveSnapshotTest extends TestCase
         Http::assertSentCount(1);
     }
 
+    public function test_many_viewers_polling_share_one_railradar_request_per_cache_window(): void
+    {
+        Http::fake([self::URL => Http::sequence()
+            ->push($this->fixture())
+            ->push($this->laterFixture())]);
+
+        // 50 browsers polling the map's live prop within the 60 s window → one upstream call.
+        $version = app(HandleInertiaRequests::class)->version(request());
+        $headers = ['X-Inertia' => 'true', 'X-Inertia-Version' => $version, 'X-Inertia-Partial-Component' => 'Trains/LiveMap', 'X-Inertia-Partial-Data' => 'live'];
+        foreach (range(1, 50) as $_) {
+            $this->get('/trains/12675/map', $headers)->assertOk()->assertJsonPath('props.live.snapshot.lastKnown', self::FIX_A);
+        }
+        Http::assertSentCount(1);
+
+        // After the cache window the next poll (from any viewer) refreshes once, and
+        // everyone then gets the new real fix paired with the previous one.
+        CarbonImmutable::setTestNow('2026-10-02 10:47:00');
+        $this->travel(61)->seconds();
+        foreach (range(1, 50) as $_) {
+            $this->get('/trains/12675/map', $headers)->assertOk()
+                ->assertJsonPath('props.live.snapshot.previous', self::FIX_A)
+                ->assertJsonPath('props.live.snapshot.lastKnown.at', '2026-10-02T10:46:14+05:30');
+        }
+        Http::assertSentCount(2);
+    }
+
     public function test_newer_fix_gives_a_previous_and_current_real_pair(): void
     {
         config(['services.railradar.cache_seconds' => 0]); // every call reaches the (fake) API

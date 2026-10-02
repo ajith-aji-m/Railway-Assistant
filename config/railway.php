@@ -27,15 +27,6 @@ return [
         ],
     ],
 
-    /*
-    | What the Search screen looks up per provider: "trains" (mock timetable)
-    | or "stations" (RailRadar station search; train search is not integrated).
-    */
-    'search_mode' => [
-        'mock' => 'trains',
-        'railradar' => 'stations',
-    ],
-
     /* Minimum query length before a station search reaches the provider. */
     'search_min_length' => 2,
 

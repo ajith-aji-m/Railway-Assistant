@@ -1,0 +1,5303 @@
+{
+    "success": true,
+    "data": {
+        "station": {
+            "code": "MAS",
+            "name": "MGR Chennai Central",
+            "city": "Chennai",
+            "elevation_m": 3,
+            "lat": 13.083847,
+            "lng": 80.275512,
+            "stationType": "junction",
+            "popularity": 0,
+            "railwayLines": null,
+            "facilities": []
+        },
+        "trains": [
+            {
+                "train": {
+                    "number": "12839",
+                    "name": "M.G.R Chennai Central Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "HWH",
+                        "name": "Howrah Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 289,
+                    "arrival": "03:20",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 1662,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "06120",
+                    "name": "MGR Chennai Central Special Fare AC Festival Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "QLN",
+                        "name": "Kollam Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 150,
+                    "arrival": "03:30",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 842,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "06154",
+                    "name": "Madurai - Chennai Central Special",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MDU",
+                        "name": "Madurai Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 94,
+                    "arrival": "03:30",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 556,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22652",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "PGT",
+                        "name": "Palakkad Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 104,
+                    "arrival": "03:45",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 672.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12658",
+                    "name": "MGR Chennai Central SF Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 76,
+                    "arrival": "04:05",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 358.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22650",
+                    "name": "Yercaud SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "ED",
+                        "name": "Erode Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 80,
+                    "arrival": "04:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 393.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12616",
+                    "name": "Grand Trunk Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "NDLS",
+                        "name": "New Delhi"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 305,
+                    "arrival": "04:40",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 2183,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12291",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "YPR",
+                        "name": "Yesvantpur Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 79,
+                    "arrival": "04:55",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 365.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12692",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SMET",
+                        "name": "Shimoga Town"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 119,
+                    "arrival": "04:55",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 629.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22681",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 97,
+                    "arrival": "04:55",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 496,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16031",
+                    "name": "Andaman Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SVDK",
+                        "name": "Shri Mata Vaishno Devi Katra"
+                    },
+                    "runDays": [
+                        "wed",
+                        "thu",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "05:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16093",
+                    "name": "Lucknow Jn.Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "LJN",
+                        "name": "Lucknow"
+                    },
+                    "runDays": [
+                        "tue",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "05:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12655",
+                    "name": "Navjeevan SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "ADI",
+                        "name": "Ahmedabad Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 282,
+                    "arrival": "05:10",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 1894.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22640",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "ALLP",
+                        "name": "Alappuzha"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 143,
+                    "arrival": "05:15",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 757.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20677",
+                    "name": "Chennai Central - Narasapur Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NS",
+                        "name": "Narasapur"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "05:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12604",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CHZ",
+                        "name": "Charlapalli"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 108,
+                    "arrival": "05:40",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 694.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20607",
+                    "name": "Chennai Central - Mysore Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "05:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12007",
+                    "name": "Chennai Central - Mysore Shatabdi Express",
+                    "type": "Shatabdi Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "06:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12611",
+                    "name": "Chennai Central - Hazrat Nizamuddin Garib Rath Express",
+                    "type": "Garib Rath Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NZM",
+                        "name": "Hazrat Nizamuddin Jn"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "06:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12433",
+                    "name": "Chennai Central - Hazrat Nizamuddin Rajdhani Express",
+                    "type": "Rajdhani Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NZM",
+                        "name": "Hazrat Nizamuddin Jn"
+                    },
+                    "runDays": [
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "06:05",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12675",
+                    "name": "Kovai SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "06:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12602",
+                    "name": "MGR Chennai Central Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAQ",
+                        "name": "Mangalore Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 163,
+                    "arrival": "06:10",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 887.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12672",
+                    "name": "Nilgiri SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MTP",
+                        "name": "Metupalaiyam"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 100,
+                    "arrival": "06:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 529.6,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16057",
+                    "name": "Sapthagiri Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TPTY",
+                        "name": "Tirupati"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "06:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12269",
+                    "name": "Chennai Central - Hazrat Nizamuddin Duronto Express",
+                    "type": "Duronto Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NZM",
+                        "name": "Hazrat Nizamuddin Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "06:35",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12622",
+                    "name": "Tamil Nadu Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "NDLS",
+                        "name": "New Delhi"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 305,
+                    "arrival": "06:35",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 2183,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16022",
+                    "name": "Kaveri Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "AP",
+                        "name": "Ashokapuram"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 99,
+                    "arrival": "06:45",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 501.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12842",
+                    "name": "Coromandel Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "HWH",
+                        "name": "Howrah Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "07:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12674",
+                    "name": "Cheran SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "07:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 494.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16094",
+                    "name": "MGR Chennai Central Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "LJN",
+                        "name": "Lucknow"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 295,
+                    "arrival": "07:00",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 2089.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16032",
+                    "name": "Andaman Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "SVDK",
+                        "name": "Shri Mata Vaishno Devi Katra"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "tue",
+                        "fri",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 417,
+                    "arrival": "07:00",
+                    "departure": null,
+                    "arrivalDay": 4,
+                    "departureDay": null,
+                    "distance": 2877.8,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12243",
+                    "name": "Chennai Central - Coimbatore Shatabdi Express",
+                    "type": "Shatabdi Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "07:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12077",
+                    "name": "Chennai Central - Vijayawada Jan Shatabdi Express",
+                    "type": "Jan Shatabdi Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BZA",
+                        "name": "Vijayawada Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "07:25",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22625",
+                    "name": "Chennai Central - KSR Bengaluru Double Decker Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "07:25",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12682",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "07:35",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 494.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12639",
+                    "name": "Brindavan SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "07:40",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12624",
+                    "name": "MGR Chennai Central Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 172,
+                    "arrival": "07:45",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 919.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20602",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "BDNK",
+                        "name": "Bodinayakkanur"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 100,
+                    "arrival": "07:55",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 645.6,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12851",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "BSP",
+                        "name": "Bilaspur Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 205,
+                    "arrival": "08:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1416,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22801",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "VSKP",
+                        "name": "Visakhapatnam"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 133,
+                    "arrival": "08:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 781,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22869",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "VSKP",
+                        "name": "Visakhapatnam"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 133,
+                    "arrival": "08:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 781,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12686",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAQ",
+                        "name": "Mangalore Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 163,
+                    "arrival": "08:05",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 887.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22808",
+                    "name": "Santragachi AC SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SRC",
+                        "name": "Santragachi Jn"
+                    },
+                    "runDays": [
+                        "thu",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "08:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20853",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "BBS",
+                        "name": "Bhubaneswar"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 197,
+                    "arrival": "08:20",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1225,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12968",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "JP",
+                        "name": "Jaipur Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 297,
+                    "arrival": "08:20",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 2185,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12970",
+                    "name": "Coimbatore SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "JP",
+                        "name": "Jaipur Jn"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 297,
+                    "arrival": "08:15",
+                    "departure": "08:40",
+                    "arrivalDay": 3,
+                    "departureDay": 3,
+                    "distance": 2185,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "17237",
+                    "name": "MGR Chennai Central MEMU Express",
+                    "type": "MEMU",
+                    "source": {
+                        "code": "BTTR",
+                        "name": "Bitragunta"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 39,
+                    "arrival": "09:05",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 210.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16090",
+                    "name": "Yelagiri Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "JTJ",
+                        "name": "Jolarpettai Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 55,
+                    "arrival": "09:10",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 213.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12390",
+                    "name": "Gaya Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "GAYA",
+                        "name": "Gaya Jn"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "09:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16003",
+                    "name": "Nagarsol Weekly Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NSL",
+                        "name": "Nagarsol"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "09:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22602",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SNSI",
+                        "name": "Sainagar Shirdi"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 195,
+                    "arrival": "09:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1389.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20854",
+                    "name": "Bhubaneswar SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BBS",
+                        "name": "Bhubaneswar"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22802",
+                    "name": "Visakhapatnam Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "VSKP",
+                        "name": "Visakhapatnam"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22870",
+                    "name": "Visakhapatnam Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "VSKP",
+                        "name": "Visakhapatnam"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12696",
+                    "name": "M.G.R Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 172,
+                    "arrival": "10:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 919.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12656",
+                    "name": "Navjeevan SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "ADI",
+                        "name": "Ahmedabad Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16204",
+                    "name": "M.G.R Chennai Central Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "TPTY",
+                        "name": "Tirupati"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 42,
+                    "arrival": "10:10",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 147.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22601",
+                    "name": "Sainagar Shirdi SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SNSI",
+                        "name": "Sainagar Shirdi"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:25",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12698",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 169,
+                    "arrival": "10:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 893.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22208",
+                    "name": "MGR Chennai Central SUPER AC Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "wed",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 173,
+                    "arrival": "10:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 906.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "67789",
+                    "name": "MGR Chennai Central - Arrakonnam MEMU",
+                    "type": "MEMU",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "AJJ",
+                        "name": "Arakkonam Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22611",
+                    "name": "New Jalpaiguri SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NJP",
+                        "name": "New Jalpaiguri"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "10:45",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22159",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CSMT",
+                        "name": "Mumbai CSMT"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 213,
+                    "arrival": "10:45",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1279.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22179",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "LTT",
+                        "name": "Mumbai LTT"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 203,
+                    "arrival": "10:55",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1262.6,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12028",
+                    "name": "KSR Bengaluru - Chennai Central Shatabdi Express",
+                    "type": "Shatabdi Express",
+                    "source": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 76,
+                    "arrival": "11:00",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 358.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "17313",
+                    "name": "MGR Chennai Central Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "UBL",
+                        "name": "SSS Hubballi Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "wed",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 117,
+                    "arrival": "11:10",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 704.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20680",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "UBL",
+                        "name": "SSS Hubballi Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 142,
+                    "arrival": "11:10",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 824.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22697",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "UBL",
+                        "name": "SSS Hubballi Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 142,
+                    "arrival": "11:10",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 824.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12690",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CAPE",
+                        "name": "Kanniyakumari"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 144,
+                    "arrival": "11:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 896.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "06118",
+                    "name": "Chennai Egmore Special Fare Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "QLN",
+                        "name": "Kollam Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 150,
+                    "arrival": "11:35",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 842,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "06122",
+                    "name": "Kollam - Chennai Central Special",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "QLN",
+                        "name": "Kollam Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 150,
+                    "arrival": "11:35",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 842,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "06128",
+                    "name": "MGR Chennai Central Special Fare Sabarimala Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "MAJN",
+                        "name": "Mangalore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 162,
+                    "arrival": "11:35",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 889.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20644",
+                    "name": "Coimbatore - Chennai Central Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "11:50",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 494.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12670",
+                    "name": "Ganga Kaveri Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CPR",
+                        "name": "Chhapra"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 328,
+                    "arrival": "12:10",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 2341.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12608",
+                    "name": "Lalbagh SF Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 76,
+                    "arrival": "12:20",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 358.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20663",
+                    "name": "Mysore - Chennai Central Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 97,
+                    "arrival": "12:30",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 496,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12711",
+                    "name": "Pinakini SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "BZA",
+                        "name": "Vijayawada Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 75,
+                    "arrival": "13:05",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 431.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22160",
+                    "name": "Mumbai CSMT SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CSMT",
+                        "name": "Mumbai CSMT"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "13:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22637",
+                    "name": "West Coast SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MAQ",
+                        "name": "Mangalore Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "13:25",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16054",
+                    "name": "MGR Chennai Central Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "TPTY",
+                        "name": "Tirupati"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 42,
+                    "arrival": "13:30",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 147.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16551",
+                    "name": "Ashokapuram SF Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "AP",
+                        "name": "Ashokapuram"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "13:35",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12680",
+                    "name": "M.G.R Chennai Central InterCity SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "13:45",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 494.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12712",
+                    "name": "Pinakini SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BZA",
+                        "name": "Vijayawada Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "14:05",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22825",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SHM",
+                        "name": "Shalimar"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 287,
+                    "arrival": "14:05",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1659.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22859",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "PURI",
+                        "name": "Puri"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 204,
+                    "arrival": "14:05",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1249.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22612",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "NJP",
+                        "name": "New Jalpaiguri"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 384,
+                    "arrival": "14:05",
+                    "departure": null,
+                    "arrivalDay": 3,
+                    "departureDay": null,
+                    "distance": 2277.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20643",
+                    "name": "Chennai Central - Coimbatore Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "14:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12679",
+                    "name": "Coimbatore InterCity SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "14:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16552",
+                    "name": "MGR Chennai Central Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "AP",
+                        "name": "Ashokapuram"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 99,
+                    "arrival": "14:35",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 501.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16053",
+                    "name": "Tirupati Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TPTY",
+                        "name": "Tirupati"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "14:40",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "06587",
+                    "name": "Bengaluru Cantt - Chennai Central Special",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "BNC",
+                        "name": "Bengaluru Cantt"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "thu",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 73,
+                    "arrival": "15:00",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 353.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20679",
+                    "name": "SSS Hubballi Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "UBL",
+                        "name": "SSS Hubballi Jn"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22698",
+                    "name": "SSS Hubballi Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "UBL",
+                        "name": "SSS Hubballi Jn"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20920",
+                    "name": "M.G.R Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "EKNR",
+                        "name": "Ekta Nagar (Kevadiya)"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 270,
+                    "arrival": "15:05",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1696.3,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22920",
+                    "name": "Ahmedabad - Chennai Central Humsafar Express",
+                    "type": "Humsafar Express",
+                    "source": {
+                        "code": "ADI",
+                        "name": "Ahmedabad Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 278,
+                    "arrival": "15:05",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1713.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12697",
+                    "name": "Thiruvananthapuram Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12695",
+                    "name": "Thiruvananthapuram Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:20",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20954",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "ADI",
+                        "name": "Ahmedabad Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 278,
+                    "arrival": "15:25",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1713.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12607",
+                    "name": "Lalbagh SF Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12852",
+                    "name": "Bilaspur Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BSP",
+                        "name": "Bilaspur Jn"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:40",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16004",
+                    "name": "MGR Chennai Central Weekly Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "NSL",
+                        "name": "Nagarsol"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 216,
+                    "arrival": "15:40",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1366.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "17314",
+                    "name": "SSS Hubballi Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "UBL",
+                        "name": "SSS Hubballi Jn"
+                    },
+                    "runDays": [
+                        "thu",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20919",
+                    "name": "Ekta Nagar Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "EKNR",
+                        "name": "Ekta Nagar (Kevadiya)"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22180",
+                    "name": "Mumbai LTT Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "LTT",
+                        "name": "Mumbai LTT"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "15:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22207",
+                    "name": "Thiruvananthapuram Central SUPER AC Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "runDays": [
+                        "tue",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22919",
+                    "name": "Chennai Central - Ahmedabad Humsafar Express",
+                    "type": "Humsafar Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "ADI",
+                        "name": "Ahmedabad Jn"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22638",
+                    "name": "West Coast SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAQ",
+                        "name": "Mangalore Central"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 167,
+                    "arrival": "16:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 900.8,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "06153",
+                    "name": "Chennai Central - Madurai Special",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MDU",
+                        "name": "Madurai Jn"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "06588",
+                    "name": "Chennai Central - Bengaluru Cantt Special",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BNC",
+                        "name": "Bengaluru Cantt"
+                    },
+                    "runDays": [
+                        "thu",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12163",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "LTT",
+                        "name": "Mumbai LTT"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 203,
+                    "arrival": "16:10",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1262.6,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12685",
+                    "name": "Mangaluru Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MAQ",
+                        "name": "Mangalore Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:20",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12389",
+                    "name": "MGR Chennai Central Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "GAYA",
+                        "name": "Gaya Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 298,
+                    "arrival": "16:20",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 2078.6,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22860",
+                    "name": "Puri SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "PURI",
+                        "name": "Puri"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:25",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16203",
+                    "name": "Tirupati Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TPTY",
+                        "name": "Tirupati"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:35",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "06028",
+                    "name": "MGR Chennai Central Special Fare Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "PTJ",
+                        "name": "Podanur Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 92,
+                    "arrival": "16:45",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 487.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12603",
+                    "name": "Charlapalli SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CHZ",
+                        "name": "Charlapalli"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "16:45",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "18041",
+                    "name": "M.G.R. Chennai Central Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "SHM",
+                        "name": "Shalimar"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 281,
+                    "arrival": "16:45",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1643.9,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "20664",
+                    "name": "Chennai Central - Mysore Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12841",
+                    "name": "Coromandel Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "HWH",
+                        "name": "Howrah Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 289,
+                    "arrival": "17:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1662,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "04816",
+                    "name": "Chennai Central - Jodhpur Special",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "JU",
+                        "name": "Jodhpur Jn"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12027",
+                    "name": "Chennai Central - KSR Bengaluru Shatabdi Express",
+                    "type": "Shatabdi Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12669",
+                    "name": "Ganga Kaveri Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CPR",
+                        "name": "Chhapra"
+                    },
+                    "runDays": [
+                        "mon",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:40",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12967",
+                    "name": "Jaipur SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "JP",
+                        "name": "Jaipur Jn"
+                    },
+                    "runDays": [
+                        "tue",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:40",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12969",
+                    "name": "Jaipur SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "JP",
+                        "name": "Jaipur Jn"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "17:10",
+                    "departure": "17:40",
+                    "arrivalDay": 1,
+                    "departureDay": 1,
+                    "distance": 494.1,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "06027",
+                    "name": "Podanur Special Fare Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "PTJ",
+                        "name": "Podanur Jn"
+                    },
+                    "runDays": [
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:45",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "16089",
+                    "name": "Yelagiri Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "JTJ",
+                        "name": "Jolarpettai Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "17:55",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12615",
+                    "name": "Grand Trunk Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NDLS",
+                        "name": "New Delhi"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "18:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12164",
+                    "name": "Mumbai LTT SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "LTT",
+                        "name": "Mumbai LTT"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "18:25",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "18042",
+                    "name": "Shalimar Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SHM",
+                        "name": "Shalimar"
+                    },
+                    "runDays": [
+                        "tue"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "18:45",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12689",
+                    "name": "Kanniyakumari SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CAPE",
+                        "name": "Kanniyakumari"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "19:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12840",
+                    "name": "Howrah Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "HWH",
+                        "name": "Howrah Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "19:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20608",
+                    "name": "Mysore - Chennai Central Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 97,
+                    "arrival": "19:20",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 496,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12623",
+                    "name": "Thiruvananthapuram Central Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "TVC",
+                        "name": "Thiruvananthapuram Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "19:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20625",
+                    "name": "Bhagat ki Kothi SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BGKT",
+                        "name": "Bhagat ki Kothi"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "thu",
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "19:35",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22626",
+                    "name": "KSR Bengaluru - Chennai Central Double Decker Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 76,
+                    "arrival": "19:45",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 358.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22826",
+                    "name": "Shalimar Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SHM",
+                        "name": "Shalimar"
+                    },
+                    "runDays": [
+                        "wed"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "19:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12601",
+                    "name": "Mangaluru Central Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MAQ",
+                        "name": "Mangalore Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "20:10",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22807",
+                    "name": "MGR Chennai Central AC SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SRC",
+                        "name": "Santragachi Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "tue",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 285,
+                    "arrival": "20:20",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 1654.4,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12270",
+                    "name": "Hazrat Nizamuddin - Chennai Central Duronto Express",
+                    "type": "Duronto Express",
+                    "source": {
+                        "code": "NZM",
+                        "name": "Hazrat Nizamuddin Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "tue",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 301,
+                    "arrival": "20:50",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 2175.8,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12434",
+                    "name": "Hazrat Nizamuddin - Chennai Central Rajdhani Express",
+                    "type": "Rajdhani Express",
+                    "source": {
+                        "code": "NZM",
+                        "name": "Hazrat Nizamuddin Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "wed",
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 301,
+                    "arrival": "20:50",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 2175.8,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22639",
+                    "name": "Alappuzha SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "ALLP",
+                        "name": "Alappuzha"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "20:55",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12612",
+                    "name": "Hazrat Nizamuddin - Chennai Central Garib Rath Express",
+                    "type": "Garib Rath Express",
+                    "source": {
+                        "code": "NZM",
+                        "name": "Hazrat Nizamuddin Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 301,
+                    "arrival": "21:00",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 2175.8,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12671",
+                    "name": "Nilgiri SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MTP",
+                        "name": "Metupalaiyam"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "21:05",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12640",
+                    "name": "Brindavan SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 76,
+                    "arrival": "21:15",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 358.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "16021",
+                    "name": "Kaveri Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "AP",
+                        "name": "Ashokapuram"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "21:15",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12008",
+                    "name": "Mysore - Chennai Central Shatabdi Express",
+                    "type": "Shatabdi Express",
+                    "source": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 97,
+                    "arrival": "21:25",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 496,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22651",
+                    "name": "Palakkad Jn. SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "PGT",
+                        "name": "Palakkad Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "21:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12244",
+                    "name": "Coimbatore - Chennai Central Shatabdi Express",
+                    "type": "Shatabdi Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "21:50",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 494.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12621",
+                    "name": "Tamil Nadu Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "NDLS",
+                        "name": "New Delhi"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "22:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12673",
+                    "name": "Cheran SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "22:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "13352",
+                    "name": "Dhanbad Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "ALLP",
+                        "name": "Alappuzha"
+                    },
+                    "destination": {
+                        "code": "DHN",
+                        "name": "Dhanbad Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 143,
+                    "arrival": "21:40",
+                    "departure": "22:10",
+                    "arrivalDay": 1,
+                    "departureDay": 1,
+                    "distance": 757.4,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "16058",
+                    "name": "Sapthagiri Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "TPTY",
+                        "name": "Tirupati"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 42,
+                    "arrival": "22:15",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 147.2,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12681",
+                    "name": "Coimbatore Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "22:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20601",
+                    "name": "Bodinayakkanur SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "BDNK",
+                        "name": "Bodinayakkanur"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "22:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "20953",
+                    "name": "Ahmedabad SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "ADI",
+                        "name": "Ahmedabad Jn"
+                    },
+                    "runDays": [
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "22:40",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12676",
+                    "name": "Kovai SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "CBE",
+                        "name": "Coimbatore Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 95,
+                    "arrival": "22:45",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 494.1,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12657",
+                    "name": "KSR Bengaluru SF Mail",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SBC",
+                        "name": "KSR Bengaluru"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "22:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12078",
+                    "name": "Vijayawada - Chennai Central Jan Shatabdi Express",
+                    "type": "Jan Shatabdi Express",
+                    "source": {
+                        "code": "BZA",
+                        "name": "Vijayawada Jn"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 80,
+                    "arrival": "23:00",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 455.8,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "22649",
+                    "name": "Yercaud SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "ED",
+                        "name": "Erode Jn"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:00",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12511",
+                    "name": "Thiruvananthapuram North Rapti Sagar SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "GKP",
+                        "name": "Gorakhpur Jn"
+                    },
+                    "destination": {
+                        "code": "TVCN",
+                        "name": "Thiruvananthapuram North (Kochuveli)"
+                    },
+                    "runDays": [
+                        "thu",
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 335,
+                    "arrival": "22:40",
+                    "departure": "23:10",
+                    "arrivalDay": 2,
+                    "departureDay": 2,
+                    "distance": 2338,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "22645",
+                    "name": "Ahilya Nagari SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "INDB",
+                        "name": "Indore Jn"
+                    },
+                    "destination": {
+                        "code": "TVCN",
+                        "name": "Thiruvananthapuram North (Kochuveli)"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 247,
+                    "arrival": "22:40",
+                    "departure": "23:10",
+                    "arrivalDay": 2,
+                    "departureDay": 2,
+                    "distance": 1743.2,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "22647",
+                    "name": "Thiruvananthapuram North SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "KRBA",
+                        "name": "Korba"
+                    },
+                    "destination": {
+                        "code": "TVCN",
+                        "name": "Thiruvananthapuram North (Kochuveli)"
+                    },
+                    "runDays": [
+                        "wed",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 234,
+                    "arrival": "22:40",
+                    "departure": "23:10",
+                    "arrivalDay": 2,
+                    "departureDay": 2,
+                    "distance": 1593.1,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "12521",
+                    "name": "Ernakulam Junction. Rapti Sagar Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "BJU",
+                        "name": "Barauni Jn"
+                    },
+                    "destination": {
+                        "code": "ERS",
+                        "name": "Ernakulam Jn"
+                    },
+                    "runDays": [
+                        "mon"
+                    ]
+                },
+                "stop": {
+                    "sequence": 405,
+                    "arrival": "22:40",
+                    "departure": "23:10",
+                    "arrivalDay": 3,
+                    "departureDay": 3,
+                    "distance": 2734,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "20626",
+                    "name": "MGR Chennai Central SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "BGKT",
+                        "name": "Bhagat ki Kothi"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 347,
+                    "arrival": "23:15",
+                    "departure": null,
+                    "arrivalDay": 2,
+                    "departureDay": null,
+                    "distance": 2353.5,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "12292",
+                    "name": "Yesvantpur Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "YPR",
+                        "name": "Yesvantpur Jn"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12691",
+                    "name": "Shivamogga Town Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "SMET",
+                        "name": "Shimoga Town"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "22682",
+                    "name": "Mysuru Weekly SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MYS",
+                        "name": "Mysore Jn"
+                    },
+                    "runDays": [
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:30",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "12512",
+                    "name": "Gorakhpur Rapti Sagar SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVCN",
+                        "name": "Thiruvananthapuram North (Kochuveli)"
+                    },
+                    "destination": {
+                        "code": "GKP",
+                        "name": "Gorakhpur Jn"
+                    },
+                    "runDays": [
+                        "tue",
+                        "wed",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 171,
+                    "arrival": "23:05",
+                    "departure": "23:35",
+                    "arrivalDay": 1,
+                    "departureDay": 1,
+                    "distance": 899.1,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "12522",
+                    "name": "Barauni Rapti Sagar Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "ERS",
+                        "name": "Ernakulam Jn"
+                    },
+                    "destination": {
+                        "code": "BJU",
+                        "name": "Barauni Jn"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 131,
+                    "arrival": "23:05",
+                    "departure": "23:35",
+                    "arrivalDay": 1,
+                    "departureDay": 1,
+                    "distance": 700.4,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "22646",
+                    "name": "Ahilya Nagari SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVCN",
+                        "name": "Thiruvananthapuram North (Kochuveli)"
+                    },
+                    "destination": {
+                        "code": "INDB",
+                        "name": "Indore Jn"
+                    },
+                    "runDays": [
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 171,
+                    "arrival": "23:05",
+                    "departure": "23:35",
+                    "arrivalDay": 1,
+                    "departureDay": 1,
+                    "distance": 899.1,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "22648",
+                    "name": "Korba SF Express",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "TVCN",
+                        "name": "Thiruvananthapuram North (Kochuveli)"
+                    },
+                    "destination": {
+                        "code": "KRBA",
+                        "name": "Korba"
+                    },
+                    "runDays": [
+                        "mon",
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 170,
+                    "arrival": "23:05",
+                    "departure": "23:35",
+                    "arrivalDay": 1,
+                    "departureDay": 1,
+                    "distance": 912.4,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "20678",
+                    "name": "Narasapur - Chennai Central Vande Bharat Express",
+                    "type": "Vande Bharat Express",
+                    "source": {
+                        "code": "NS",
+                        "name": "Narasapur"
+                    },
+                    "destination": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "runDays": [
+                        "mon",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 132,
+                    "arrival": "23:45",
+                    "departure": null,
+                    "arrivalDay": 1,
+                    "departureDay": null,
+                    "distance": 652.7,
+                    "stopType": "destination"
+                }
+            },
+            {
+                "train": {
+                    "number": "13351",
+                    "name": "Alappuzha Express",
+                    "type": "Mail/Express",
+                    "source": {
+                        "code": "DHN",
+                        "name": "Dhanbad Jn"
+                    },
+                    "destination": {
+                        "code": "ALLP",
+                        "name": "Alappuzha"
+                    },
+                    "runDays": [
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                        "sun"
+                    ]
+                },
+                "stop": {
+                    "sequence": 268,
+                    "arrival": "23:15",
+                    "departure": "23:45",
+                    "arrivalDay": 2,
+                    "departureDay": 2,
+                    "distance": 1775.7,
+                    "stopType": "halt"
+                }
+            },
+            {
+                "train": {
+                    "number": "06117",
+                    "name": "Kollam Special Fare Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "QLN",
+                        "name": "Kollam Jn"
+                    },
+                    "runDays": [
+                        "thu",
+                        "sat"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "06127",
+                    "name": "Kollam Special Fare Sabarimala Special",
+                    "type": "Train on Demand",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "MAJN",
+                        "name": "Mangalore Jn"
+                    },
+                    "runDays": [
+                        "fri"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:50",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            },
+            {
+                "train": {
+                    "number": "06023",
+                    "name": "Chennai Central - Podanur Special",
+                    "type": "Superfast Express",
+                    "source": {
+                        "code": "MAS",
+                        "name": "MGR Chennai Central"
+                    },
+                    "destination": {
+                        "code": "PTJ",
+                        "name": "Podanur Jn"
+                    },
+                    "runDays": [
+                        "thu"
+                    ]
+                },
+                "stop": {
+                    "sequence": 1,
+                    "arrival": null,
+                    "departure": "23:55",
+                    "arrivalDay": null,
+                    "departureDay": 1,
+                    "distance": 0,
+                    "stopType": "origin"
+                }
+            }
+        ],
+        "count": 176,
+        "includeIntermediate": false
+    },
+    "meta": {
+        "timestamp": "2026-10-02T17:34:36+05:30",
+        "traceId": "8074b213-84a5-4709-a2ec-63c08d145a40",
+        "source": "database",
+        "executionTime": 6
+    }
+}

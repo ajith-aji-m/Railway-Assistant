@@ -1,0 +1,91 @@
+{
+    "success": true,
+    "data": [
+        {
+            "number": "12670",
+            "name": "Ganga Kaveri Express",
+            "popularity": 126,
+            "source": "CPR",
+            "sourceName": "Chhapra",
+            "dest": "MAS",
+            "destName": "MGR Chennai Central",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12675",
+            "name": "Kovai SF Express",
+            "popularity": 103,
+            "source": "MAS",
+            "sourceName": "MGR Chennai Central",
+            "dest": "CBE",
+            "destName": "Coimbatore Jn",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12676",
+            "name": "Kovai SF Express",
+            "popularity": 90,
+            "source": "CBE",
+            "sourceName": "Coimbatore Jn",
+            "dest": "MAS",
+            "destName": "MGR Chennai Central",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12674",
+            "name": "Cheran SF Express",
+            "popularity": 88,
+            "source": "CBE",
+            "sourceName": "Coimbatore Jn",
+            "dest": "MAS",
+            "destName": "MGR Chennai Central",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12679",
+            "name": "Coimbatore InterCity SF Express",
+            "popularity": 87,
+            "source": "MAS",
+            "sourceName": "MGR Chennai Central",
+            "dest": "CBE",
+            "destName": "Coimbatore Jn",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12672",
+            "name": "Nilgiri SF Express",
+            "popularity": 73,
+            "source": "MTP",
+            "sourceName": "Metupalaiyam",
+            "dest": "MAS",
+            "destName": "MGR Chennai Central",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12671",
+            "name": "Nilgiri SF Express",
+            "popularity": 72,
+            "source": "MAS",
+            "sourceName": "MGR Chennai Central",
+            "dest": "MTP",
+            "destName": "Metupalaiyam",
+            "type": "Superfast Express"
+        },
+        {
+            "number": "12673",
+            "name": "Cheran SF Express",
+            "popularity": 68,
+            "source": "MAS",
+            "sourceName": "MGR Chennai Central",
+            "dest": "CBE",
+            "destName": "Coimbatore Jn",
+            "type": "Superfast Express"
+        }
+    ],
+    "meta": {
+        "timestamp": "2026-10-02T17:34:36+05:30",
+        "traceId": "cef289ef-8ecf-440d-a594-9c0b4296be51",
+        "source": "database",
+        "executionTime": 17
+    }
+}

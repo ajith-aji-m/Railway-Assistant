@@ -1,6 +1,7 @@
 // Mirrors the PHP DTOs in app/Railway/Data. Keep the two in sync.
 
 export type BoardType = 'arrivals' | 'departures';
+export type BoardPhase = 'completed' | 'running' | 'upcoming';
 export type RunningStatus = 'scheduled' | 'running' | 'completed' | 'cancelled';
 export type StopState = 'departed' | 'current' | 'next' | 'upcoming';
 export type BoardStatus = 'scheduled' | 'expected' | 'approaching' | 'at_station' | 'arrived' | 'departed' | 'cancelled';
@@ -51,19 +52,24 @@ export interface BoardEntry {
     status: BoardStatus;
     /** true when expectedTime/delay come from live data; false = timetable only. */
     isLive: boolean;
+    /** Completed / running / upcoming at this station today. */
+    phase: BoardPhase;
 }
 
+// status / delayMinutes / times: null = unknown (lookup result without live status).
 export interface TrainSummary {
     number: string;
     name: string;
     type: string;
     from: StationRef;
     to: StationRef;
-    departs: string;
-    arrives: string;
+    departs: string | null;
+    arrives: string | null;
     originPlatform: string | null;
-    status: RunningStatus;
-    delayMinutes: number;
+    status: RunningStatus | null;
+    delayMinutes: number | null;
+    /** false = delay is only the timetable (not tracked yet): never "On time". */
+    delayIsLive: boolean;
 }
 
 export interface StopStatus extends LatLng {

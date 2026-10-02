@@ -10,6 +10,7 @@ import { SegmentedTabs } from '@/components/ui/SegmentedTabs';
 import { getLastLocation } from '@/hooks/useLastLocation';
 import { useLiveReload } from '@/hooks/useLiveReload';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
+import { groupByPhase } from '@/lib/board';
 import { cn, formatDate } from '@/lib/format';
 import { distanceKm } from '@/lib/geo';
 import { goBack } from '@/lib/navigation';
@@ -58,7 +59,13 @@ export default function StationShow({ station, tab, board, boardError, today }: 
 
     return (
         <AppShell title={`${station.name} (${station.code})`} header={null} nav="stations">
-            <StationHero station={station} distanceKm={distance} onBack={() => goBack(urls.stations())} />
+            <StationHero
+                station={station}
+                distanceKm={distance}
+                onBack={() => goBack(urls.stations())}
+                // Station selection: nearby stations from the saved location (no new prompt) + manual search.
+                onChangeStation={() => router.visit(urls.stations())}
+            />
             <StationInfoStrip station={station} />
 
             <nav aria-label="Station schedule view" className="sticky top-0 z-20 w-full border-b border-outline-variant/30 bg-surface-container-lowest px-margin pt-3 pb-1">
@@ -101,9 +108,49 @@ export default function StationShow({ station, tab, board, boardError, today }: 
                 ) : board.length === 0 ? (
                     <BoardEmpty type={tab} stationName={station.name} onRefresh={live.reload} />
                 ) : (
-                    board.map((entry) => <BoardCard key={`${entry.trainNumber}-${entry.scheduledTime}`} entry={entry} />)
+                    <FullDayBoard board={board} />
                 )}
             </main>
         </AppShell>
+    );
+}
+
+const PHASE_DOT = { completed: 'bg-outline-variant', running: 'bg-secondary', upcoming: 'bg-primary' } as const;
+
+/** Today's trains at the station: Completed → Running → Upcoming, each in time order. */
+function FullDayBoard({ board }: { board: BoardEntry[] }) {
+    const groups = groupByPhase(board);
+    const jump = (phase: string) => document.getElementById(`board-${phase}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    return (
+        <>
+            {groups.length > 1 && (
+                <div className="flex flex-wrap gap-2" aria-label="Jump to section">
+                    {groups.map((g) => (
+                        <button
+                            key={g.phase}
+                            type="button"
+                            onClick={() => jump(g.phase)}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-lowest px-3 py-1 font-label-md text-label-md text-on-surface shadow-sm transition-colors hover:border-primary active:scale-95"
+                        >
+                            <span className={cn('h-2 w-2 rounded-full', PHASE_DOT[g.phase])} />
+                            {g.label}
+                            <span className="font-bold tabular-nums text-on-surface-variant">{g.entries.length}</span>
+                        </button>
+                    ))}
+                </div>
+            )}
+            {groups.map((g) => (
+                <section key={g.phase} id={`board-${g.phase}`} aria-label={`${g.label} trains`} className="scroll-mt-32 space-y-3">
+                    <h2 className="flex items-center gap-2 px-1 pt-1 font-label-sm text-label-sm tracking-wider text-outline uppercase">
+                        <span className={cn('h-2 w-2 rounded-full', PHASE_DOT[g.phase])} />
+                        {g.label} · {g.entries.length}
+                    </h2>
+                    {g.entries.map((entry) => (
+                        <BoardCard key={`${entry.trainNumber}-${entry.scheduledTime}`} entry={entry} />
+                    ))}
+                </section>
+            ))}
+        </>
     );
 }

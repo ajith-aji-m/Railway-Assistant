@@ -97,7 +97,7 @@ export default function TrainLiveMap({ train, live: latestLive }: { train: Train
 
             <section ref={hudRef} className="absolute inset-x-0 bottom-[76px] z-20 px-margin">
                 {gpsLost ? (
-                    <EstimatedCard live={live} onShare={share} />
+                    <EstimatedCard live={live} onShare={share} stale={refresh.stale} />
                 ) : (
                     <TelemetryCard train={train} live={live} refreshing={refresh.loading} onRefresh={refresh.reload} stale={refresh.stale} />
                 )}

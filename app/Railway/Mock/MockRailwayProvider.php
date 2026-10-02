@@ -13,8 +13,10 @@ use App\Railway\Data\StationRef;
 use App\Railway\Data\StationSummary;
 use App\Railway\Data\TrainDetail;
 use App\Railway\Data\TrainSummary;
+use App\Railway\Enums\BoardPhase;
 use App\Railway\Enums\BoardStatus;
 use App\Railway\Enums\BoardType;
+use App\Railway\Enums\RunningStatus;
 use App\Railway\Support\LocalStationDirectory;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
@@ -51,10 +53,12 @@ final class MockRailwayProvider implements RailwayProvider
         $query = trim($query);
 
         return Station::query()
+            ->where('is_active', true)
             ->where(fn (Builder $q) => $q
                 ->where('code', 'like', $query)
                 ->orWhere('name', 'like', "%{$query}%")
-                ->orWhere('city', 'like', "%{$query}%"))
+                ->orWhere('city', 'like', "%{$query}%")
+                ->orWhere('aliases', 'like', "%{$query}%")) // alternate spellings / former codes
             ->orderByRaw('code = ? desc', [strtoupper($query)])
             ->orderBy('name')
             ->limit($limit)
@@ -193,6 +197,13 @@ final class MockRailwayProvider implements RailwayProvider
             platform: $stop->platform,
             delayMinutes: $delay,
             status: $status,
+            phase: match ($status) {
+                BoardStatus::Departed, BoardStatus::Arrived => BoardPhase::Completed,
+                BoardStatus::AtStation, BoardStatus::Approaching => BoardPhase::Running,
+                BoardStatus::Cancelled => $expected <= $now ? BoardPhase::Completed : BoardPhase::Upcoming,
+                // Expected here: running once the journey has started, otherwise upcoming.
+                default => $this->simulator->simulate($train, $now)->status === RunningStatus::Running ? BoardPhase::Running : BoardPhase::Upcoming,
+            },
         );
     }
 

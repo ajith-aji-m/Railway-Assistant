@@ -11,6 +11,17 @@ export function queryState(raw: string, minLength: number): QueryState {
     return q.length < minLength ? 'short' : 'ready';
 }
 
+/**
+ * Query to send when the user submits a search, or null when it must not be sent:
+ * empty / too short, or the same query whose results are already shown. Trimmed;
+ * digits are kept as typed, so leading zeros survive ("06120").
+ */
+export function submittableQuery(raw: string, minLength: number, alreadyShown: string | null = null): string | null {
+    const q = normalizeQuery(raw);
+    if (queryState(q, minLength) !== 'ready') return null;
+    return q === alreadyShown ? null : q;
+}
+
 interface SchedulerOptions {
     delayMs: number;
     minLength: number;

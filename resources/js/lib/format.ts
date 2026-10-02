@@ -7,13 +7,18 @@ export function formatDistance(km: number, unit: DistanceUnit = 'km'): string {
     return `${value.toFixed(value < 100 ? 1 : 0)} ${unit}`;
 }
 
-/** "13:05" → "01:05 PM" */
+/**
+ * The one formatter for user-facing railway times ("h:mm A"):
+ * "13:05" → "1:05 PM", "00:15" → "12:15 AM", "12:00" → "12:00 PM".
+ * Input is the backend's 24-hour "HH:MM" (station-local); data values are never changed.
+ */
 export function to12h(time: string | null | undefined): string {
-    if (!time) return '--';
-    const [h, m] = time.split(':').map(Number);
+    const match = time ? /^(\d{1,2}):(\d{2})/.exec(time) : null;
+    if (!match) return '--';
+    const h = Number(match[1]);
     const suffix = h >= 12 ? 'PM' : 'AM';
     const hour = h % 12 === 0 ? 12 : h % 12;
-    return `${String(hour).padStart(2, '0')}:${String(m).padStart(2, '0')} ${suffix}`;
+    return `${hour}:${match[2]} ${suffix}`;
 }
 
 /** Signed delay label used in pills: "+7m", "On time". */
@@ -40,13 +45,13 @@ export function formatDate(iso: string): string {
     return `${String(d).padStart(2, '0')} ${MONTHS[mo - 1]} ${y}`;
 }
 
-/** "10:35" from an ISO datetime. */
+/** "10:35" (24-hour, station-local) from an ISO datetime; pass to to12h() for display. */
 export function timeOf(iso: string): string {
     const { h, mi } = parts(iso);
     return `${String(h).padStart(2, '0')}:${String(mi).padStart(2, '0')}`;
 }
 
-/** "02 Oct 2026, 10:35 AM" */
+/** "02 Oct 2026, 10:35 AM" (station-local, whatever the viewer's timezone) */
 export function formatDateTime(iso: string): string {
     return `${formatDate(iso)}, ${to12h(timeOf(iso))}`;
 }

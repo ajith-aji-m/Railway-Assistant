@@ -71,7 +71,7 @@ export function GpsLostBanner({ lastFixAt = null }: { lastFixAt?: string | null 
                 <div className="flex flex-col">
                     <div className="flex items-center space-x-1.5">
                         <span className="font-label-md text-label-md font-bold text-amber-900">Train GPS Signal Lost</span>
-                        <span className="rounded bg-amber-200/80 px-1.5 font-label-sm text-[10px] text-amber-950">TIMETABLE MODE</span>
+                        <span className="rounded bg-amber-200/80 px-1.5 font-label-sm text-[10px] text-amber-950">{lastFixAt ? 'LAST KNOWN' : 'TIMETABLE MODE'}</span>
                     </div>
                     <span className="font-label-sm text-[11px] leading-tight text-amber-800">
                         {lastFixAt ? `Showing last reported position (${to12h(timeOf(lastFixAt))})` : 'Showing Scheduled Stations & Estimated Track Segment'}
@@ -220,8 +220,8 @@ export function TelemetryCard({
     );
 }
 
-/** Bottom card when GPS is lost: position estimated from the timetable. */
-export function EstimatedCard({ live, onShare }: { live: LiveStatus; onShare: () => void }) {
+/** Bottom card when GPS is lost: last real position, or estimated from the timetable. */
+export function EstimatedCard({ live, onShare, stale = false }: { live: LiveStatus; onShare: () => void; /** Latest background refresh failed. */ stale?: boolean }) {
     const last = stopBySequence(live, live.lastStopSequence);
     const next = stopBySequence(live, live.nextStopSequence);
     if (!last || !next) return null;
@@ -255,6 +255,12 @@ export function EstimatedCard({ live, onShare }: { live: LiveStatus; onShare: ()
                         : 'Train progress calculated via timetable schedule.'}{' '}
                     Next milestone expected at {to12h(next.expectedArrival ?? next.scheduledArrival)}.
                 </p>
+                {stale && (
+                    <p className="flex items-center gap-1 font-label-sm text-label-sm font-bold text-amber-700">
+                        <Icon name="sync_problem" className="text-sm" />
+                        Update failed · showing data from {to12h(timeOf(live.updatedAt))}
+                    </p>
+                )}
             </div>
             <div className="flex items-center justify-between rounded-xl border border-surface-container bg-surface-container-low p-3">
                 <div className="space-y-0.5">

@@ -8,15 +8,16 @@ import { InfoTip } from '@/components/ui/InfoTip';
 import { StateCard } from '@/components/ui/StateCard';
 import { SearchField } from '@/components/ui/SearchField';
 import { DetectingState, LocationErrorState, NoStationsState, PermissionState } from '@/components/station/LocationStates';
-import { PopularStations } from '@/components/station/PopularStations';
 import { StationListItem } from '@/components/station/StationListItem';
-import { OrDivider, UseLocationCard } from '@/components/station/UseLocationCard';
+import { OrDivider, TrainSearchCard, UseLocationCard } from '@/components/station/UseLocationCard';
 import { hasLocationPermission, useGeolocation } from '@/hooks/useGeolocation';
 import { getLastLocation, setLastLocation } from '@/hooks/useLastLocation';
 import { useSettings } from '@/hooks/useSettings';
+import { formatDistance } from '@/lib/format';
+import { restoreLocation } from '@/lib/location';
 import { createSearchScheduler, queryState } from '@/lib/search';
 import { urls } from '@/lib/urls';
-import type { LatLng, StationDetail, StationSummary } from '@/types/railway';
+import type { LatLng, StationSummary } from '@/types/railway';
 
 interface Props {
     radiusKm: number;
@@ -30,7 +31,6 @@ interface Props {
     /** Mock: 1 char / 250ms. RailRadar: 2 chars / 400ms (protects the API quota). */
     searchMinLength: number;
     searchDebounceMs: number;
-    popular?: StationDetail[]; // optional prop, requested only when shown
 }
 
 const EXTENDED_RADIUS = 100;
@@ -45,7 +45,6 @@ export default function StationsIndex({
     searchError,
     searchMinLength,
     searchDebounceMs,
-    popular,
 }: Props) {
     const [settings] = useSettings();
     const geo = useGeolocation();
@@ -54,21 +53,20 @@ export default function StationsIndex({
     const [sheetOpen, setSheetOpen] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
 
-    const params = (extra: Record<string, string | number | undefined> = {}) => {
+    // Coordinates reach the server only for the nearby-station lookup, never with searches.
+    const nearbyParams = (position: LatLng, extra: Record<string, string | number | undefined> = {}) => {
         const all = {
-            lat: location?.lat,
-            lng: location?.lng,
-            radius: radiusKm !== 50 ? radiusKm : undefined,
+            lat: position.lat,
+            lng: position.lng,
+            radius: radiusKm === EXTENDED_RADIUS ? EXTENDED_RADIUS : undefined, // otherwise the configured default
             all: showAll ? 1 : undefined,
-            q: search || undefined,
             ...extra,
         };
         return Object.fromEntries(Object.entries(all).filter(([, v]) => v !== undefined)) as Record<string, string | number>;
     };
 
     const showNearby = (position: LatLng, extra: Record<string, string | number | undefined> = {}) => {
-        setLastLocation(position);
-        router.get(urls.stations(), params({ lat: position.lat, lng: position.lng, ...extra }), {
+        router.get(urls.stations(), nearbyParams(position, extra), {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -76,27 +74,29 @@ export default function StationsIndex({
         });
     };
 
-    const detect = async () => {
+    const locateAndSave = async () => {
         const position = await geo.locate();
+        if (position) setLastLocation(position);
+        return position;
+    };
+
+    const detect = async () => {
+        const position = await locateAndSave();
         if (position) showNearby(position);
     };
 
-    // On first visit restore the last position, or detect silently when permission was already granted.
+    // Reuse the saved position, or detect silently when permission was already granted — never prompt here.
     useEffect(() => {
         if (location || !settings.useLocation) return;
-        const last = getLastLocation();
-        if (last) {
-            showNearby(last);
-            return;
-        }
-        hasLocationPermission().then((granted) => {
-            if (granted) void detect();
+        void restoreLocation({ saved: getLastLocation, permissionGranted: hasLocationPermission, locate: locateAndSave }).then((position) => {
+            if (position) showNearby(position);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Manual search covers every station; it is never limited by the user's location.
     const runSearch = (q: string) =>
-        router.get(urls.stations(), params({ q: q || undefined }), {
+        router.get(urls.stations(), q ? { q } : {}, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -105,7 +105,7 @@ export default function StationsIndex({
             onFinish: () => setSearching(false),
         });
 
-    // Always call the latest runSearch (it reads the current location/radius params).
+    // Always call the latest runSearch.
     const runSearchRef = useRef(runSearch);
     runSearchRef.current = runSearch;
 
@@ -132,11 +132,8 @@ export default function StationsIndex({
     const openManualSearch = () => setSheetOpen(true);
     const searchReady = queryState(search, searchMinLength) === 'ready';
     const activeSearch = searchReady && (searchResults !== null || searchError !== null);
-    const showsPopular = sheetOpen || (location !== null && nearby !== null && nearby.length === 0);
-
-    useEffect(() => {
-        if (showsPopular && popular === undefined) router.reload({ only: ['popular'] });
-    }, [showsPopular, popular]);
+    // Suggestions come only from the user's location — no default/global stations.
+    const suggestions = location ? (nearby ?? []) : [];
 
     let content;
     if (geo.state.status === 'detecting') {
@@ -152,21 +149,22 @@ export default function StationsIndex({
         );
     } else if (location && nearby && nearby.length === 0 && !activeSearch) {
         content = (
-            <div className="space-y-space-md">
-                <NoStationsState
-                    radiusKm={radiusKm}
-                    onSearch={openManualSearch}
-                    onExtend={radiusKm < EXTENDED_RADIUS ? () => showNearby(location, { radius: EXTENDED_RADIUS }) : undefined}
-                />
-                <PopularStations stations={popular ?? []} />
-            </div>
+            <NoStationsState
+                radiusKm={radiusKm}
+                onSearch={openManualSearch}
+                onExtend={radiusKm < EXTENDED_RADIUS ? () => showNearby(location, { radius: EXTENDED_RADIUS }) : undefined}
+            />
         );
     } else if (location || activeSearch) {
         const list = activeSearch ? (searchResults ?? []) : (nearby ?? []);
         content = (
             <div className="flex flex-col space-y-space-lg">
-                <UseLocationCard onClick={detect} />
-                <OrDivider />
+                {location && (
+                    <>
+                        <UseLocationCard onClick={detect} />
+                        <OrDivider />
+                    </>
+                )}
                 <SearchField
                     ref={searchRef}
                     value={search}
@@ -181,7 +179,7 @@ export default function StationsIndex({
                     </h2>
                     {!activeSearch && location && !showAll && (nearby?.length ?? 0) > 0 && (
                         <Link
-                            href={urls.stations(params({ all: 1 }))}
+                            href={urls.stations(nearbyParams(location, { all: 1 }))}
                             only={['nearby', 'showAll']}
                             preserveState
                             preserveScroll
@@ -210,6 +208,7 @@ export default function StationsIndex({
                     )}
                 </div>
                 <InfoTip>Tap any railway hub to explore real-time platform allocations, train schedules, and live arrival updates.</InfoTip>
+                <TrainSearchCard />
             </div>
         );
     } else {
@@ -232,9 +231,11 @@ export default function StationsIndex({
                     className="bg-surface"
                 />
                 <div className="space-y-1.5 pt-1">
-                    <span className="block font-label-sm text-label-sm tracking-wider text-outline uppercase">
-                        {activeSearch ? 'Matching Stations' : 'Frequent Stations'}
-                    </span>
+                    {(activeSearch || suggestions.length > 0) && (
+                        <span className="block font-label-sm text-label-sm tracking-wider text-outline uppercase">
+                            {activeSearch ? 'Matching Stations' : 'Nearby Stations'}
+                        </span>
+                    )}
                     {activeSearch && searchError && (
                         <p className="py-2 text-center font-body-sm text-body-sm text-tertiary">
                             <Icon name="wifi_off" className="mr-1 text-base" />
@@ -244,7 +245,7 @@ export default function StationsIndex({
                             </button>
                         </p>
                     )}
-                    {(activeSearch ? (searchResults ?? []) : (popular ?? [])).map((s) => (
+                    {(activeSearch ? (searchResults ?? []) : suggestions).map((s) => (
                         <Link
                             key={s.code}
                             href={urls.station(s.code)}
@@ -256,12 +257,18 @@ export default function StationsIndex({
                                 </p>
                                 <p className="font-body-sm text-body-sm text-on-surface-variant">
                                     {[s.city, s.state].filter(Boolean).join(', ') || '—'}
-                                    {'platforms' in s && s.platforms !== null ? ` • ${s.platforms} Platforms` : ''}
+                                    {s.distanceKm !== null ? ` • ${formatDistance(s.distanceKm, settings.distanceUnit)} away` : ''}
                                 </p>
                             </div>
                             <span className="rounded bg-surface-container px-2 py-0.5 font-label-sm text-label-sm font-bold text-primary">Select</span>
                         </Link>
                     ))}
+                    {!activeSearch && location && nearby !== null && nearby.length === 0 && (
+                        <p className="py-4 text-center font-body-sm text-body-sm text-on-surface-variant">
+                            <Icon name="location_off" className="mr-1 text-base" />
+                            No stations within {radiusKm} km. Search any station by name or code.
+                        </p>
+                    )}
                     {activeSearch && !searchError && (searchResults ?? []).length === 0 && (
                         <p className="py-4 text-center font-body-sm text-body-sm text-on-surface-variant">
                             <Icon name="search_off" className="mr-1 text-base" />

@@ -214,10 +214,17 @@ class RailRadarProviderTest extends TestCase
         Http::assertSentCount(1);
     }
 
-    public function test_unsupported_features_fail_clearly(): void
+    public function test_exact_train_number_search_reuses_the_cached_live_request(): void
     {
-        $e = $this->expectFailure(fn () => $this->provider()->searchTrains('kovai'));
-        $this->assertSame(RailwayDataException::NOT_SUPPORTED, $e->reason);
+        config(['services.railradar.cache_seconds' => 60]);
+        Http::fake([self::LIVE_URL => Http::response($this->fixture())]);
+
+        $results = $this->provider()->searchTrains('12675');
+        $this->provider()->train('12675');
+
+        $this->assertSame('12675', $results[0]->number);
+        $this->assertSame(RunningStatus::Running, $results[0]->status);
+        Http::assertSentCount(1);
     }
 
     public function test_diagnostic_command_prints_safe_summary(): void

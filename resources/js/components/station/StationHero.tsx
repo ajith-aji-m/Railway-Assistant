@@ -5,7 +5,17 @@ import { formatDistance } from '@/lib/format';
 import type { StationDetail } from '@/types/railway';
 
 /** Photo header from the Stitch station dashboard. */
-export function StationHero({ station, distanceKm, onBack }: { station: StationDetail; distanceKm: number | null; onBack: () => void }) {
+export function StationHero({
+    station,
+    distanceKm,
+    onBack,
+    onChangeStation,
+}: {
+    station: StationDetail;
+    distanceKm: number | null;
+    onBack: () => void;
+    onChangeStation?: () => void;
+}) {
     const [{ distanceUnit }] = useSettings();
     const place = [station.city, station.state].filter(Boolean).join(', ');
 
@@ -22,7 +32,10 @@ export function StationHero({ station, distanceKm, onBack }: { station: StationD
 
             <div className="absolute top-4 right-0 left-0 z-20 flex items-center justify-between px-margin">
                 <HeroButton icon="arrow_back" label="Back" onClick={onBack} />
-                <HeroButton icon="share" label="Share" share={{ title: `${station.name} (${station.code})` }} />
+                <div className="flex items-center gap-2">
+                    {onChangeStation && <HeroButton icon="swap_horiz" label="Change Station" onClick={onChangeStation} />}
+                    <HeroButton icon="share" label="Share" share={{ title: `${station.name} (${station.code})` }} />
+                </div>
             </div>
 
             <div className="absolute right-0 bottom-3 left-0 z-20 flex items-end justify-between px-margin">

@@ -1,0 +1,22 @@
+{
+    "_comment": "Curated corrections applied on top of station_directory.json when seeding (StationDirectorySeeder). Keyed by the directory's station code. Supported keys: code (official code change; the old code becomes a search alias), name, aliases (alternate spellings/names for search), active (false = no passenger service: hidden from nearby and search). Only add entries that can be verified.",
+    "stations": {
+        "CSTM": { "code": "CSMT", "name": "Mumbai CSMT", "aliases": ["Chhatrapati Shivaji Maharaj Terminus", "Mumbai CST", "Victoria Terminus"] },
+        "ALD": { "code": "PRYJ", "name": "Prayagraj Jn", "aliases": ["Allahabad Jn"] },
+        "MGS": { "code": "DDU", "name": "Pt. Deen Dayal Upadhyaya Jn", "aliases": ["Mughal Sarai Jn"] },
+        "HBJ": { "code": "RKMP", "name": "Rani Kamlapati", "aliases": ["Habibganj"] },
+        "TN": { "aliases": ["Thoothukudi"] },
+        "VPT": { "aliases": ["Virudhunagar Jn"] },
+        "KZT": { "aliases": ["Kulithurai", "Kuzhithurai"] },
+        "TVC": { "aliases": ["Thiruvananthapuram Central"] },
+        "TPJ": { "aliases": ["Trichy", "Tiruchchirappalli"] },
+        "ERS": { "aliases": ["Kochi", "Cochin"] },
+        "CLT": { "aliases": ["Calicut"] },
+        "TCR": { "aliases": ["Thrissur", "Trichur"] },
+        "ALLP": { "aliases": ["Alappuzha"] },
+        "MYS": { "aliases": ["Mysuru Jn"] },
+        "MAQ": { "aliases": ["Mangaluru Central", "Mangalore Central"] },
+        "UBL": { "aliases": ["Hubballi Jn"] },
+        "SBC": { "aliases": ["Bangalore City Jn", "Bengaluru City"] }
+    }
+}

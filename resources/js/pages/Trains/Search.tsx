@@ -1,30 +1,27 @@
 import { Link, router } from '@inertiajs/react';
 import { useEffect, useMemo, useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
-import { StationListItem, StationListSkeleton } from '@/components/station/StationListItem';
 import { TrainResultCard, TrainResultSkeleton } from '@/components/train/TrainResultCard';
 import { Icon } from '@/components/ui/Icon';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
 import { cn } from '@/lib/format';
-import { createSearchScheduler, normalizeQuery, queryState } from '@/lib/search';
+import { createSearchScheduler, normalizeQuery, queryState, submittableQuery } from '@/lib/search';
 import { urls } from '@/lib/urls';
-import type { StationSummary, TrainSummary } from '@/types/railway';
+import type { TrainSummary } from '@/types/railway';
 
 interface Props {
-    /** "trains" (mock timetable) or "stations" (RailRadar station search). */
-    searchMode: 'trains' | 'stations';
     minQueryLength: number;
     liveData: boolean;
+    /** Live data (RailRadar quota): search only when the user submits, never per keystroke. */
+    searchOnSubmit: boolean;
     query: string;
     showAll: boolean;
     results: TrainSummary[] | null;
-    stationResults: StationSummary[] | null;
     /** Set when the data provider failed; shows the existing error state. */
     searchError: string | null;
 }
 
-// Station search hits the RailRadar API: wait longer and require a few characters.
-const DEBOUNCE_MS = { trains: 250, stations: 400 } as const;
+const DEBOUNCE_MS = 250; // demo data only: search while typing
 
 function SectionTitle({ icon, iconClass, title, aside }: { icon: string; iconClass: string; title: string; aside?: React.ReactNode }) {
     return (
@@ -38,18 +35,19 @@ function SectionTitle({ icon, iconClass, title, aside }: { icon: string; iconCla
     );
 }
 
-export default function TrainSearch({ searchMode, minQueryLength, liveData, query, showAll, results, stationResults, searchError }: Props) {
-    const stations = searchMode === 'stations';
-    const minLength = stations ? minQueryLength : 1;
+export default function TrainSearch({ minQueryLength, liveData, searchOnSubmit, query, showAll, results, searchError }: Props) {
+    const minLength = minQueryLength;
     const [value, setValue] = useState(query);
+    const [submitted, setSubmitted] = useState(query);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const recent = useRecentSearches();
 
     const runSearch = (q: string, all = false) => {
         scheduler.prime(q);
+        setSubmitted(q);
         router.get(urls.trainSearch(q ? { q } : all ? { all: 1 } : undefined), {}, {
-            only: ['query', 'results', 'stationResults', 'searchError', 'showAll'],
+            only: ['query', 'results', 'searchError', 'showAll'],
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -61,11 +59,11 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
         });
     };
 
-    // Debounced, de-duplicated; queries below the minimum length are never sent.
+    // Demo data: debounced and de-duplicated while typing. Live data: submit only.
     const scheduler = useMemo(
-        () => createSearchScheduler({ delayMs: DEBOUNCE_MS[searchMode], minLength, onSearch: (q) => runSearch(q) }),
+        () => createSearchScheduler({ delayMs: DEBOUNCE_MS, minLength, onSearch: (q) => runSearch(q) }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [searchMode, minLength],
+        [minLength],
     );
     useEffect(() => {
         scheduler.prime(query);
@@ -74,7 +72,16 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
 
     const onChange = (next: string) => {
         setValue(next);
-        scheduler.update(next);
+        if (!searchOnSubmit) scheduler.update(next);
+    };
+
+    // Trimmed; empty / too-short queries are never sent. Leading zeros are kept ("06102").
+    const submit = (e?: React.FormEvent) => {
+        e?.preventDefault();
+        const q = submittableQuery(value, minLength, results !== null && !error ? submitted : null);
+        if (q === null) return;
+        scheduler.cancel();
+        runSearch(q);
     };
 
     const retry = () => {
@@ -83,9 +90,11 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
     };
 
     const state = queryState(value, minLength);
-    const hasQuery = state === 'ready' || showAll;
     const failed = error || searchError !== null;
-    const pending = stations ? stationResults === null : results === null;
+    // Submit mode: results belong to the submitted query, not to what is being typed.
+    const hasQuery = searchOnSubmit ? queryState(submitted, minLength) === 'ready' && (results !== null || failed || loading) : state === 'ready' || showAll;
+    const pending = results === null;
+    const shownQuery = searchOnSubmit ? submitted : value.trim();
 
     return (
         <AppShell title="Train Search" nav="search">
@@ -99,10 +108,12 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                         </span>
                     </div>
                     <h1 className="font-headline-xl text-headline-xl tracking-tight text-on-surface">Train Search</h1>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant">Query live running status, platforms, and routes across all railway zones.</p>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant">Enter a train number to see its live running status, route and map.</p>
                 </section>
 
-                <div
+                <form
+                    role="search"
+                    onSubmit={submit}
                     className={cn(
                         'relative flex items-center rounded-xl bg-surface-container-lowest px-3.5 py-2.5 shadow-sm transition-all',
                         value ? 'border-2 border-primary ring-2 ring-primary/10' : 'border border-outline-variant focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20',
@@ -114,8 +125,10 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                         autoFocus
                         value={value}
                         onChange={(e) => onChange(e.target.value)}
-                        placeholder={stations ? 'Search station name or code' : 'Search train number or station name'}
-                        aria-label={stations ? 'Search station name or code' : 'Search train number or station name'}
+                        enterKeyHint="search"
+                        autoComplete="off"
+                        placeholder={searchOnSubmit ? 'Enter train number (e.g. 12675)' : 'Search train number or station name'}
+                        aria-label="Search train number or name"
                         className="w-full border-none bg-transparent p-0 font-body-md text-body-md font-semibold text-on-surface placeholder:font-normal placeholder:text-outline focus:ring-0 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
                     />
                     {value && (
@@ -128,7 +141,16 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                             <Icon name="close" className="text-sm font-bold" />
                         </button>
                     )}
-                </div>
+                    {searchOnSubmit && (
+                        <button
+                            type="submit"
+                            disabled={state !== 'ready' || loading}
+                            className="ml-2 shrink-0 rounded-lg bg-primary px-3 py-1.5 font-label-md text-label-md font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-container active:scale-95 disabled:cursor-not-allowed disabled:bg-surface-container-high disabled:text-outline"
+                        >
+                            Search
+                        </button>
+                    )}
+                </form>
 
                 {!hasQuery && (
                     <section className="space-y-2.5">
@@ -144,8 +166,8 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                                 )
                             }
                         />
-                        {stations && state === 'short' && (
-                            <p className="font-body-sm text-body-sm text-on-surface-variant">Type at least {minQueryLength} characters to search stations.</p>
+                        {searchOnSubmit && state === 'short' && (
+                            <p className="font-body-sm text-body-sm text-on-surface-variant">Type at least {minQueryLength} characters, then press Search.</p>
                         )}
                         {recent.items.length > 0 ? (
                             <div className="flex flex-wrap gap-2">
@@ -165,7 +187,7 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                         ) : (
                             <p className="font-body-sm text-body-sm text-on-surface-variant">
                                 Trains and stations you open will appear here.{' '}
-                                {!stations && (
+                                {!liveData && (
                                     <button type="button" onClick={() => runSearch('', true)} className="font-bold text-primary hover:underline">
                                         View all trains
                                     </button>
@@ -200,49 +222,16 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                 {hasQuery && !failed && loading && pending && (
                     <section className="space-y-2">
                         <SectionTitle icon="progress_activity" iconClass="animate-spin text-primary" title="Searching…" />
-                        {stations ? <StationListSkeleton count={2} /> : <TrainResultSkeleton />}
+                        <TrainResultSkeleton />
                     </section>
                 )}
 
-                {stations && hasQuery && !failed && stationResults !== null && stationResults.length > 0 && (
+                {hasQuery && !failed && results !== null && results.length > 0 && (
                     <section className="space-y-2">
                         <SectionTitle
                             icon="check_circle"
                             iconClass="text-secondary"
-                            title="Search Results"
-                            aside={
-                                <span className="rounded-full bg-surface-container px-2 py-0.5 font-label-sm text-label-sm text-on-surface-variant">
-                                    {stationResults.length} {stationResults.length === 1 ? 'match' : 'matches'}
-                                </span>
-                            }
-                        />
-                        <div className={cn('flex flex-col space-y-2.5 transition-opacity', loading && 'opacity-60')}>
-                            {stationResults.map((station) => (
-                                <StationListItem key={station.code} station={station} />
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                {stations && hasQuery && !failed && stationResults !== null && stationResults.length === 0 && (
-                    <div className="flex flex-col items-center justify-center rounded-2xl border border-outline-variant bg-surface-container-lowest p-6 text-center shadow-sm">
-                        <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-surface-container-high text-primary">
-                            <Icon name="search" className="text-3xl" />
-                        </div>
-                        <h3 className="font-headline-md text-headline-md text-on-surface">No Stations Found</h3>
-                        <p className="mt-1.5 max-w-xs font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
-                            We couldn't find any stations matching <span className="font-semibold text-on-surface">"{normalizeQuery(value)}"</span>. Please check
-                            the station name or code.
-                        </p>
-                    </div>
-                )}
-
-                {!stations && hasQuery && !failed && results !== null && results.length > 0 && (
-                    <section className="space-y-2">
-                        <SectionTitle
-                            icon="check_circle"
-                            iconClass="text-secondary"
-                            title={showAll && !value.trim() ? 'All Trains' : 'Search Results'}
+                            title={showAll && !shownQuery ? 'All Trains' : 'Search Results'}
                             aside={
                                 <span className="rounded-full bg-surface-container px-2 py-0.5 font-label-sm text-label-sm text-on-surface-variant">
                                     {results.length} {results.length === 1 ? 'match' : 'matches'}
@@ -257,27 +246,29 @@ export default function TrainSearch({ searchMode, minQueryLength, liveData, quer
                     </section>
                 )}
 
-                {!stations && hasQuery && !failed && results !== null && results.length === 0 && (
+                {hasQuery && !failed && results !== null && results.length === 0 && (
                     <div className="flex flex-col items-center justify-center rounded-2xl border border-outline-variant bg-surface-container-lowest p-6 text-center shadow-sm">
                         <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-surface-container-high text-primary">
                             <Icon name="search" className="text-3xl" />
                         </div>
                         <h3 className="font-headline-md text-headline-md text-on-surface">No Trains Found</h3>
                         <p className="mt-1.5 max-w-xs font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
-                            We couldn't find any trains matching <span className="font-semibold text-on-surface">"{value.trim()}"</span>. Please verify the train number
-                            or search by station name.
+                            We couldn't find any trains matching <span className="font-semibold text-on-surface">"{shownQuery}"</span>. Please verify the train
+                            number{liveData ? '.' : ' or search by station name.'}
                         </p>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setValue('');
-                                scheduler.cancel();
-                                runSearch('', true);
-                            }}
-                            className="mt-4 inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 font-label-lg text-label-lg text-on-primary shadow-sm transition-colors transition-transform hover:bg-primary-container active:scale-95"
-                        >
-                            View All Trains
-                        </button>
+                        {!liveData && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setValue('');
+                                    scheduler.cancel();
+                                    runSearch('', true);
+                                }}
+                                className="mt-4 inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 font-label-lg text-label-lg text-on-primary shadow-sm transition-colors transition-transform hover:bg-primary-container active:scale-95"
+                            >
+                                View All Trains
+                            </button>
+                        )}
                     </div>
                 )}
             </main>

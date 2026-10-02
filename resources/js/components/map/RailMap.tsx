@@ -1,5 +1,5 @@
 import type { LatLngBoundsExpression, LatLngExpression, Map as LeafletMap } from 'leaflet';
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet';
 import { nearestSegmentIndex } from '@/lib/geo';
 import { stopBySequence } from '@/lib/live';
@@ -88,6 +88,32 @@ export const RailMap = forwardRef<RailMapHandle, RailMapProps>(function RailMap(
 
     const tooltip = live.status === 'running' && next && !live.atStation ? `Next: ${next.station.name} (${Math.round(live.distanceToNextKm ?? 0)} km)` : null;
 
+    // Station markers and the train icon depend only on the live data, not on the marker
+    // position: memoized so a glide (one render per frame) does not rebuild every icon.
+    const stopMarkers = useMemo(
+        () =>
+            live.stops.map((stop, i) => {
+                const role = roleOf(stop.sequence, i);
+                return (
+                    <Fragment key={stop.sequence}>
+                        <Marker position={[stop.lat, stop.lng]} icon={stopNodeIcon(stop, role)} interactive={false} />
+                        {showLabels && (
+                            <Marker
+                                key={`label-${role}`}
+                                position={[stop.lat, stop.lng]}
+                                icon={stopLabelIcon(stop, role, { nextKm: live.distanceToNextKm })}
+                                interactive={false}
+                                zIndexOffset={role === 'next' ? 500 : 0}
+                            />
+                        )}
+                    </Fragment>
+                );
+            }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [live, showLabels],
+    );
+    const icon = useMemo(() => trainIcon({ tooltip, estimated }), [tooltip, estimated]);
+
     return (
         <MapContainer
             ref={mapRef}
@@ -115,31 +141,12 @@ export const RailMap = forwardRef<RailMapHandle, RailMapProps>(function RailMap(
                 />
             )}
 
-            {live.stops.map((stop, i) => {
-                const role = roleOf(stop.sequence, i);
-                return (
-                    <Marker key={`node-${stop.sequence}`} position={[stop.lat, stop.lng]} icon={stopNodeIcon(stop, role)} interactive={false} />
-                );
-            })}
-
-            {showLabels &&
-                live.stops.map((stop, i) => {
-                    const role = roleOf(stop.sequence, i);
-                    return (
-                        <Marker
-                            key={`label-${stop.sequence}-${role}`}
-                            position={[stop.lat, stop.lng]}
-                            icon={stopLabelIcon(stop, role, { nextKm: live.distanceToNextKm })}
-                            interactive={false}
-                            zIndexOffset={role === 'next' ? 500 : 0}
-                        />
-                    );
-                })}
+            {stopMarkers}
 
             {trainPosition && live.status !== 'cancelled' && (
                 <Marker
                     position={[trainPosition.lat, trainPosition.lng]}
-                    icon={trainIcon({ tooltip, estimated })}
+                    icon={icon}
                     interactive={false}
                     zIndexOffset={1000}
                 />

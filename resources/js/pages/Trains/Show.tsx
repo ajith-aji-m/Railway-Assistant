@@ -1,17 +1,14 @@
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
-import { Amenities } from '@/components/train/Amenities';
 import { DelayCard, LocationSpeedCards } from '@/components/train/LiveCards';
 import { nextStops, StopTimeline } from '@/components/train/StopTimeline';
 import { TrainHeader, TrainIdentity } from '@/components/train/TrainHeader';
 import { Icon } from '@/components/ui/Icon';
 import { UnderlineTabs } from '@/components/ui/UnderlineTabs';
-import { useTrainFlags } from '@/hooks/useFavourites';
 import { rememberTrain } from '@/hooks/useLastTrain';
 import { useLiveReload } from '@/hooks/useLiveReload';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
-import { cn } from '@/lib/format';
 import { goBack } from '@/lib/navigation';
 import { urls } from '@/lib/urls';
 import type { SharedProps } from '@/types/inertia';
@@ -21,7 +18,6 @@ const LIVE_PROPS = ['train', 'now'];
 
 export default function TrainShow({ train, now }: { train: TrainDetail; now: string }) {
     const [tab, setTab] = useState<'overview' | 'route'>('overview');
-    const { alert, toggleAlert } = useTrainFlags(train.number);
     // Server-configured: 30s for mock data, 5 min by default for RailRadar (monthly quota).
     const refreshSeconds = usePage<SharedProps>().props.liveRefresh.train;
     // A failed background refresh keeps the current data and marks it as not updated.
@@ -78,24 +74,9 @@ export default function TrainShow({ train, now }: { train: TrainDetail; now: str
                     </div>
                     <StopTimeline stops={stops} cancelled={cancelled} />
                 </section>
-
-                <Amenities train={train} />
             </div>
 
             <div className="fixed bottom-0 left-1/2 z-30 flex w-full max-w-md -translate-x-1/2 gap-3 border-t border-outline-variant/20 bg-surface-container-lowest/90 p-margin pb-[max(env(safe-area-inset-bottom),1rem)] shadow-md backdrop-blur-md">
-                <button
-                    type="button"
-                    onClick={toggleAlert}
-                    aria-pressed={alert}
-                    aria-label={alert ? 'Arrival alert on' : 'Set arrival alert'}
-                    title={alert ? 'Arrival alert on' : 'Set arrival alert'}
-                    className={cn(
-                        'flex h-12 w-12 items-center justify-center rounded-xl border border-outline-variant/40 transition-colors hover:bg-surface-container-high active:scale-95',
-                        alert ? 'text-primary' : 'text-on-surface-variant',
-                    )}
-                >
-                    <Icon name="notifications_active" fill={alert} className="text-[22px]" />
-                </button>
                 <Link
                     href={urls.trainMap(train.number)}
                     className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-primary-container font-label-lg text-label-lg font-bold text-on-primary-container shadow-sm transition-all hover:bg-primary active:scale-95"

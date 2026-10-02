@@ -33,6 +33,7 @@ class RailRadarStationDashboardTest extends TestCase
             'services.railradar.cache_seconds' => 60,
         ]);
         Http::preventStrayRequests();
+        $this->fakeStationTimetable();
     }
 
     private function fixture(): array
@@ -58,21 +59,26 @@ class RailRadarStationDashboardTest extends TestCase
                 ->where('tab', 'arrivals')
                 ->where('boardError', null)
                 ->has('board', 4)
-                ->where('board.0.trainNumber', '12028')
-                ->where('board.0.trainName', 'KSR Bengaluru - Chennai Central Shatabdi Express')
-                ->where('board.0.scheduledTime', '11:00')
-                ->where('board.0.expectedTime', '11:00')
-                ->where('board.0.delayMinutes', 0)
-                ->where('board.0.platform', '2')
-                ->where('board.0.status', 'expected')
-                ->where('board.0.from.code', 'SBC')
+                ->where('board.0.trainNumber', '22159') // scheduled 10:45 (running late)
+                ->where('board.1.trainNumber', '12028')
+                ->where('board.1.trainName', 'KSR Bengaluru - Chennai Central Shatabdi Express')
+                ->where('board.1.scheduledTime', '11:00')
+                ->where('board.1.expectedTime', '11:00')
+                ->where('board.1.delayMinutes', 0)
+                ->where('board.1.platform', '2')
+                ->where('board.1.status', 'expected')
+                ->where('board.1.phase', 'running') // live-tracked, on its way
+                ->where('board.1.from.code', 'SBC')
                 ->where('liveRefresh.station', 0));
 
-        // One API call per page view; the key only ever goes in the Authorization header.
-        Http::assertSentCount(1);
-        Http::assertSent(fn (Request $r) => $r->hasHeader('Authorization', 'Bearer '.self::FAKE_KEY)
-            && $r['hours'] === '8'
-            && ! str_contains($r->url(), self::FAKE_KEY));
+        // Live board + the station timetable (cached for a day); the key only ever goes in the Authorization header.
+        Http::assertSentCount(2);
+        Http::assertSent(fn (Request $r) => str_contains($r->url(), '/v1/stations/MAS/live') && $r['hours'] === '8');
+        Http::assertSent(fn (Request $r) => str_contains($r->url(), '/v1/stations/MAS/trains'));
+        foreach (Http::recorded() as [$request]) {
+            $this->assertTrue($request->hasHeader('Authorization', 'Bearer '.self::FAKE_KEY));
+            $this->assertStringNotContainsString(self::FAKE_KEY, $request->url());
+        }
     }
 
     public function test_arrivals_and_departures_are_split_and_ordered(): void
@@ -83,11 +89,12 @@ class RailRadarStationDashboardTest extends TestCase
         $arrivals = $railway->stationBoard('MAS', BoardType::Arrivals);
         $departures = $railway->stationBoard('MAS', BoardType::Departures);
 
-        $this->assertSame(['12028', '22159', '12969', '12841'], array_column($arrivals, 'trainNumber'));
+        // Chronological by the scheduled time at this station.
+        $this->assertSame(['22159', '12028', '12841', '12969'], array_column($arrivals, 'trainNumber'));
         $this->assertSame(['67789', '22160', '22637', '12969'], array_column($departures, 'trainNumber'));
 
         // Train 12969 calls at MAS: arrives 17:10 and departs 17:40.
-        $this->assertSame(['17:10', '17:15'], [$arrivals[2]->scheduledTime, $arrivals[2]->expectedTime]);
+        $this->assertSame(['17:10', '17:15'], [$arrivals[3]->scheduledTime, $arrivals[3]->expectedTime]);
         $this->assertSame(['17:40', '17:45'], [$departures[3]->scheduledTime, $departures[3]->expectedTime]);
 
         $this->assertSame(BoardStatus::Departed, $departures[0]->status);   // live.type departed
@@ -97,7 +104,7 @@ class RailRadarStationDashboardTest extends TestCase
         $this->assertNull($departures[2]->expectedTime);
         $this->assertNull($departures[2]->delayMinutes);
 
-        Http::assertSentCount(1); // both tabs share the cached response
+        Http::assertSentCount(2); // both tabs share the cached live board and timetable
     }
 
     public function test_delay_handling(): void
@@ -139,7 +146,7 @@ class RailRadarStationDashboardTest extends TestCase
         $this->get('/stations/MAS?tab=departures')
             ->assertInertia(fn (Assert $page) => $page->where('tab', 'departures')->has('board', 4));
 
-        Http::assertSentCount(1);
+        Http::assertSentCount(2); // live board + timetable, both reused for the second tab
     }
 
     public function test_unknown_station_shows_not_found_page(): void

@@ -1,4 +1,5 @@
-import type { LiveStatus, StopStatus, TrainDetail } from '@/types/railway';
+import { to12h } from '@/lib/format';
+import type { LiveStatus, StopStatus, TrainDetail, TrainSummary } from '@/types/railway';
 
 export const stopBySequence = (live: LiveStatus, sequence: number | null): StopStatus | undefined =>
     sequence === null ? undefined : live.stops.find((s) => s.sequence === sequence);
@@ -14,7 +15,7 @@ export function describeLocation(train: Pick<TrainDetail, 'from' | 'to' | 'depar
         case 'cancelled':
             return { title: 'Cancelled', detail: 'This train is not running today' };
         case 'scheduled':
-            return { title: `At ${train.from.name} (${train.from.code})`, detail: `Departs at ${train.departs}` };
+            return { title: `At ${train.from.name} (${train.from.code})`, detail: `Departs at ${to12h(train.departs)}` };
         case 'completed':
             return { title: `Arrived ${train.to.name} (${train.to.code})`, detail: 'Journey completed' };
     }
@@ -112,12 +113,30 @@ export function withLastKnownPosition(previous: LiveStatus | null, next: LiveSta
     };
 }
 
-const ZONES: Record<string, string> = {
-    SR: 'Southern',
-    SWR: 'South Western',
-    SER: 'South Eastern',
-    SCR: 'South Central',
-    ECoR: 'East Coast',
-};
+export interface SummaryStatus {
+    /** Pill text and tone; null when there is nothing reliable to show. */
+    pill: { label: string; tone: 'live' | 'late' | 'muted' } | null;
+    /** Running state label ("Running", "Scheduled", "Completed", …); null = unknown. */
+    state: string | null;
+}
 
-export const zoneLabel = (zone: string) => `${ZONES[zone] ?? zone} (${zone})`;
+/**
+ * Status shown on a train search result. Delay ("On Time" / "+7m") only for a running,
+ * live-tracked train; a lookup result without live status shows neither.
+ */
+export function summaryStatus(train: Pick<TrainSummary, 'status' | 'delayMinutes' | 'delayIsLive'>): SummaryStatus {
+    switch (train.status) {
+        case null:
+            return { pill: null, state: null };
+        case 'cancelled':
+            return { pill: { label: 'Cancelled', tone: 'muted' }, state: null };
+        case 'completed':
+            return { pill: null, state: 'Completed' };
+        case 'scheduled':
+            return { pill: null, state: 'Scheduled' };
+    }
+    if (!train.delayIsLive || train.delayMinutes === null) return { pill: null, state: 'Running' };
+    return train.delayMinutes > 0
+        ? { pill: { label: `Delayed (+${train.delayMinutes}m)`, tone: 'late' }, state: 'Running' }
+        : { pill: { label: 'On Time', tone: 'live' }, state: 'Running' };
+}

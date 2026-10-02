@@ -8,6 +8,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(RailwayMockSeeder::class);
+        $this->call([StationDirectorySeeder::class, RailwayMockSeeder::class]);
     }
 }

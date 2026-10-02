@@ -40,6 +40,7 @@ class RailRadarLocationTest extends TestCase
             'services.railradar.base_url' => 'https://api.railradar.in',
         ]);
         Http::preventStrayRequests();
+        $this->fakeStationTimetable();
     }
 
     public function test_location_screen_renders_without_api_calls(): void
@@ -66,10 +67,12 @@ class RailRadarLocationTest extends TestCase
         $this->get('/?lat='.self::LAT.'&lng='.self::LNG)->assertOk()->assertInertia(fn (Assert $page) => $page
             ->where('location', ['lat' => self::LAT, 'lng' => self::LNG])
             ->has('nearby', 5)
-            ->where('nearby.0.code', 'MS')
-            ->where('nearby.0.name', 'Chennai Egmore')
-            ->where('nearby.0.city', 'Chennai')
-            ->where('nearby.0.distanceKm', 2.4)
+            ->where('nearby.0.code', 'MSC')
+            ->where('nearby.0.name', 'Chennai Chetpat')
+            ->where('nearby.0.city', null)        // the station directory has no city data
+            ->where('nearby.0.distanceKm', 1.7)
+            ->where('nearby.3.code', 'MS')
+            ->where('nearby.3.distanceKm', 2.4)
             ->where('nearby', function ($nearby) {
                 $distances = collect($nearby)->pluck('distanceKm')->all();
                 $sorted = $distances;
@@ -104,10 +107,10 @@ class RailRadarLocationTest extends TestCase
 
     public function test_selecting_nearest_station_opens_railradar_dashboard(): void
     {
-        Http::fake(['https://api.railradar.in/v1/stations/MS/live*' => Http::response([
+        Http::fake(['https://api.railradar.in/v1/stations/MSC/live*' => Http::response([
             'success' => true,
             'data' => [
-                'station' => ['code' => 'MS', 'name' => 'Chennai Egmore', 'city' => 'Chennai', 'lat' => 13.0785, 'lng' => 80.2609],
+                'station' => ['code' => 'MSC', 'name' => 'Chennai Chetpat', 'city' => 'Chennai', 'lat' => 13.0711, 'lng' => 80.2414],
                 'trains' => [],
                 'count' => 0,
             ],
@@ -122,23 +125,19 @@ class RailRadarLocationTest extends TestCase
         // The existing route with the station's real code → live RailRadar board.
         $this->get('/stations/'.$code)->assertOk()->assertInertia(fn (Assert $page) => $page
             ->component('Stations/Show')
-            ->where('station.code', 'MS')
-            ->where('station.name', 'Chennai Egmore'));
-        Http::assertSentCount(1);
+            ->where('station.code', 'MSC')
+            ->where('station.name', 'Chennai Chetpat'));
+        Http::assertSentCount(2); // live board + station timetable
     }
 
-    public function test_popular_stations_load_on_demand_without_api_calls(): void
+    public function test_no_default_stations_are_suggested_without_location(): void
     {
         Http::fake();
 
         $this->get('/')->assertInertia(fn (Assert $page) => $page
+            ->where('nearby', null)
             ->missing('popular')
-            ->reloadOnly('popular', fn (Assert $reload) => $reload
-                ->has('popular', 3)
-                ->where('popular.0.code', 'MAS')
-                ->where('popular.0.city', 'Chennai')
-                ->where('popular.0.platforms', null)   // not known without a live request
-                ->where('popular.0.facilities', null)));
+            ->reload(only: 'popular', callback: fn (Assert $reload) => $reload->missing('popular')));
 
         Http::assertNothingSent();
     }
@@ -147,7 +146,7 @@ class RailRadarLocationTest extends TestCase
     {
         Http::fake();
 
-        $this->get('/?lat='.self::LAT.'&lng='.self::LNG.'&all=1')->assertInertia(fn (Assert $page) => $page->where('showAll', true)->has('nearby', 6)); // all 6 stations within 50 km
+        $this->get('/?lat='.self::LAT.'&lng='.self::LNG.'&all=1')->assertInertia(fn (Assert $page) => $page->where('showAll', true)->has('nearby', 20)); // "See All" cap
 
         Http::assertNothingSent();
     }
@@ -199,12 +198,11 @@ class RailRadarLocationTest extends TestCase
 
         $this->get('/?lat='.self::LAT.'&lng='.self::LNG)->assertInertia(fn (Assert $page) => $page
             ->has('nearby', 5)
-            ->where('nearby.0.code', 'MS')
-            ->where('nearby.0.distanceKm', 2.4)
+            ->where('nearby.0.code', 'MSC')
+            ->where('nearby.0.distanceKm', 1.7)
             ->where('searchMinLength', 1)
-            ->where('searchDebounceMs', 250)
-            ->reloadOnly('popular', fn (Assert $reload) => $reload->where('popular.0.platforms', 17)));
-        $this->get('/?q=chennai')->assertInertia(fn (Assert $page) => $page->has('searchResults', 6));
+            ->where('searchDebounceMs', 250));
+        $this->get('/?q=chennai')->assertInertia(fn (Assert $page) => $page->has('searchResults', 10));
 
         Http::assertNothingSent();
     }

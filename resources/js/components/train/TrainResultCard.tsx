@@ -1,21 +1,19 @@
 import { Link } from '@inertiajs/react';
 import { Icon } from '@/components/ui/Icon';
 import { cn, to12h } from '@/lib/format';
+import { summaryStatus } from '@/lib/live';
 import { urls } from '@/lib/urls';
 import type { TrainSummary } from '@/types/railway';
-import { runningLabel } from './Badges';
 
 export function TrainResultCard({ train, onOpen }: { train: TrainSummary; onOpen?: () => void }) {
+    const { pill, state } = summaryStatus(train);
     const cancelled = train.status === 'cancelled';
-    const delayed = train.delayMinutes > 0 && !cancelled;
-    const accent = cancelled ? 'bg-outline' : delayed ? 'bg-tertiary' : 'bg-secondary';
+    const accent = cancelled || !pill ? 'bg-outline' : pill.tone === 'late' ? 'bg-tertiary' : 'bg-secondary';
 
     return (
-        <Link
-            href={urls.train(train.number)}
-            onClick={onOpen}
-            className="group relative block overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest p-4 shadow-sm transition-shadow hover:shadow-md"
-        >
+        <article className="group relative block overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest p-4 shadow-sm transition-shadow hover:shadow-md">
+            {/* Whole card opens Train Details; the Live Map link sits above it. */}
+            <Link href={urls.train(train.number)} onClick={onOpen} aria-label={`${train.number} ${train.name} – Train Details`} className="absolute inset-0 z-0" />
             <div className={cn('absolute top-0 bottom-0 left-0 w-1.5', accent)} />
             <div className="flex items-start justify-between gap-2">
                 <div className="flex items-start gap-3">
@@ -43,40 +41,54 @@ export function TrainResultCard({ train, onOpen }: { train: TrainSummary; onOpen
                     </div>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-2">
-                    <span
-                        className={cn(
-                            'inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-label-sm text-label-sm font-bold',
-                            cancelled ? 'bg-surface-container-high text-outline' : delayed ? 'bg-error-container text-on-error-container' : 'bg-secondary-container/40 text-on-secondary-container',
-                        )}
-                    >
-                        <span className={cn('h-1.5 w-1.5 rounded-full', cancelled ? 'bg-outline' : delayed ? 'bg-tertiary' : 'animate-ping bg-secondary')} />
-                        {cancelled ? 'Cancelled' : delayed ? `Delayed (+${train.delayMinutes}m)` : 'On Time'}
-                    </span>
-                    {!cancelled && (
-                        <span className={cn('font-label-sm text-label-sm font-bold', train.status === 'running' ? 'text-secondary' : 'text-outline')}>
-                            {runningLabel(train.status)}
+                    {pill && (
+                        <span
+                            className={cn(
+                                'inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-label-sm text-label-sm font-bold',
+                                pill.tone === 'muted' ? 'bg-surface-container-high text-outline' : pill.tone === 'late' ? 'bg-error-container text-on-error-container' : 'bg-secondary-container/40 text-on-secondary-container',
+                            )}
+                        >
+                            <span className={cn('h-1.5 w-1.5 rounded-full', pill.tone === 'muted' ? 'bg-outline' : pill.tone === 'late' ? 'bg-tertiary' : 'animate-ping bg-secondary')} />
+                            {pill.label}
                         </span>
                     )}
+                    {state && <span className={cn('font-label-sm text-label-sm font-bold', train.status === 'running' ? 'text-secondary' : 'text-outline')}>{state}</span>}
                 </div>
             </div>
             <div className="mt-3.5 flex items-center justify-between border-t border-outline-variant/60 pt-3 font-body-sm text-body-sm">
-                <div className="flex items-center gap-4">
-                    <div>
-                        <span className="block font-label-sm text-label-sm text-outline">Departs</span>
-                        <span className="font-label-md text-label-md font-bold text-on-surface tabular-nums">{to12h(train.departs)}</span>
+                {train.departs || train.arrives ? (
+                    <div className="flex items-center gap-4">
+                        <div>
+                            <span className="block font-label-sm text-label-sm text-outline">Departs</span>
+                            <span className="font-label-md text-label-md font-bold text-on-surface tabular-nums">{to12h(train.departs)}</span>
+                        </div>
+                        <div className="h-6 w-[1px] bg-outline-variant" />
+                        <div>
+                            <span className="block font-label-sm text-label-sm text-outline">Arrives</span>
+                            <span className="font-label-md text-label-md font-bold text-on-surface tabular-nums">{to12h(train.arrives)}</span>
+                        </div>
                     </div>
-                    <div className="h-6 w-[1px] bg-outline-variant" />
-                    <div>
-                        <span className="block font-label-sm text-label-sm text-outline">Arrives</span>
-                        <span className="font-label-md text-label-md font-bold text-on-surface tabular-nums">{to12h(train.arrives)}</span>
-                    </div>
+                ) : (
+                    <span className="font-label-sm text-label-sm text-outline">Open for live status</span>
+                )}
+                <div className="flex items-center gap-3">
+                    {!cancelled && (
+                        <Link
+                            href={urls.trainMap(train.number)}
+                            onClick={onOpen}
+                            className="relative z-10 inline-flex items-center gap-1 font-label-md text-label-md font-bold text-primary hover:underline"
+                        >
+                            <Icon name="map" className="text-base" />
+                            <span>Live Map</span>
+                        </Link>
+                    )}
+                    <span className="inline-flex items-center gap-1 font-label-md text-label-md font-bold text-primary transition-transform group-hover:translate-x-0.5">
+                        <span>Details</span>
+                        <Icon name="chevron_right" className="text-base" />
+                    </span>
                 </div>
-                <span className="inline-flex items-center gap-1 font-label-md text-label-md font-bold text-primary transition-transform group-hover:translate-x-0.5">
-                    <span>{cancelled ? 'View Details' : 'Track Live'}</span>
-                    <Icon name="chevron_right" className="text-base" />
-                </span>
             </div>
-        </Link>
+        </article>
     );
 }
 

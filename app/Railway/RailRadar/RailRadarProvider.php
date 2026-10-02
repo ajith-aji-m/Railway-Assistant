@@ -119,16 +119,56 @@ final class RailRadarProvider implements RailwayProvider
         return $this->normalizer->stationDetail($response['data'], $code);
     }
 
-    /** Same (cached) request as station(), so a dashboard view costs one API call. */
+    /**
+     * Live board: the same (cached) request as station(). Plus the station timetable,
+     * cached for a day, so a full-day view costs at most one extra call per station per day.
+     */
     public function stationBoard(string $code, BoardType $type): array
     {
         $response = $this->client->stationLive($code, self::BOARD_HOURS);
 
-        return $this->normalizer->stationBoard($response['data'], $type, $response['meta']);
+        $live = $this->normalizer->stationBoard($response['data'], $type, $response['meta'], $this->now());
+
+        // The live board covers ~2 h back to 8 h ahead; the timetable (cached for a day)
+        // fills in the rest of today. If it is unavailable, the live board is shown as before.
+        try {
+            $timetable = $this->client->stationTrains($code);
+            $scheduled = $this->normalizer->stationTimetable($timetable['data'], $type, $this->now(), $timetable['meta']);
+        } catch (RailwayDataException $e) {
+            report($e);
+            $scheduled = [];
+        }
+
+        return $this->normalizer->fullDayBoard($scheduled, $live);
     }
 
+    /**
+     * Exact 5-digit number → the train's live status (the same cached, locked request
+     * Train Details and the Live Map use, so opening it costs nothing extra). Partial
+     * numbers / names, or a number with no live record → RailRadar's train lookup.
+     */
     public function searchTrains(string $query, int $limit = 10): array
     {
-        throw RailwayDataException::notSupported('Train search');
+        $query = trim($query);
+
+        if (preg_match('/^\d{5}$/', $query) && ($train = $this->train($query))) {
+            return [$this->normalizer->trainSummary($train)];
+        }
+
+        // Short queries never reach the API (protects the monthly quota).
+        if (mb_strlen($query) < (int) config('railway.search_min_length', 2)) {
+            return [];
+        }
+
+        try {
+            $response = $this->client->searchTrains($query, $limit);
+        } catch (RailwayDataException $e) {
+            if ($e->reason === RailwayDataException::NOT_FOUND) {
+                return [];
+            }
+            throw $e;
+        }
+
+        return $this->normalizer->trainSearch($response['data'], $response['meta']);
     }
 }

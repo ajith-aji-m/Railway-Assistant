@@ -19,19 +19,17 @@ class TrainController extends Controller
             'all' => ['nullable', 'boolean'],
         ]);
         $query = trim($validated['q'] ?? '');
-        $all = (bool) ($validated['all'] ?? false);
-        $mode = config('railway.search_mode.'.config('railway.provider'), 'trains');
-        $minLength = (int) config('railway.search_min_length', 2);
+        $live = config('railway.provider') !== 'mock';
+        // "All trains" lists the demo timetable; the live provider has no such list.
+        $all = (bool) ($validated['all'] ?? false) && ! $live;
+        // Live data costs API quota: searched on submit, and never for very short queries.
+        $minLength = $live ? (int) config('railway.search_min_length', 2) : 1;
 
         $results = null;
-        $stationResults = null;
         $searchError = null;
 
         try {
-            if ($mode === 'stations') {
-                // Short queries are not searched (no upstream request).
-                $stationResults = mb_strlen($query) >= $minLength ? $this->railway->searchStations($query) : null;
-            } elseif ($query !== '' || $all) {
+            if (mb_strlen($query) >= $minLength || $all) {
                 $results = $this->railway->searchTrains($query, $all ? 50 : 10);
             }
         } catch (RailwayDataException $e) {
@@ -39,13 +37,12 @@ class TrainController extends Controller
         }
 
         return Inertia::render('Trains/Search', [
-            'searchMode' => $mode,
-            'liveData' => config('railway.provider') !== 'mock',
+            'liveData' => $live,
+            'searchOnSubmit' => $live,
             'minQueryLength' => $minLength,
             'query' => $query,
-            'showAll' => $all && $mode === 'trains',
+            'showAll' => $all,
             'results' => $results,
-            'stationResults' => $stationResults,
             'searchError' => $searchError,
         ]);
     }

@@ -18,7 +18,7 @@ class PagesTest extends TestCase
             ->component('Stations/Index')
             ->where('nearby', null)
             ->missing('popular')
-            ->reloadOnly('popular', fn (Assert $reload) => $reload->has('popular', 3)));
+            ->reload(only: 'popular', callback: fn (Assert $reload) => $reload->missing('popular'))); // no default stations
     }
 
     public function test_station_selection_with_location_and_search(): void
@@ -26,9 +26,9 @@ class PagesTest extends TestCase
         $this->get('/?lat=13.0604&lng=80.2496')->assertInertia(fn (Assert $page) => $page
             ->component('Stations/Index')
             ->has('nearby', 5)
-            ->where('nearby.0.code', 'MS'));
+            ->where('nearby.0.code', 'MSC'));
 
-        $this->get('/?q=chennai')->assertInertia(fn (Assert $page) => $page->has('searchResults', 6)); // name or city
+        $this->get('/?q=chennai')->assertInertia(fn (Assert $page) => $page->has('searchResults', 10)); // name or city, capped at 10
     }
 
     public function test_invalid_coordinates_are_rejected(): void

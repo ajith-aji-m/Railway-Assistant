@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Station extends Model
 {
     protected $fillable = [
-        'code', 'name', 'full_name', 'city', 'state', 'lat', 'lng', 'platforms', 'image_path', 'facilities',
+        'code', 'name', 'full_name', 'city', 'state', 'zone', 'lat', 'lng', 'platforms', 'image_path', 'facilities',
+        'is_active', 'aliases',
     ];
 
     protected function casts(): array
@@ -18,6 +19,8 @@ class Station extends Model
             'lng' => 'float',
             'platforms' => 'integer',
             'facilities' => 'array',
+            'is_active' => 'boolean',
+            'aliases' => 'array',
         ];
     }
 

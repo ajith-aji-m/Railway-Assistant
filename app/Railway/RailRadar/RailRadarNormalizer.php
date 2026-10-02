@@ -10,12 +10,15 @@ use App\Railway\Data\StationRef;
 use App\Railway\Data\StationSummary;
 use App\Railway\Data\StopStatus;
 use App\Railway\Data\TrainDetail;
+use App\Railway\Data\TrainSummary;
+use App\Railway\Enums\BoardPhase;
 use App\Railway\Enums\BoardStatus;
 use App\Railway\Enums\BoardType;
 use App\Railway\Enums\GpsStatus;
 use App\Railway\Enums\RunningStatus;
 use App\Railway\Enums\StopState;
 use App\Railway\Exceptions\RailwayDataException;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Arr;
 
 /**
@@ -158,6 +161,63 @@ class RailRadarNormalizer
      * @param  mixed  $data  The `data` array of the response.
      * @return list<StationSummary>
      */
+    /** Search result from a full live status (exact train number). */
+    public function trainSummary(TrainDetail $train): TrainSummary
+    {
+        return new TrainSummary(
+            number: $train->number,
+            name: $train->name,
+            type: $train->type,
+            from: $train->from,
+            to: $train->to,
+            departs: $train->departs !== '' ? $train->departs : null,
+            arrives: $train->arrives !== '' ? $train->arrives : null,
+            originPlatform: null,
+            status: $train->live->status,
+            delayMinutes: $train->live->delayMinutes,
+            delayIsLive: $train->live->delayIsLive,
+        );
+    }
+
+    /**
+     * `/v1/lookup/search/trains` results (observed fields: number, name, type, source,
+     * sourceName, dest, destName). No live status: it is loaded on Train Details.
+     *
+     * @return list<TrainSummary>
+     */
+    public function trainSearch(mixed $data, array $meta = []): array
+    {
+        if (! is_array($data) || ! Arr::isList($data)) {
+            throw RailwayDataException::invalidResponse('train search data is not a list', $meta['traceId'] ?? null);
+        }
+
+        $results = [];
+        foreach ($data as $item) {
+            if (! is_array($item) || ! is_string($item['number'] ?? null) || ! preg_match('/^\d{5}$/', $item['number'])) {
+                continue;
+            }
+            $ref = fn (mixed $code, mixed $name) => is_string($code) && $code !== ''
+                ? new StationRef($code, is_string($name) && $name !== '' ? $name : $code)
+                : new StationRef('—', '—');
+
+            $results[] = new TrainSummary(
+                number: $item['number'],
+                name: is_string($item['name'] ?? null) ? $item['name'] : $item['number'],
+                type: is_string($item['type'] ?? null) ? $item['type'] : '',
+                from: $ref($item['source'] ?? null, $item['sourceName'] ?? null),
+                to: $ref($item['dest'] ?? $item['destination'] ?? null, $item['destName'] ?? null),
+                departs: null,
+                arrives: null,
+                originPlatform: null,
+                status: null,
+                delayMinutes: null,
+                delayIsLive: false,
+            );
+        }
+
+        return $results;
+    }
+
     public function stationSearch(mixed $data, array $meta = []): array
     {
         if (! is_array($data) || ! Arr::isList($data)) {
@@ -215,8 +275,9 @@ class RailRadarNormalizer
      * @param  array<string, mixed>  $data
      * @return list<BoardEntry>
      */
-    public function stationBoard(array $data, BoardType $type, array $meta = []): array
+    public function stationBoard(array $data, BoardType $type, array $meta = [], ?CarbonImmutable $now = null): array
     {
+        $nowHm = ($now ?? CarbonImmutable::now())->format('H:i');
         $trains = $data['trains'] ?? null;
 
         if (! is_array($trains) || ! Arr::isList($trains)) {
@@ -246,6 +307,7 @@ class RailRadarNormalizer
             $platform = $live['platform'] ?? $stop['platform'] ?? null; // live platform when reported, else timetable platform
             $source = is_string($train['source'] ?? null) ? $train['source'] : null;
             $destination = is_string($train['destination'] ?? null) ? $train['destination'] : null;
+            $status = $this->boardStatus($type);
 
             $entries[] = [
                 'sort' => is_string($expectedIso) ? $expectedIso : null,
@@ -261,8 +323,15 @@ class RailRadarNormalizer
                     expectedTime: $isLive ? $expected : null,
                     platform: $platform !== null && $platform !== '' ? (string) $platform : null,
                     delayMinutes: $isLive ? $delay : null,
-                    status: $this->boardStatus($type),
+                    status: $status,
                     isLive: $isLive,
+                    phase: match ($status) {
+                        BoardStatus::Departed, BoardStatus::Arrived => BoardPhase::Completed,
+                        // Live "upcoming" / at the station: RailRadar is tracking the run.
+                        BoardStatus::AtStation, BoardStatus::Expected, BoardStatus::Approaching => BoardPhase::Running,
+                        BoardStatus::Cancelled => substr($scheduled, 0, 5) < $nowHm ? BoardPhase::Completed : BoardPhase::Upcoming,
+                        default => BoardPhase::Upcoming, // RailRadar: not started
+                    },
                 ),
             ];
         }
@@ -271,6 +340,97 @@ class RailRadarNormalizer
         usort($entries, fn ($a, $b) => [$a['sort'] === null, $a['sort'] ?? $a['entry']->scheduledTime] <=> [$b['sort'] === null, $b['sort'] ?? $b['entry']->scheduledTime]);
 
         return array_column($entries, 'entry');
+    }
+
+    /**
+     * Today's calls at the station from its timetable (GET /v1/stations/{code}/trains),
+     * for the part of the day the live board does not cover. No live data here: a past
+     * call counts as completed per timetable, a future one as scheduled.
+     *
+     * @return list<BoardEntry>
+     */
+    public function stationTimetable(array $data, BoardType $type, CarbonImmutable $now, array $meta = []): array
+    {
+        $trains = $data['trains'] ?? null;
+
+        if (! is_array($trains) || ! Arr::isList($trains)) {
+            throw RailwayDataException::invalidResponse('missing trains list', $meta['traceId'] ?? null);
+        }
+
+        $arrivals = $type === BoardType::Arrivals;
+        $today = $now->startOfDay();
+        $nowHm = $now->format('H:i');
+        $entries = [];
+
+        foreach ($trains as $item) {
+            $train = is_array($item['train'] ?? null) ? $item['train'] : null;
+            $stop = is_array($item['stop'] ?? null) ? $item['stop'] : [];
+            $scheduled = $arrivals ? ($stop['arrival'] ?? null) : ($stop['departure'] ?? null);
+
+            if ($train === null || ! is_string($train['number'] ?? null) || ! is_string($scheduled) || ! preg_match('/^\d{2}:\d{2}/', $scheduled)) {
+                continue; // not an arrival/departure for this tab
+            }
+
+            // The run calling here today started `day - 1` days ago; it must run on that weekday.
+            $day = $arrivals ? ($stop['arrivalDay'] ?? null) : ($stop['departureDay'] ?? null);
+            $startedOn = $today->subDays(max(0, (is_numeric($day) ? (int) $day : 1) - 1));
+            $runDays = $train['runDays'] ?? null;
+            if (is_array($runDays) && $runDays !== [] && ! in_array(strtolower($startedOn->format('D')), array_map('strtolower', $runDays), true)) {
+                continue;
+            }
+
+            $time = substr($scheduled, 0, 5);
+            $past = $time < $nowHm;
+            $entries[] = new BoardEntry(
+                trainNumber: $train['number'],
+                trainName: (string) ($train['name'] ?? $train['number']),
+                trainType: (string) ($train['type'] ?? ''),
+                from: $this->endpoint($train['source'] ?? null),
+                to: $this->endpoint($train['destination'] ?? null),
+                scheduledTime: $time,
+                expectedTime: null,
+                platform: null,
+                delayMinutes: null,
+                status: $past ? ($arrivals ? BoardStatus::Arrived : BoardStatus::Departed) : BoardStatus::Scheduled,
+                isLive: false,
+                phase: $past ? BoardPhase::Completed : BoardPhase::Upcoming,
+            );
+        }
+
+        return $entries;
+    }
+
+    /**
+     * Full-day board: the timetable for the whole day, with the live board's entry
+     * (status, delay, platform) replacing the timetable entry wherever RailRadar has one.
+     *
+     * @param  list<BoardEntry>  $timetable
+     * @param  list<BoardEntry>  $live
+     * @return list<BoardEntry> In scheduled-time order at this station.
+     */
+    public function fullDayBoard(array $timetable, array $live): array
+    {
+        $byNumber = [];
+        foreach ($timetable as $entry) {
+            $byNumber[$entry->trainNumber] ??= $entry;
+        }
+        foreach ($live as $entry) {
+            $byNumber[$entry->trainNumber] = $entry; // live data wins
+        }
+
+        $entries = array_values($byNumber);
+        usort($entries, fn (BoardEntry $a, BoardEntry $b) => [$a->scheduledTime, $a->trainNumber] <=> [$b->scheduledTime, $b->trainNumber]);
+
+        return $entries;
+    }
+
+    /** Timetable origin/destination: {code, name} object or a bare code. */
+    private function endpoint(mixed $value): StationRef
+    {
+        $code = is_array($value) ? ($value['code'] ?? null) : $value;
+        $name = is_array($value) ? ($value['name'] ?? $code) : $value;
+
+        return is_string($code) && $code !== '' ? new StationRef($code, is_string($name) ? $name : $code) : new StationRef('—', '—');
     }
 
     /** `live.type` values backed by live tracking (documented + observed). */

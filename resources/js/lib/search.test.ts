@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createSearchScheduler, normalizeQuery, queryState } from './search';
+import { createSearchScheduler, normalizeQuery, queryState, submittableQuery } from './search';
 import { urls } from './urls';
 
 describe('search query helpers', () => {
@@ -87,5 +87,23 @@ describe('createSearchScheduler', () => {
         scheduler.update('Salem');
         vi.runAllTimers();
         expect(onSearch).toHaveBeenCalledTimes(2);
+    });
+});
+
+describe('submittableQuery (train number search, submit only)', () => {
+    it('trims the query and keeps leading zeros', () => {
+        expect(submittableQuery('  12675 ', 2)).toBe('12675');
+        expect(submittableQuery('06120', 2)).toBe('06120');
+    });
+
+    it('rejects empty and too-short searches', () => {
+        expect(submittableQuery('', 2)).toBeNull();
+        expect(submittableQuery('   ', 2)).toBeNull();
+        expect(submittableQuery('1', 2)).toBeNull();
+    });
+
+    it('does not resend the query whose results are already shown', () => {
+        expect(submittableQuery('12675', 2, '12675')).toBeNull();
+        expect(submittableQuery('12676', 2, '12675')).toBe('12676');
     });
 });

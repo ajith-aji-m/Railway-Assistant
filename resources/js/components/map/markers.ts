@@ -42,7 +42,7 @@ export function stopLabelIcon(stop: StopStatus, role: StopRole, extra: { nextKm?
     } else if (role === 'origin') {
         html = `<div class="flex flex-col items-start bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded shadow-sm border border-outline-variant/40 whitespace-nowrap">
             <span class="font-label-sm text-label-sm text-on-surface font-bold">${name}</span>
-            <span class="font-label-sm text-[10px] text-outline">${esc(stop.station.code)} • Dep ${stop.scheduledDeparture ?? ''}</span></div>`;
+            <span class="font-label-sm text-[10px] text-outline">${esc(stop.station.code)} • Dep ${to12h(stop.scheduledDeparture)}</span></div>`;
     } else {
         html = `<div class="bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded shadow-sm border border-outline-variant/40 whitespace-nowrap">
             <span class="font-label-sm text-label-sm text-on-surface font-semibold">${name}</span></div>`;

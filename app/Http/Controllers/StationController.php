@@ -12,9 +12,6 @@ use Inertia\Response;
 
 class StationController extends Controller
 {
-    /** Station codes suggested when nothing is nearby or when searching manually. */
-    private const POPULAR = ['MAS', 'SBC', 'CBE'];
-
     public function __construct(private readonly RailwayProvider $railway) {}
 
     public function index(Request $request): Response
@@ -60,8 +57,6 @@ class StationController extends Controller
             'searchError' => fn () => $search()[1],
             'searchMinLength' => $minLength,
             'searchDebounceMs' => $isMock ? 250 : 400,
-            // Loaded on demand (partial reload); never one upstream request per station.
-            'popular' => Inertia::optional(fn () => $this->railway->popularStations(self::POPULAR)),
         ]);
     }
 

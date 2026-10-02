@@ -1,12 +1,10 @@
 import { RunningPill } from '@/components/train/Badges';
 import { HeroButton } from '@/components/ui/HeroButton';
 import { Icon } from '@/components/ui/Icon';
-import { useTrainFlags } from '@/hooks/useFavourites';
 import type { TrainDetail } from '@/types/railway';
 
 /** Locomotive photo banner + identity block from the Stitch train details screen. */
 export function TrainHeader({ train, onBack }: { train: TrainDetail; onBack: () => void }) {
-    const { favourite, toggleFavourite } = useTrainFlags(train.number);
     const shareData = { title: `${train.number} – ${train.name}`, text: `Live status of ${train.number} ${train.name}` };
 
     return (
@@ -16,10 +14,7 @@ export function TrainHeader({ train, onBack }: { train: TrainDetail; onBack: () 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 <nav aria-label="Train Header Actions" className="absolute inset-x-0 top-3 z-10 flex items-center justify-between px-margin">
                     <HeroButton icon="arrow_back" label="Back" onClick={onBack} />
-                    <div className="flex items-center gap-2">
-                        <HeroButton icon="share" label="Share Train Status" share={shareData} />
-                        <HeroButton icon="star" label={favourite ? 'Remove from Favorites' : 'Add to Favorites'} onClick={toggleFavourite} active={favourite} />
-                    </div>
+                    <HeroButton icon="share" label="Share Train Status" share={shareData} />
                 </nav>
                 <div className="absolute bottom-3 left-margin flex items-center gap-1.5 rounded-md border border-white/20 bg-black/50 px-2.5 py-1 text-on-primary backdrop-blur-md">
                     <Icon name="train" className="text-[14px]" />

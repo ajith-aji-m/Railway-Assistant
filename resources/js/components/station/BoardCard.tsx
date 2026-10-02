@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import { BoardStatusPill, DelayPill, PlatformBadge } from '@/components/train/Badges';
 import { Icon } from '@/components/ui/Icon';
 import { boardTimeInfo } from '@/lib/board';
-import { cn } from '@/lib/format';
+import { cn, to12h } from '@/lib/format';
 import { urls } from '@/lib/urls';
 import type { BoardEntry } from '@/types/railway';
 
@@ -44,7 +44,7 @@ export function BoardCard({ entry }: { entry: BoardEntry }) {
             <div className="mt-2.5 flex items-center justify-between border-t border-surface-container pt-2">
                 <div className="flex items-baseline space-x-2">
                     <span className={cn('font-metric-display text-metric-display leading-none font-extrabold tabular-nums', cancelled ? 'text-outline' : 'text-on-surface')}>
-                        {entry.scheduledTime}
+                        {to12h(entry.scheduledTime)}
                     </span>
                     {time.expectedLabel && (
                         <span className={cn('font-body-sm text-body-sm font-medium tabular-nums', time.delayed ? 'text-tertiary' : 'text-on-surface-variant')}>

@@ -3,6 +3,7 @@
 namespace App\Railway\RailRadar;
 
 use App\Railway\Exceptions\RailwayDataException;
+use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Cache;
@@ -24,6 +25,8 @@ class RailRadarClient
         private readonly int $timeout,
         private readonly int $cacheSeconds,
         private readonly int $searchCacheSeconds = 86400,
+        /** How long a request waits for another request's in-flight refresh (null = HTTP timeout + 2 s). */
+        private readonly ?int $lockWaitSeconds = null,
     ) {}
 
     public static function fromConfig(): self
@@ -50,7 +53,7 @@ class RailRadarClient
             throw RailwayDataException::notFound("Train {$number}");
         }
 
-        return $this->get("/v1/trains/{$number}/live", ['includeCoordinates' => 'true'], "Train {$number}", $fresh);
+        return $this->get("/v1/trains/{$number}/live", ['includeCoordinates' => 'true'], "Train {$number}", $fresh, lockKey: "railradar:live:lock:{$number}");
     }
 
     /**
@@ -75,6 +78,37 @@ class RailRadarClient
     }
 
     /**
+     * GET /v1/stations/{code}/trains — the station's timetable (all scheduled trains
+     * halting, originating or terminating there). Static data: cached like lookups.
+     *
+     * @return array{data: array<string, mixed>, meta: array<string, mixed>}
+     */
+    public function stationTrains(string $code): array
+    {
+        $code = strtoupper(trim($code));
+
+        if (! preg_match('/^[A-Z]{1,10}$/', $code)) {
+            throw RailwayDataException::notFound("Station {$code}");
+        }
+
+        return $this->get("/v1/stations/{$code}/trains", [], "Station {$code}", false, $this->searchCacheSeconds);
+    }
+
+    /**
+     * GET /v1/lookup/search/trains — train autocomplete by number or name substring.
+     * Documented parameters: `q` (required) and `limit` (5, 10, 20, 50).
+     *
+     * @return array{data: array<int, mixed>, meta: array<string, mixed>}
+     */
+    public function searchTrains(string $query, int $limit = 10): array
+    {
+        $query = preg_replace('/\s+/', ' ', trim($query));
+        $limit = in_array($limit, [5, 10, 20, 50], true) ? $limit : 10;
+
+        return $this->get('/v1/lookup/search/trains', ['q' => $query, 'limit' => (string) $limit], 'Train search', false, $this->searchCacheSeconds);
+    }
+
+    /**
      * GET /v1/lookup/search/stations — station autocomplete.
      * Documented parameters: `q` (required) and `limit` (5, 10, 20, 50).
      *
@@ -92,7 +126,7 @@ class RailRadarClient
      * @param  array<string, string>  $query
      * @return array{data: array<string, mixed>, meta: array<string, mixed>}
      */
-    private function get(string $path, array $query, string $resource, bool $fresh, ?int $ttl = null): array
+    private function get(string $path, array $query, string $resource, bool $fresh, ?int $ttl = null, ?string $lockKey = null): array
     {
         $ttl ??= $this->cacheSeconds;
 
@@ -106,6 +140,31 @@ class RailRadarClient
             return $cached;
         }
 
+        if ($lockKey === null || $fresh || $ttl <= 0) {
+            return $this->fetch($path, $query, $resource, $cacheKey, $ttl);
+        }
+
+        // Concurrent cache misses for the same resource: one request refreshes it, the
+        // others wait and reuse its cached response. The lock outlives the HTTP timeout
+        // (so it cannot expire mid-request) but stays short, so a crashed holder never
+        // blocks later refreshes for long.
+        try {
+            return Cache::lock($lockKey, $this->timeout + 5)->block(
+                $this->lockWaitSeconds ?? $this->timeout + 2,
+                fn () => Cache::get($cacheKey) ?? $this->fetch($path, $query, $resource, $cacheKey, $ttl),
+            );
+        } catch (LockTimeoutException) {
+            // Still refreshing elsewhere: never start a second upstream request.
+            return Cache::get($cacheKey) ?? throw RailwayDataException::timeout();
+        }
+    }
+
+    /**
+     * @param  array<string, string>  $query
+     * @return array{data: array<string, mixed>, meta: array<string, mixed>}
+     */
+    private function fetch(string $path, array $query, string $resource, string $cacheKey, int $ttl): array
+    {
         try {
             $response = Http::baseUrl($this->baseUrl)
                 ->withToken($this->apiKey)

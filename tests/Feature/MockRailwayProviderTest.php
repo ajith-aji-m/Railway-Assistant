@@ -117,6 +117,20 @@ class MockRailwayProviderTest extends TestCase
         $this->assertSame('07:22', $byNumber['12243']->expectedTime);
     }
 
+    public function test_train_search_finds_completed_running_and_upcoming_trains(): void
+    {
+        $status = fn (string $q) => $this->railway()->searchTrains($q)[0]->status;
+
+        $this->assertSame(RunningStatus::Completed, $status('06055')); // 05:15 → 07:05, before 08:30
+        $this->assertSame(RunningStatus::Running, $status('12675'));
+        $this->assertSame(RunningStatus::Scheduled, $status('12635'));
+        $this->assertSame(RunningStatus::Cancelled, $status('16057'));
+
+        // Leading zeros are part of the number.
+        $this->assertSame(['06055'], array_map(fn ($t) => $t->number, $this->railway()->searchTrains('060')));
+        $this->assertSame([], $this->railway()->searchTrains('6055'));
+    }
+
     public function test_train_search_matches_number_name_and_station(): void
     {
         $this->assertCount(2, $this->railway()->searchTrains('kovai'));

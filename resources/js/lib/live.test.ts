@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { LiveStatus, StopStatus, TrainDetail } from '@/types/railway';
-import { delayDisplay, describeLocation, mapLocationDetail, withLastKnownPosition } from './live';
+import { delayDisplay, describeLocation, mapLocationDetail, summaryStatus, withLastKnownPosition } from './live';
 
 const train: Pick<TrainDetail, 'from' | 'to' | 'departs'> = {
     from: { code: 'MAS', name: 'MGR Chennai Central' },
@@ -80,6 +80,13 @@ describe('live map location text', () => {
     });
 });
 
+describe('scheduled train location text', () => {
+    it('shows the departure time in 12-hour format', () => {
+        expect(describeLocation(train, railRadarLive({ status: 'scheduled' })).detail).toBe('Departs at 6:10 AM');
+        expect(describeLocation({ ...train, departs: '18:45' }, railRadarLive({ status: 'scheduled' })).detail).toBe('Departs at 6:45 PM');
+    });
+});
+
 describe('delay display (same rule on every screen)', () => {
     it('shows live delay', () => {
         expect(delayDisplay(railRadarLive({ delayMinutes: 14 }))).toEqual({ kind: 'late', text: '+14 minutes late', short: '+14 min' });
@@ -137,5 +144,26 @@ describe('countdown reference time', () => {
         const now = '2026-10-02T11:52:00+05:30';
         expect(minutesUntil(now, '12:16')).toBe(24);
         expect(minutesUntil(updatedAt, '12:16')).toBe(36); // what the old code would have shown
+    });
+});
+
+describe('train search result status', () => {
+    it('shows live delay only for a running, tracked train', () => {
+        expect(summaryStatus({ status: 'running', delayMinutes: 6, delayIsLive: true })).toEqual({ pill: { label: 'Delayed (+6m)', tone: 'late' }, state: 'Running' });
+        expect(summaryStatus({ status: 'running', delayMinutes: 0, delayIsLive: true })).toEqual({ pill: { label: 'On Time', tone: 'live' }, state: 'Running' });
+    });
+
+    it('never says "On Time" for a train RailRadar is not tracking yet', () => {
+        expect(summaryStatus({ status: 'scheduled', delayMinutes: 0, delayIsLive: false })).toEqual({ pill: null, state: 'Scheduled' });
+        expect(summaryStatus({ status: 'running', delayMinutes: 0, delayIsLive: false })).toEqual({ pill: null, state: 'Running' });
+    });
+
+    it('still shows completed and cancelled trains clearly', () => {
+        expect(summaryStatus({ status: 'completed', delayMinutes: 4, delayIsLive: true })).toEqual({ pill: null, state: 'Completed' });
+        expect(summaryStatus({ status: 'cancelled', delayMinutes: 0, delayIsLive: true })).toEqual({ pill: { label: 'Cancelled', tone: 'muted' }, state: null });
+    });
+
+    it('shows nothing invented for a lookup result without live status', () => {
+        expect(summaryStatus({ status: null, delayMinutes: null, delayIsLive: false })).toEqual({ pill: null, state: null });
     });
 });

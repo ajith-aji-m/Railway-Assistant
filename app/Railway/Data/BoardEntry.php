@@ -2,6 +2,7 @@
 
 namespace App\Railway\Data;
 
+use App\Railway\Enums\BoardPhase;
 use App\Railway\Enums\BoardStatus;
 
 final readonly class BoardEntry
@@ -21,5 +22,7 @@ final readonly class BoardEntry
         public ?int $delayMinutes,
         public BoardStatus $status,
         public bool $isLive = true,
+        // Completed / running / upcoming at this station today (groups the full-day board).
+        public BoardPhase $phase = BoardPhase::Upcoming,
     ) {}
 }

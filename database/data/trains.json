@@ -1,5 +1,5 @@
 {
-    "_comment": "Mock timetable. stops: [stationCode, arrival, departure, platform, distanceKm, liveDelayMinutes, dayOffset]. Numbers/names are real Indian Railways services; times are realistic approximations for the prototype.",
+    "_comment": "Mock timetable. stops: [stationCode, arrival, departure, platform, distanceKm, liveDelayMinutes, dayOffset]. Numbers/names are real Indian Railways services (except 06055, a demo special that finishes before the demo clock's 08:00 start, to show a completed trip); times are realistic approximations for the prototype.",
     "trains": [
         {
             "number": "12675", "name": "Kovai Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
@@ -151,6 +151,15 @@
                 ["MBM", "08:50", "08:51", "2", 19, 0, 0],
                 ["MS", "09:03", "09:04", "9", 26, 0, 0],
                 ["MSB", "09:12", null, "2", 29, 0, 0]
+            ]
+        },
+        {
+            "number": "06055", "name": "Chennai - Katpadi Special", "type": "Express", "pantry": false, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["MAS", null, "05:15", "4", 0, 0, 0],
+                ["AJJ", "06:10", "06:12", "2", 69, 0, 0],
+                ["KPD", "07:05", null, "1", 130, 0, 0]
             ]
         }
     ]

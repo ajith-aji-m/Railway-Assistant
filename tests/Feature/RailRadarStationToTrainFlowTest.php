@@ -35,6 +35,7 @@ class RailRadarStationToTrainFlowTest extends TestCase
             'services.railradar.cache_seconds' => 60,
         ]);
         Http::preventStrayRequests();
+        $this->fakeStationTimetable();
 
         // Fixtures are real RailRadar responses from 2026-10-02 ~10:42 IST; pin "now"
         // just after them so fixes are fresh (the stale threshold is 10 minutes).
@@ -88,7 +89,7 @@ class RailRadarStationToTrainFlowTest extends TestCase
             // 12635 starts here (no arrival) → only in departures; 22676 terminates here → only in arrivals.
             ->where('board', fn ($board) => ! collect($board)->contains('trainNumber', '22676')));
 
-        Http::assertSentCount(1); // both requests above share nothing; this one is the only board call
+        Http::assertSentCount(2); // the live board + the station timetable (no per-card calls)
     }
 
     public function test_expected_vs_scheduled_time(): void
@@ -238,13 +239,13 @@ class RailRadarStationToTrainFlowTest extends TestCase
     {
         $this->fakeBoardAndTrains();
 
-        $this->get('/stations/MS')->assertOk();                 // 1 board request (no per-card calls)
+        $this->get('/stations/MS')->assertOk();                 // live board + timetable (no per-card calls)
         $this->get('/stations/MS?tab=departures')->assertOk();  // cached
         $this->get('/trains/12635')->assertOk();                // 1 train request
         $this->get('/trains/12635/map')->assertOk()             // cached
             ->assertInertia(fn (Assert $page) => $page->where('train.number', '12635'));
 
-        Http::assertSentCount(2);
+        Http::assertSentCount(3);
     }
 
     public function test_live_map_keeps_the_selected_train(): void
@@ -311,9 +312,8 @@ class RailRadarStationToTrainFlowTest extends TestCase
         Http::fake();
 
         $this->get('/stations/MAS?tab=departures')->assertInertia(fn (Assert $page) => $page
-            ->where('board.1.trainNumber', '12675')
-            ->where('board.1.isLive', true)
-            ->where('board.1.status', 'departed'));
+            ->where('board', fn ($board) => collect($board)->firstWhere('trainNumber', '12675')['isLive'] === true
+                && collect($board)->firstWhere('trainNumber', '12675')['status'] === 'departed'));
         $this->get('/trains/12675')->assertOk()->assertInertia(fn (Assert $page) => $page->where('train.name', 'Kovai Express'));
 
         Http::assertNothingSent();
