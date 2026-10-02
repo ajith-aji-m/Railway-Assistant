@@ -27,6 +27,35 @@ npm run types           # TypeScript check
 npm run build           # production assets
 ```
 
+## Docker deployment
+
+A single image (`Dockerfile`) builds the Vite assets, installs production PHP dependencies
+and serves the app with Apache + PHP 8.4 on port 80. SQLite, logs and cache live in the
+`storage` volume, so data survives container rebuilds.
+
+```bash
+cp .env.example .env.production
+# edit .env.production: APP_KEY, APP_URL=https://your-domain, APP_DEBUG=false,
+# LOG_LEVEL=warning, RAILWAY_PROVIDER / API_KEY_RAILWAY as needed
+php artisan key:generate --show     # paste the output into APP_KEY
+
+docker compose up -d --build        # http://<server>:8080 (override with APP_PORT)
+docker compose logs -f app
+```
+
+On every start the container caches config/routes/views, runs migrations and the
+(idempotent) mock seeder; set `RUN_MIGRATIONS=false` / `RUN_SEEDERS=false` to skip them.
+`.env.production` is read at container start, so `docker compose up -d` applies changes;
+`VITE_*` values are baked in at build time (build args in `docker-compose.yml`).
+
+Health check: `GET /api/health` returns JSON with database and cache checks (`200` when
+healthy, `503` otherwise) and is used by the Docker `HEALTHCHECK`. It never calls the railway
+provider, so probes don't use the RailRadar quota. `GET /up` is Laravel's plain liveness ping.
+
+Put the container behind a TLS-terminating reverse proxy (Caddy, Nginx, Traefik) —
+geolocation only works over HTTPS. All proxies are trusted by default; restrict with
+`TRUSTED_PROXIES` (comma-separated IPs/CIDRs) if the port is reachable directly.
+
 ## Mock railway data
 
 - Network: `database/data/stations.json` (25 stations, real coordinates) and
