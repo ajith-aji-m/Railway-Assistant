@@ -4,7 +4,7 @@ import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet
 import { nearestSegmentIndex } from '@/lib/geo';
 import { stopBySequence } from '@/lib/live';
 import { mapConfig } from '@/lib/mapConfig';
-import type { LiveStatus, TrainDetail } from '@/types/railway';
+import type { LatLng, LiveStatus, TrainDetail } from '@/types/railway';
 import { stopLabelIcon, stopNodeIcon, trainIcon, type StopRole } from './markers';
 
 export interface RailMapHandle {
@@ -16,6 +16,8 @@ export interface RailMapHandle {
 interface RailMapProps {
     train: TrainDetail;
     live: LiveStatus;
+    /** Marker position to draw (real fix, or a local glide between two real fixes). */
+    trainPosition: LatLng | null;
     showLabels: boolean;
     /** Extra padding so the route is not hidden behind the floating header/HUD. */
     padding: { top: number; bottom: number };
@@ -48,7 +50,7 @@ function FitRoute({ bounds, padding }: { bounds: LatLngBoundsExpression; padding
     return null;
 }
 
-export const RailMap = forwardRef<RailMapHandle, RailMapProps>(function RailMap({ train, live, showLabels, padding, onTilesLoaded, onTileError }, ref) {
+export const RailMap = forwardRef<RailMapHandle, RailMapProps>(function RailMap({ train, live, trainPosition, showLabels, padding, onTilesLoaded, onTileError }, ref) {
     const mapRef = useRef<LeafletMap | null>(null);
     const route = train.route as LatLngExpression[];
     const estimated = live.gps === 'lost';
@@ -58,13 +60,13 @@ export const RailMap = forwardRef<RailMapHandle, RailMapProps>(function RailMap(
 
     // Completed track: the route geometry up to the segment the train is on, then its position.
     const completed = useMemo(() => {
-        if (live.position && live.status === 'running' && train.route.length > 1) {
-            const segment = nearestSegmentIndex(train.route, live.position);
-            return [...train.route.slice(0, segment + 1), [live.position.lat, live.position.lng]] as LatLngExpression[];
+        if (trainPosition && live.status === 'running' && train.route.length > 1) {
+            const segment = nearestSegmentIndex(train.route, trainPosition);
+            return [...train.route.slice(0, segment + 1), [trainPosition.lat, trainPosition.lng]] as LatLngExpression[];
         }
         // No position: departed stops only.
         return live.stops.filter((s) => s.state === 'departed' || s.state === 'current').map((s) => [s.lat, s.lng]) as LatLngExpression[];
-    }, [live, train.route]);
+    }, [live, trainPosition, train.route]);
 
     useImperativeHandle(ref, () => ({
         recenter: () => {
@@ -134,9 +136,9 @@ export const RailMap = forwardRef<RailMapHandle, RailMapProps>(function RailMap(
                     );
                 })}
 
-            {live.position && live.status !== 'cancelled' && (
+            {trainPosition && live.status !== 'cancelled' && (
                 <Marker
-                    position={[live.position.lat, live.position.lng]}
+                    position={[trainPosition.lat, trainPosition.lng]}
                     icon={trainIcon({ tooltip, estimated })}
                     interactive={false}
                     zIndexOffset={1000}

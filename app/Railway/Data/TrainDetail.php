@@ -25,4 +25,23 @@ final readonly class TrainDetail
         public array $route,
         public LiveStatus $live,
     ) {}
+
+    public function withLive(LiveStatus $live): self
+    {
+        return new self(
+            number: $this->number,
+            name: $this->name,
+            type: $this->type,
+            from: $this->from,
+            to: $this->to,
+            departs: $this->departs,
+            arrives: $this->arrives,
+            hasPantry: $this->hasPantry,
+            zone: $this->zone,
+            image: $this->image,
+            wifiStations: $this->wifiStations,
+            route: $this->route,
+            live: $live,
+        );
+    }
 }

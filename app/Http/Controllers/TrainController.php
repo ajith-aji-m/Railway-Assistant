@@ -54,6 +54,9 @@ class TrainController extends Controller
     {
         return Inertia::render('Trains/Show', [
             'train' => $this->railway->train($number) ?? abort(404),
+            // Current time of the data source, so "in N min" is measured from now —
+            // not from the provider's (possibly older) last-updated time.
+            'now' => $this->railway->now()->toIso8601String(),
         ]);
     }
 

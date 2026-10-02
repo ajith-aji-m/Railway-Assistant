@@ -25,6 +25,7 @@ final class RailRadarProvider implements RailwayProvider
         private readonly RailRadarClient $client,
         private readonly RailRadarNormalizer $normalizer,
         private readonly LocalStationDirectory $directory,
+        private readonly LiveSnapshotStore $snapshots,
     ) {}
 
     public function now(): CarbonImmutable
@@ -43,7 +44,11 @@ final class RailRadarProvider implements RailwayProvider
             throw $e;
         }
 
-        return $this->normalizer->trainDetail($response['data'], $response['meta']);
+        $train = $this->normalizer->trainDetail($response['data'], $response['meta']);
+        $trackingMode = is_string($response['data']['trackingMode'] ?? null) ? $response['data']['trackingMode'] : null;
+
+        // Attach real position fixes (same cached response for Train Details and Live Map).
+        return $train->withLive($this->snapshots->apply($train->number, $train->live, $trackingMode, $this->now()));
     }
 
     public function liveStatus(string $number): ?LiveStatus

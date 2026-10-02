@@ -2,8 +2,8 @@ import { Link } from '@inertiajs/react';
 import type { ReactNode } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { runningLabel } from '@/components/train/Badges';
-import { cn, formatDateTime, minutesUntil, to12h } from '@/lib/format';
-import { describeLocation, mapLocationDetail, stopBySequence } from '@/lib/live';
+import { cn, formatDateTime, minutesUntil, timeOf, to12h } from '@/lib/format';
+import { delayDisplay, describeLocation, mapLocationDetail, stopBySequence } from '@/lib/live';
 import { urls } from '@/lib/urls';
 import type { LiveStatus, TrainDetail } from '@/types/railway';
 
@@ -31,16 +31,16 @@ export function MapHeaderCard({ train, live, onBack, onShare }: { train: TrainDe
                             <span className={cn('mr-1 inline-block h-2 w-2 rounded-full', runningDot[live.status])} />
                             {runningLabel(live.status)}
                         </span>
-                        {live.status !== 'cancelled' && (
+                        {live.status !== 'cancelled' && live.delayIsLive !== false && (
                             <>
                                 <span className="text-[11px] text-outline">•</span>
                                 <span
                                     className={cn(
                                         'inline-flex items-center rounded px-1.5 font-label-sm text-[11px] font-bold',
-                                        live.delayMinutes > 0 ? 'bg-error-container text-tertiary' : 'bg-secondary/10 text-secondary',
+                                        delayDisplay(live).kind === 'late' ? 'bg-error-container text-tertiary' : 'bg-secondary/10 text-secondary',
                                     )}
                                 >
-                                    {live.delayMinutes > 0 ? `+${live.delayMinutes} min` : 'On time'}
+                                    {delayDisplay(live).short}
                                 </span>
                             </>
                         )}
@@ -59,7 +59,8 @@ export function MapHeaderCard({ train, live, onBack, onShare }: { train: TrainDe
     );
 }
 
-export function GpsLostBanner() {
+/** `lastFixAt`: provider's last real fix (RailRadar) — wording then refers to it instead of the timetable. */
+export function GpsLostBanner({ lastFixAt = null }: { lastFixAt?: string | null }) {
     return (
         <div className="flex items-center justify-between rounded-xl border border-amber-300/80 bg-amber-50/95 px-3 py-2 shadow-sm backdrop-blur-md">
             <div className="flex items-center space-x-2">
@@ -72,7 +73,9 @@ export function GpsLostBanner() {
                         <span className="font-label-md text-label-md font-bold text-amber-900">Train GPS Signal Lost</span>
                         <span className="rounded bg-amber-200/80 px-1.5 font-label-sm text-[10px] text-amber-950">TIMETABLE MODE</span>
                     </div>
-                    <span className="font-label-sm text-[11px] leading-tight text-amber-800">Showing Scheduled Stations &amp; Estimated Track Segment</span>
+                    <span className="font-label-sm text-[11px] leading-tight text-amber-800">
+                        {lastFixAt ? `Showing last reported position (${to12h(timeOf(lastFixAt))})` : 'Showing Scheduled Stations & Estimated Track Segment'}
+                    </span>
                 </div>
             </div>
             <Icon name="location_disabled" className="text-lg text-amber-700" />
@@ -140,7 +143,20 @@ export function MapControls({
 }
 
 /** Bottom floating telemetry card (GPS active). */
-export function TelemetryCard({ train, live, refreshing, onRefresh }: { train: TrainDetail; live: LiveStatus; refreshing: boolean; onRefresh: () => void }) {
+export function TelemetryCard({
+    train,
+    live,
+    refreshing,
+    onRefresh,
+    stale = false,
+}: {
+    train: TrainDetail;
+    live: LiveStatus;
+    refreshing: boolean;
+    onRefresh: () => void;
+    /** Latest background refresh failed; the data shown is from `live.updatedAt`. */
+    stale?: boolean;
+}) {
     const location = describeLocation(train, live);
     const last = stopBySequence(live, live.lastStopSequence);
     const next = stopBySequence(live, live.nextStopSequence);
@@ -180,7 +196,10 @@ export function TelemetryCard({ train, live, refreshing, onRefresh }: { train: T
             <div className="flex items-center justify-between pt-0.5">
                 <div className="flex items-center space-x-1 font-label-sm text-[11px] text-on-surface-variant">
                     <Icon name="schedule" className="text-[14px] text-outline" />
-                    <span>Updated: {formatDateTime(live.updatedAt)}</span>
+                    <span className={cn(stale && 'text-amber-700')}>
+                        Updated: {formatDateTime(live.updatedAt)}
+                        {stale && ' · update failed'}
+                    </span>
                 </div>
                 <div className="flex items-center space-x-1">
                     <button type="button" aria-label="Refresh telemetry" onClick={onRefresh} className="flex items-center rounded-lg p-1 text-primary hover:bg-surface-container active:scale-95">
@@ -215,7 +234,9 @@ export function EstimatedCard({ live, onShare }: { live: LiveStatus; onShare: ()
             <div className="mx-auto h-1 w-10 rounded-full bg-outline-variant/70" />
             <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                    <span className="rounded bg-amber-100/90 px-2 py-0.5 font-label-sm text-label-sm font-bold tracking-wider text-amber-700 uppercase">Estimated Location</span>
+                    <span className="rounded bg-amber-100/90 px-2 py-0.5 font-label-sm text-label-sm font-bold tracking-wider text-amber-700 uppercase">
+                        {live.snapshot?.lastKnown ? 'Last Known Location' : 'Estimated Location'}
+                    </span>
                     {ago !== null && ago >= 0 && (
                         <div className="flex items-center space-x-1 font-label-sm text-label-sm text-on-surface-variant">
                             <Icon name="schedule" className="text-sm" />
@@ -229,7 +250,10 @@ export function EstimatedCard({ live, onShare }: { live: LiveStatus; onShare: ()
                     {live.atStation ? `At ${last.station.name}` : `Between ${last.station.name} & ${next.station.name}`}
                 </h2>
                 <p className="font-body-sm text-body-sm text-outline">
-                    Train progress calculated via timetable schedule. Next milestone expected at {to12h(next.expectedArrival)}.
+                    {live.snapshot?.lastKnown
+                        ? `Last real position reported at ${to12h(timeOf(live.snapshot.lastKnown.at))}; live tracking is not current.`
+                        : 'Train progress calculated via timetable schedule.'}{' '}
+                    Next milestone expected at {to12h(next.expectedArrival ?? next.scheduledArrival)}.
                 </p>
             </div>
             <div className="flex items-center justify-between rounded-xl border border-surface-container bg-surface-container-low p-3">

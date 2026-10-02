@@ -7,6 +7,8 @@ use App\Railway\Enums\BoardStatus;
 final readonly class BoardEntry
 {
     // expectedTime / delayMinutes are null when the provider does not report them.
+    // isLive: true only when expectedTime/delay come from live data; false means
+    // timetable-only (show as "Scheduled", never as "Expected").
     public function __construct(
         public string $trainNumber,
         public string $trainName,
@@ -18,5 +20,6 @@ final readonly class BoardEntry
         public ?string $platform,
         public ?int $delayMinutes,
         public BoardStatus $status,
+        public bool $isLive = true,
     ) {}
 }

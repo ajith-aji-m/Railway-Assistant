@@ -1,6 +1,6 @@
 import { Icon } from '@/components/ui/Icon';
-import { cn, formatDuration, minutesUntil, to12h } from '@/lib/format';
-import { describeLocation, stationLabel, stopBySequence } from '@/lib/live';
+import { cn, formatDuration, minutesUntil, timeOf, to12h } from '@/lib/format';
+import { delayDisplay, describeLocation, stationLabel, stopBySequence } from '@/lib/live';
 import type { TrainDetail } from '@/types/railway';
 
 function CardLabel({ icon, children }: { icon: string; children: string }) {
@@ -14,7 +14,8 @@ function CardLabel({ icon, children }: { icon: string; children: string }) {
     );
 }
 
-export function LocationSpeedCards({ train }: { train: TrainDetail }) {
+/** `staleSince`: ISO time of the data on screen when the latest refresh failed. */
+export function LocationSpeedCards({ train, staleSince = null }: { train: TrainDetail; staleSince?: string | null }) {
     const { live } = train;
     const location = describeLocation(train, live);
     const gpsLost = live.gps === 'lost' && live.status === 'running';
@@ -35,9 +36,9 @@ export function LocationSpeedCards({ train }: { train: TrainDetail }) {
                     <span className="font-label-sm text-label-sm font-semibold text-on-surface-variant">km/h</span>
                 </div>
                 {live.status === 'running' && (
-                    <p className={cn('mt-0.5 flex items-center gap-1 font-label-sm text-label-sm font-medium', gpsLost ? 'text-amber-600' : 'text-secondary')}>
-                        <span className={cn('h-1.5 w-1.5 rounded-full', gpsLost ? 'bg-amber-500' : 'bg-secondary')} />
-                        {gpsLost ? 'GPS Signal Lost' : 'GPS Tracked'}
+                    <p className={cn('mt-0.5 flex items-center gap-1 font-label-sm text-label-sm font-medium', gpsLost || staleSince ? 'text-amber-600' : 'text-secondary')}>
+                        <span className={cn('h-1.5 w-1.5 rounded-full', gpsLost || staleSince ? 'bg-amber-500' : 'bg-secondary')} />
+                        {staleSince ? `Not updated since ${to12h(timeOf(staleSince))}` : gpsLost ? 'GPS Signal Lost' : 'GPS Tracked'}
                     </p>
                 )}
             </article>
@@ -45,10 +46,15 @@ export function LocationSpeedCards({ train }: { train: TrainDetail }) {
     );
 }
 
-export function DelayCard({ train }: { train: TrainDetail }) {
+/** `now`: current time of the data source (ISO); countdowns are measured from it. */
+export function DelayCard({ train, now }: { train: TrainDetail; now?: string }) {
     const { live } = train;
     const next = stopBySequence(live, live.nextStopSequence);
-    const delayed = live.delayMinutes > 0;
+    const delay = delayDisplay(live);
+    const delayed = delay.kind === 'late';
+    const scheduledOnly = delay.kind === 'scheduled';
+    // Timetable-only trains show the scheduled arrival, never an "expected" one.
+    const arrival = scheduledOnly ? next?.scheduledArrival : next?.expectedArrival;
 
     if (live.status === 'cancelled') return null;
 
@@ -59,13 +65,17 @@ export function DelayCard({ train }: { train: TrainDetail }) {
                 <span
                     className={cn(
                         'rounded-full px-2.5 py-0.5 font-label-md text-label-md font-bold',
-                        delayed ? 'bg-error-container text-tertiary' : 'bg-secondary-container/50 text-on-secondary-container',
+                        delayed
+                            ? 'bg-error-container text-tertiary'
+                            : scheduledOnly
+                              ? 'bg-surface-container-high text-on-surface-variant'
+                              : 'bg-secondary-container/50 text-on-secondary-container',
                     )}
                 >
-                    {delayed ? `+${live.delayMinutes} minutes late` : 'On time'}
+                    {delay.text}
                 </span>
             </div>
-            {next && next.expectedArrival && (
+            {next && arrival && (
                 <div className="grid grid-cols-2 gap-4 border-t border-outline-variant/20 pt-2">
                     <div>
                         <span className="block font-body-sm text-body-sm text-on-surface-variant">Next Station</span>
@@ -73,11 +83,11 @@ export function DelayCard({ train }: { train: TrainDetail }) {
                         {next.platform && <span className="font-label-sm text-label-sm font-semibold text-outline">Platform {next.platform} (Expected)</span>}
                     </div>
                     <div className="text-right">
-                        <span className="block font-body-sm text-body-sm text-on-surface-variant">Expected Arrival</span>
-                        <div className="mt-0.5 font-headline-md text-headline-md font-bold text-on-surface tabular-nums">{to12h(next.expectedArrival)}</div>
-                        {live.status === 'running' && (
+                        <span className="block font-body-sm text-body-sm text-on-surface-variant">{scheduledOnly ? 'Scheduled Arrival' : 'Expected Arrival'}</span>
+                        <div className="mt-0.5 font-headline-md text-headline-md font-bold text-on-surface tabular-nums">{to12h(arrival)}</div>
+                        {live.status === 'running' && !scheduledOnly && (
                             <span className={cn('font-body-sm text-body-sm font-semibold', delayed ? 'text-tertiary' : 'text-secondary')}>
-                                (in {formatDuration(minutesUntil(live.updatedAt, next.expectedArrival))})
+                                (in {formatDuration(minutesUntil(now ?? live.updatedAt, arrival))})
                             </span>
                         )}
                     </div>

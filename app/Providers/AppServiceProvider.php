@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Railway\Contracts\RailwayProvider;
 use App\Railway\Mock\MockClock;
 use App\Railway\Mock\MockRailwayProvider;
+use App\Railway\RailRadar\LiveSnapshotStore;
 use App\Railway\RailRadar\RailRadarClient;
 use App\Railway\RailRadar\RailRadarProvider;
 use Illuminate\Support\ServiceProvider;
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(MockClock::class, fn () => new MockClock(config('railway.mock.clock')));
         $this->app->bind(RailRadarClient::class, fn () => RailRadarClient::fromConfig());
+        $this->app->bind(LiveSnapshotStore::class, fn ($app) => LiveSnapshotStore::fromConfig($app['cache.store']));
 
         $this->app->singleton(RailwayProvider::class, fn ($app) => match (config('railway.provider')) {
             'mock' => $app->make(MockRailwayProvider::class),

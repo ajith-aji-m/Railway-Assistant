@@ -63,6 +63,9 @@ class RailRadarNormalizer
         $nextHalt = is_array($data['nextHalt'] ?? null) ? $data['nextHalt'] : null;
 
         $status = $this->runningStatus($data['status'] ?? null, $route);
+        // Same convention as the station board: before the journey starts RailRadar
+        // echoes the timetable (delay 0, actual = scheduled), which is not live data.
+        $delayIsLive = $status !== RunningStatus::Scheduled;
         $atStation = ($current['isHalt'] ?? false) === true && isset($current['status']) && $current['status'] !== 'departed';
 
         // Distances along the route (km from origin).
@@ -96,11 +99,11 @@ class RailRadarNormalizer
                 scheduledArrival: $this->hm($stop['scheduledArrival'] ?? null),
                 scheduledDeparture: $this->hm($stop['scheduledDeparture'] ?? null),
                 // For upcoming stops RailRadar's actual* fields hold the predicted time.
-                expectedArrival: $this->hm($stop['actualArrival'] ?? null) ?? $this->hm($stop['scheduledArrival'] ?? null),
-                expectedDeparture: $this->hm($stop['actualDeparture'] ?? null) ?? $this->hm($stop['scheduledDeparture'] ?? null),
+                expectedArrival: $delayIsLive ? ($this->hm($stop['actualArrival'] ?? null) ?? $this->hm($stop['scheduledArrival'] ?? null)) : null,
+                expectedDeparture: $delayIsLive ? ($this->hm($stop['actualDeparture'] ?? null) ?? $this->hm($stop['scheduledDeparture'] ?? null)) : null,
                 platform: isset($stop['platform']) ? (string) $stop['platform'] : null,
                 distanceKm: (int) round((float) ($stop['distance'] ?? 0)),
-                delayMinutes: is_numeric($stop['delayArrival'] ?? $stop['delayDeparture'] ?? null) ? (int) ($stop['delayArrival'] ?? $stop['delayDeparture']) : null,
+                delayMinutes: $delayIsLive && is_numeric($stop['delayArrival'] ?? $stop['delayDeparture'] ?? null) ? (int) ($stop['delayArrival'] ?? $stop['delayDeparture']) : null,
                 state: match (true) {
                     $atStation && $sequence === ($current['sequence'] ?? null) => StopState::Current,
                     ($stop['status'] ?? null) === 'departed' => StopState::Departed,
@@ -128,6 +131,7 @@ class RailRadarNormalizer
             updatedAt: (string) ($data['lastUpdatedAt'] ?? $meta['timestamp'] ?? ''),
             stops: $stops,
             currentLocation: $this->currentLocation($current),
+            delayIsLive: $delayIsLive,
         );
     }
 
@@ -233,6 +237,12 @@ class RailRadarNormalizer
             }
 
             $expectedIso = $arrivals ? ($live['expectedArrivalTime'] ?? null) : ($live['expectedDepartureTime'] ?? null);
+            $type = is_string($live['type'] ?? null) ? strtolower($live['type']) : null;
+            $isLive = in_array($type, self::LIVE_BOARD_TYPES, true);
+            $delay = is_numeric($live['delayMinutes'] ?? null) ? (int) $live['delayMinutes'] : null;
+
+            // Live expected time; if RailRadar sent only a delay, derive it from the schedule.
+            $expected = $this->hm($expectedIso) ?? ($isLive && $delay !== null ? $this->addMinutes(substr($scheduled, 0, 5), $delay) : null);
             $platform = $live['platform'] ?? $stop['platform'] ?? null; // live platform when reported, else timetable platform
             $source = is_string($train['source'] ?? null) ? $train['source'] : null;
             $destination = is_string($train['destination'] ?? null) ? $train['destination'] : null;
@@ -247,10 +257,12 @@ class RailRadarNormalizer
                     from: new StationRef($source ?? '—', $source ?? '—'),
                     to: new StationRef($destination ?? '—', $destination ?? '—'),
                     scheduledTime: substr($scheduled, 0, 5),
-                    expectedTime: $this->hm($expectedIso),
+                    // Without live data the "expected" time is just the timetable, so it is not exposed.
+                    expectedTime: $isLive ? $expected : null,
                     platform: $platform !== null && $platform !== '' ? (string) $platform : null,
-                    delayMinutes: is_numeric($live['delayMinutes'] ?? null) ? (int) $live['delayMinutes'] : null,
-                    status: $this->boardStatus($live['type'] ?? null),
+                    delayMinutes: $isLive ? $delay : null,
+                    status: $this->boardStatus($type),
+                    isLive: $isLive,
                 ),
             ];
         }
@@ -261,19 +273,35 @@ class RailRadarNormalizer
         return array_column($entries, 'entry');
     }
 
+    /** `live.type` values backed by live tracking (documented + observed). */
+    private const LIVE_BOARD_TYPES = ['upcoming', 'at-station', 'at_station', 'departed', 'arrived'];
+
     /**
      * Documented `live.type`: at-station, upcoming, departed, scheduled.
-     * Also observed: not-started. Unknown values fall back to "expected".
+     * Also observed: not-started. Unknown values are treated as timetable-only.
      */
-    private function boardStatus(mixed $type): BoardStatus
+    private function boardStatus(?string $type): BoardStatus
     {
-        return match (is_string($type) ? strtolower($type) : null) {
-            'at-station', 'at_station', 'arrived_at_station' => BoardStatus::AtStation,
+        return match ($type) {
+            'at-station', 'at_station' => BoardStatus::AtStation,
             'departed' => BoardStatus::Departed,
             'arrived', 'terminated' => BoardStatus::Arrived,
             'cancelled', 'canceled' => BoardStatus::Cancelled,
-            default => BoardStatus::Expected, // upcoming, scheduled, not-started
+            'upcoming' => BoardStatus::Expected,
+            default => BoardStatus::Scheduled, // scheduled, not-started, unknown
         };
+    }
+
+    /** "23:50" + 20 → "00:10" */
+    private function addMinutes(string $hm, int $minutes): ?string
+    {
+        if (! preg_match('/^(\d{2}):(\d{2})$/', $hm, $m)) {
+            return null;
+        }
+        $total = ((int) $m[1] * 60 + (int) $m[2] + $minutes) % 1440;
+        $total = $total < 0 ? $total + 1440 : $total;
+
+        return sprintf('%02d:%02d', intdiv($total, 60), $total % 60);
     }
 
     /** @return list<array<string, mixed>> */

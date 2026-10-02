@@ -1,0 +1,217 @@
+{
+  "success": true,
+  "data": {
+    "station": {
+      "code": "MS",
+      "name": "Chennai Egmore",
+      "city": "Chennai",
+      "elevation_m": 10,
+      "lat": 13.07855,
+      "lng": 80.26119
+    },
+    "window": {
+      "from": "09:41",
+      "to": "19:41",
+      "hoursBack": 2,
+      "hoursAhead": 8
+    },
+    "trains": [
+      {
+        "train": {
+          "number": "40040",
+          "name": "Tambaram - Chennai Beach EMU",
+          "type": "EMU",
+          "source": "TBM",
+          "destination": "MSB",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat"
+          ]
+        },
+        "stop": {
+          "sequence": 15,
+          "arrival": "11:42",
+          "departure": "11:43",
+          "day": 1,
+          "distance": 24.8,
+          "isHalt": true,
+          "platform": "11"
+        },
+        "live": {
+          "type": "not-started",
+          "startDate": "2026-10-02",
+          "expectedArrivalTime": "2026-10-02T11:42:00+05:30",
+          "expectedDepartureTime": "2026-10-02T11:43:00+05:30",
+          "delayMinutes": 0
+        }
+      },
+      {
+        "train": {
+          "number": "12635",
+          "name": "Vaigai SF Express",
+          "type": "Superfast Express",
+          "source": "MS",
+          "destination": "MDU",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 1,
+          "arrival": null,
+          "departure": "13:15",
+          "day": 1,
+          "distance": 0,
+          "isHalt": true,
+          "platform": "4"
+        },
+        "live": {
+          "type": "not-started",
+          "startDate": "2026-10-02",
+          "expectedDepartureTime": "2026-10-02T13:15:00+05:30",
+          "delayMinutes": 0
+        }
+      },
+      {
+        "train": {
+          "number": "16357",
+          "name": "Nagercoil - Charlapalli Amrit Bharat Express",
+          "type": "Amrit Bharat Express",
+          "source": "NCJ",
+          "destination": "CHZ",
+          "runDays": [
+            "thu"
+          ]
+        },
+        "stop": {
+          "sequence": 136,
+          "arrival": "13:00",
+          "departure": "13:15",
+          "day": 2,
+          "distance": 786.1,
+          "isHalt": true,
+          "platform": "6"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-01",
+          "expectedArrivalTime": "2026-10-02T13:21:00+05:30",
+          "expectedDepartureTime": "2026-10-02T13:36:00+05:30",
+          "delayMinutes": 21
+        }
+      },
+      {
+        "train": {
+          "number": "19419",
+          "name": "Tiruchchirappalli Weekly Express",
+          "type": "Mail/Express",
+          "source": "ADI",
+          "destination": "TPJ",
+          "runDays": [
+            "thu"
+          ]
+        },
+        "stop": {
+          "sequence": 282,
+          "arrival": "15:10",
+          "departure": "15:20",
+          "day": 2,
+          "distance": 1718.3,
+          "isHalt": true,
+          "platform": "6"
+        },
+        "live": {
+          "type": "upcoming",
+          "startDate": "2026-10-01",
+          "expectedArrivalTime": "2026-10-02T15:22:00+05:30",
+          "expectedDepartureTime": "2026-10-02T15:32:00+05:30",
+          "delayMinutes": 12
+        }
+      },
+      {
+        "train": {
+          "number": "22676",
+          "name": "Cholan SF Express",
+          "type": "Superfast Express",
+          "source": "TPJ",
+          "destination": "MS",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stop": {
+          "sequence": 89,
+          "arrival": "19:25",
+          "departure": null,
+          "day": 1,
+          "distance": 401.1,
+          "isHalt": true,
+          "platform": "4"
+        },
+        "live": {
+          "type": "not-started",
+          "startDate": "2026-10-02",
+          "expectedArrivalTime": "2026-10-02T19:25:00+05:30",
+          "delayMinutes": 0
+        }
+      },
+      {
+        "train": {
+          "number": "40039",
+          "name": "Chennai Beach - Tambaram EMU",
+          "type": "EMU",
+          "source": "MSB",
+          "destination": "TBM",
+          "runDays": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat"
+          ]
+        },
+        "stop": {
+          "sequence": 4,
+          "arrival": "11:48",
+          "departure": "11:49",
+          "day": 1,
+          "distance": 3.8,
+          "isHalt": true,
+          "platform": "10"
+        },
+        "live": {
+          "type": "departed",
+          "startDate": "2026-10-02",
+          "departedAt": "2026-10-02T11:49:00+05:30",
+          "expectedArrivalTime": "2026-10-02T11:48:00+05:30",
+          "expectedDepartureTime": "2026-10-02T11:49:00+05:30",
+          "delayMinutes": 0
+        }
+      }
+    ],
+    "count": 6
+  },
+  "meta": {
+    "timestamp": "2026-10-02T11:41:48+05:30",
+    "traceId": "e09da399-92bd-4fb0-91de-00a4745a5fa6",
+    "source": "hybrid",
+    "executionTime": 26
+  }
+}

@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { BoardStatusPill, DelayPill, PlatformBadge } from '@/components/train/Badges';
 import { Icon } from '@/components/ui/Icon';
+import { boardTimeInfo } from '@/lib/board';
 import { cn } from '@/lib/format';
 import { urls } from '@/lib/urls';
 import type { BoardEntry } from '@/types/railway';
@@ -8,7 +9,7 @@ import type { BoardEntry } from '@/types/railway';
 export function BoardCard({ entry }: { entry: BoardEntry }) {
     const cancelled = entry.status === 'cancelled';
     const past = entry.status === 'departed' || entry.status === 'arrived';
-    const delayed = (entry.delayMinutes ?? 0) > 0 && !cancelled;
+    const time = boardTimeInfo(entry);
 
     return (
         <Link
@@ -36,7 +37,7 @@ export function BoardCard({ entry }: { entry: BoardEntry }) {
                     </span>
                 </div>
                 <div className="flex shrink-0 items-center space-x-1">
-                    {!cancelled && entry.delayMinutes !== null && <DelayPill minutes={entry.delayMinutes} />}
+                    {time.showDelay && <DelayPill minutes={entry.delayMinutes!} />}
                     <Icon name="chevron_right" className="text-[18px] text-outline" />
                 </div>
             </div>
@@ -45,9 +46,9 @@ export function BoardCard({ entry }: { entry: BoardEntry }) {
                     <span className={cn('font-metric-display text-metric-display leading-none font-extrabold tabular-nums', cancelled ? 'text-outline' : 'text-on-surface')}>
                         {entry.scheduledTime}
                     </span>
-                    {!cancelled && (
-                        <span className={cn('font-body-sm text-body-sm font-medium tabular-nums', delayed ? 'text-tertiary' : 'text-on-surface-variant')}>
-                            Exp {entry.expectedTime ?? '—'}
+                    {time.expectedLabel && (
+                        <span className={cn('font-body-sm text-body-sm font-medium tabular-nums', time.delayed ? 'text-tertiary' : 'text-on-surface-variant')}>
+                            {time.expectedLabel}
                         </span>
                     )}
                 </div>

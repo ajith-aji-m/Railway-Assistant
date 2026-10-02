@@ -72,6 +72,46 @@ export function mapLocationDetail(train: Pick<TrainDetail, 'from' | 'to' | 'depa
     return describeLocation(train, live).detail;
 }
 
+export interface DelayDisplay {
+    kind: 'late' | 'on_time' | 'scheduled' | 'cancelled';
+    /** Long form for the Train Details delay card. */
+    text: string;
+    /** Short form for the map header pill. */
+    short: string;
+}
+
+/** One rule for every screen: only live data may say "late" or "On time". */
+export function delayDisplay(live: Pick<LiveStatus, 'status' | 'delayMinutes' | 'delayIsLive'>): DelayDisplay {
+    if (live.status === 'cancelled') return { kind: 'cancelled', text: 'Cancelled', short: 'Cancelled' };
+    if (live.delayIsLive === false) return { kind: 'scheduled', text: 'Scheduled', short: 'Scheduled' };
+    if (live.delayMinutes > 0) return { kind: 'late', text: `+${live.delayMinutes} minutes late`, short: `+${live.delayMinutes} min` };
+    return { kind: 'on_time', text: 'On time', short: 'On time' };
+}
+
+/**
+ * Keep the last real position when a newer update for the same journey has none,
+ * marking it stale (shown with the existing GPS-lost / estimated styling).
+ */
+export function withLastKnownPosition(previous: LiveStatus | null, next: LiveStatus): LiveStatus {
+    if (next.position || next.status !== 'running') return next;
+
+    // Server-side snapshot remembers the last real fix (survives page reloads).
+    const last = next.snapshot?.lastKnown;
+    if (last) {
+        return { ...next, position: { lat: last.lat, lng: last.lng }, gps: 'lost', positionStaleSince: last.at };
+    }
+
+    if (!previous?.position || previous.journeyDate !== next.journeyDate) {
+        return next;
+    }
+    return {
+        ...next,
+        position: previous.position,
+        gps: 'lost',
+        positionStaleSince: previous.positionStaleSince ?? previous.updatedAt,
+    };
+}
+
 const ZONES: Record<string, string> = {
     SR: 'Southern',
     SWR: 'South Western',

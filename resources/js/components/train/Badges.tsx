@@ -31,6 +31,7 @@ export function PlatformBadge({ platform, short = false, muted = false }: { plat
 }
 
 const boardStatus: Record<BoardStatus, { label: string; className: string }> = {
+    scheduled: { label: 'Scheduled', className: 'bg-surface-container-high text-on-surface-variant' },
     expected: { label: 'Expected', className: 'bg-secondary/10 text-secondary' },
     approaching: { label: 'Approaching', className: 'bg-primary-fixed text-primary' },
     at_station: { label: 'At Station', className: 'bg-surface-container-highest text-on-surface border border-outline-variant/60' },

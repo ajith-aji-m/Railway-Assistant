@@ -18,6 +18,8 @@ class RailRadarLiveMapTest extends TestCase
 
     private const FAKE_KEY = 'rr_test_fake_key_for_tests';
 
+    private const FIXTURE_NOW = '2026-10-02 10:45:00';
+
     private const LIVE_URL = 'https://api.railradar.in/v1/trains/12675/live*';
 
     protected function setUp(): void
@@ -31,6 +33,16 @@ class RailRadarLiveMapTest extends TestCase
             'services.railradar.cache_seconds' => 60,
         ]);
         Http::preventStrayRequests();
+
+        // Fixtures are real RailRadar responses from 2026-10-02 ~10:42 IST; pin "now"
+        // just after them so fixes are fresh (the stale threshold is 10 minutes).
+        \Carbon\CarbonImmutable::setTestNow(self::FIXTURE_NOW);
+    }
+
+    protected function tearDown(): void
+    {
+        \Carbon\CarbonImmutable::setTestNow();
+        parent::tearDown();
     }
 
     private function fixture(): array

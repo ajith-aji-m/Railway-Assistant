@@ -5,6 +5,8 @@ import { EstimatedCard, GpsLostBanner, MapControls, MapErrorOverlay, MapHeaderCa
 import { RailMap, type RailMapHandle } from '@/components/map/RailMap';
 import { rememberTrain } from '@/hooks/useLastTrain';
 import { useLiveReload } from '@/hooks/useLiveReload';
+import { useTrackedPosition } from '@/hooks/useTrackedPosition';
+import { withLastKnownPosition } from '@/lib/live';
 import { goBack } from '@/lib/navigation';
 import { sharePage } from '@/lib/share';
 import { urls } from '@/lib/urls';
@@ -13,7 +15,14 @@ import type { LiveStatus, TrainDetail } from '@/types/railway';
 
 const LIVE_PROPS = ['live'];
 
-export default function TrainLiveMap({ train, live }: { train: TrainDetail; live: LiveStatus }) {
+export default function TrainLiveMap({ train, live: latestLive }: { train: TrainDetail; live: LiveStatus }) {
+    // If a refresh has no coordinates, keep the last real position (marked stale/estimated).
+    const lastLive = useRef<LiveStatus | null>(null);
+    const live = withLastKnownPosition(lastLive.current, latestLive);
+    lastLive.current = live;
+    // Real fixes from RailRadar; a short local glide only between two real fixes.
+    const tracked = useTrackedPosition(live, train.route);
+
     const mapRef = useRef<RailMapHandle>(null);
     const [tilesLoaded, setTilesLoaded] = useState(false);
     const [tileError, setTileError] = useState(false);
@@ -54,6 +63,7 @@ export default function TrainLiveMap({ train, live }: { train: TrainDetail; live
                     ref={mapRef}
                     train={train}
                     live={live}
+                    trainPosition={tracked.position}
                     showLabels={labelsOn}
                     padding={{ top: gpsLost ? 190 : 120, bottom: gpsLost ? 380 : 260 }}
                     onTilesLoaded={() => setTilesLoaded(true)}
@@ -69,7 +79,7 @@ export default function TrainLiveMap({ train, live }: { train: TrainDetail; live
                 </div>
                 {gpsLost && (
                     <div className="pointer-events-auto">
-                        <GpsLostBanner />
+                        <GpsLostBanner lastFixAt={live.snapshot?.lastKnown?.at ?? null} />
                     </div>
                 )}
             </header>
@@ -89,7 +99,7 @@ export default function TrainLiveMap({ train, live }: { train: TrainDetail; live
                 {gpsLost ? (
                     <EstimatedCard live={live} onShare={share} />
                 ) : (
-                    <TelemetryCard train={train} live={live} refreshing={refresh.loading} onRefresh={refresh.reload} />
+                    <TelemetryCard train={train} live={live} refreshing={refresh.loading} onRefresh={refresh.reload} stale={refresh.stale} />
                 )}
             </section>
         </AppShell>

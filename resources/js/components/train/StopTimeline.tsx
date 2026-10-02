@@ -14,7 +14,7 @@ function delayText(stop: StopStatus) {
 function subtitle(stop: StopStatus, isLast: boolean) {
     if (stop.state === 'departed') return isLast ? `Arrived ${to12h(stop.expectedArrival)}` : `Departed ${to12h(stop.expectedDeparture)}`;
     if (stop.state === 'current') return `At platform · Departs ${to12h(stop.expectedDeparture)}`;
-    if (stop.state === 'next') return `Expected ${to12h(stop.expectedArrival)}`;
+    if (stop.state === 'next') return stop.expectedArrival ? `Expected ${to12h(stop.expectedArrival)}` : `Scheduled ${to12h(stop.scheduledArrival)}`;
     return `Scheduled ${to12h(stop.scheduledArrival ?? stop.scheduledDeparture)}`;
 }
 

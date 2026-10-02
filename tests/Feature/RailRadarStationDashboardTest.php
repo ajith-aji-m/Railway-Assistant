@@ -91,7 +91,11 @@ class RailRadarStationDashboardTest extends TestCase
         $this->assertSame(['17:40', '17:45'], [$departures[3]->scheduledTime, $departures[3]->expectedTime]);
 
         $this->assertSame(BoardStatus::Departed, $departures[0]->status);   // live.type departed
-        $this->assertSame(BoardStatus::Expected, $departures[2]->status);   // live.type not-started
+        // live.type not-started: timetable only → "Scheduled", no live expected time/delay.
+        $this->assertSame(BoardStatus::Scheduled, $departures[2]->status);
+        $this->assertFalse($departures[2]->isLive);
+        $this->assertNull($departures[2]->expectedTime);
+        $this->assertNull($departures[2]->delayMinutes);
 
         Http::assertSentCount(1); // both tabs share the cached response
     }

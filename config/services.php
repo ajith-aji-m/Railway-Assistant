@@ -48,6 +48,10 @@ return [
         // Station lookups rarely change: cache search results for a day.
         'search_cache_seconds' => (int) env('RAILRADAR_SEARCH_CACHE_SECONDS', 86400),
         'test_train' => env('RAILRADAR_TEST_TRAIN'),
+        // Real position fixes kept per train (cache only) for map interpolation.
+        'snapshot_ttl_seconds' => (int) env('RAILRADAR_SNAPSHOT_TTL_SECONDS', 21600),
+        // A real fix older than this is shown as stale (GPS-lost styling, no animation).
+        'stale_after_seconds' => (int) env('RAILRADAR_STALE_AFTER_SECONDS', 600),
     ],
 
 ];

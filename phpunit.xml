@@ -19,6 +19,11 @@
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <!-- Tests never depend on the local .env provider or use a real RailRadar key. -->
+        <env name="RAILWAY_PROVIDER" value="mock" force="true"/>
+        <env name="API_KEY_RAILWAY" value="" force="true"/>
+        <!-- Deliberately faked provider failures in tests must not reach storage/logs/laravel.log. -->
+        <env name="LOG_CHANNEL" value="null" force="true"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>

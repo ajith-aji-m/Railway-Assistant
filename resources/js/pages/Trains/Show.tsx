@@ -17,14 +17,15 @@ import { urls } from '@/lib/urls';
 import type { SharedProps } from '@/types/inertia';
 import type { TrainDetail } from '@/types/railway';
 
-const LIVE_PROPS = ['train'];
+const LIVE_PROPS = ['train', 'now'];
 
-export default function TrainShow({ train }: { train: TrainDetail }) {
+export default function TrainShow({ train, now }: { train: TrainDetail; now: string }) {
     const [tab, setTab] = useState<'overview' | 'route'>('overview');
     const { alert, toggleAlert } = useTrainFlags(train.number);
     // Server-configured: 30s for mock data, 5 min by default for RailRadar (monthly quota).
     const refreshSeconds = usePage<SharedProps>().props.liveRefresh.train;
-    useLiveReload(LIVE_PROPS, refreshSeconds > 0 ? refreshSeconds * 1000 : undefined);
+    // A failed background refresh keeps the current data and marks it as not updated.
+    const refresh = useLiveReload(LIVE_PROPS, refreshSeconds > 0 ? refreshSeconds * 1000 : undefined, { keepDataOnPollError: true });
 
     const { add: addRecent } = useRecentSearches();
 
@@ -56,8 +57,8 @@ export default function TrainShow({ train }: { train: TrainDetail }) {
             <div className="space-y-space-md px-margin pt-space-md pb-space-md">
                 {tab === 'overview' && (
                     <>
-                        <LocationSpeedCards train={train} />
-                        <DelayCard train={train} />
+                        <LocationSpeedCards train={train} staleSince={refresh.stale ? train.live.updatedAt : null} />
+                        <DelayCard train={train} now={now} />
                     </>
                 )}
 

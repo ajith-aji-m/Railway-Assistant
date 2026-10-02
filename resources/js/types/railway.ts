@@ -3,7 +3,7 @@
 export type BoardType = 'arrivals' | 'departures';
 export type RunningStatus = 'scheduled' | 'running' | 'completed' | 'cancelled';
 export type StopState = 'departed' | 'current' | 'next' | 'upcoming';
-export type BoardStatus = 'expected' | 'approaching' | 'at_station' | 'arrived' | 'departed' | 'cancelled';
+export type BoardStatus = 'scheduled' | 'expected' | 'approaching' | 'at_station' | 'arrived' | 'departed' | 'cancelled';
 export type GpsStatus = 'active' | 'lost';
 export type FacilityKey = 'wifi' | 'food' | 'taxi' | 'elevator' | 'charging';
 
@@ -49,6 +49,8 @@ export interface BoardEntry {
     platform: string | null;
     delayMinutes: number | null;
     status: BoardStatus;
+    /** true when expectedTime/delay come from live data; false = timetable only. */
+    isLive: boolean;
 }
 
 export interface TrainSummary {
@@ -93,6 +95,29 @@ export interface LiveStatus {
     stops: StopStatus[];
     /** Provider-reported location (may be a non-halting station); null for mock data. */
     currentLocation?: CurrentLocation | null;
+    /** false = delays/expected times are timetable only (journey not started) — never "On time". */
+    delayIsLive: boolean;
+    /** Client-side only: position kept from an earlier update because the latest had none. */
+    positionStaleSince?: string | null;
+    /** Real provider position fixes (RailRadar); null for mock data. */
+    snapshot?: PositionSnapshot | null;
+}
+
+export interface PositionFix extends LatLng {
+    /** Provider's own lastUpdatedAt for this fix. */
+    at: string;
+}
+
+export interface PositionSnapshot {
+    /** `position` is a real fix (not estimated / missing). */
+    authoritative: boolean;
+    trackingMode: string | null;
+    /** The real fix before the current one (interpolation start), if any. */
+    previous: PositionFix | null;
+    /** Most recent real fix — kept even when a later response has no coordinates. */
+    lastKnown: PositionFix | null;
+    /** Latest real fix is older than the stale threshold. */
+    stale: boolean;
 }
 
 export interface CurrentLocation {
