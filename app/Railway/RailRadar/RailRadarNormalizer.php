@@ -424,6 +424,55 @@ class RailRadarNormalizer
         return $entries;
     }
 
+    /**
+     * Trains that call at the From station and later at the To station, from the two
+     * stations' timetables (GET /v1/stations/{code}/trains). Route order comes from
+     * the stop `sequence` RailRadar returns for each station (same numbering along
+     * the train's route); a train without a departure at From, an arrival at To, or
+     * with To at or before From is left out. Nothing is inferred.
+     *
+     * @return array<string, array{arrives: string, dayOffset: int}> Keyed by train number.
+     */
+    public function journeyLegs(array $fromData, array $toData, array $meta = []): array
+    {
+        $calls = function (array $data) use ($meta): array {
+            $trains = $data['trains'] ?? null;
+            if (! is_array($trains) || ! Arr::isList($trains)) {
+                throw RailwayDataException::invalidResponse('missing trains list', $meta['traceId'] ?? null);
+            }
+            $byNumber = [];
+            foreach ($trains as $item) {
+                $number = $item['train']['number'] ?? null;
+                $stop = is_array($item['stop'] ?? null) ? $item['stop'] : null;
+                if (is_string($number) && $stop !== null && is_numeric($stop['sequence'] ?? null)) {
+                    $byNumber[$number] ??= $stop;
+                }
+            }
+
+            return $byNumber;
+        };
+
+        $time = fn (mixed $v): ?string => is_string($v) && preg_match('/^\d{2}:\d{2}/', $v) ? substr($v, 0, 5) : null;
+        $toCalls = $calls($toData);
+        $legs = [];
+
+        foreach ($calls($fromData) as $number => $board) {
+            $alight = $toCalls[$number] ?? null;
+            $arrives = $time($alight['arrival'] ?? null);
+
+            if ($alight === null || $time($board['departure'] ?? null) === null || $arrives === null
+                || (float) $alight['sequence'] <= (float) $board['sequence']) {
+                continue;
+            }
+
+            $departureDay = is_numeric($board['departureDay'] ?? null) ? (int) $board['departureDay'] : 1;
+            $arrivalDay = is_numeric($alight['arrivalDay'] ?? null) ? (int) $alight['arrivalDay'] : $departureDay;
+            $legs[$number] = ['arrives' => $arrives, 'dayOffset' => max(0, $arrivalDay - $departureDay)];
+        }
+
+        return $legs;
+    }
+
     /** Timetable origin/destination: {code, name} object or a bare code. */
     private function endpoint(mixed $value): StationRef
     {

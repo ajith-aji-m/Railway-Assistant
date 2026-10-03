@@ -3,6 +3,7 @@
 namespace App\Railway\Contracts;
 
 use App\Railway\Data\BoardEntry;
+use App\Railway\Data\JourneyOption;
 use App\Railway\Data\LiveStatus;
 use App\Railway\Data\StationDetail;
 use App\Railway\Data\StationSummary;
@@ -47,4 +48,12 @@ interface RailwayProvider
     public function train(string $number): ?TrainDetail;
 
     public function liveStatus(string $number): ?LiveStatus;
+
+    /**
+     * Today's trains that call at $from and later on the same run at $to (route
+     * order verified from the timetable; never inferred). Empty when none do.
+     *
+     * @return list<JourneyOption> Ordered by departure time from $from.
+     */
+    public function journeys(string $from, string $to): array;
 }

@@ -6,6 +6,8 @@ export const urls = {
     trainSearch: (params?: { q?: string; all?: 1 }) => withQuery('/trains', params as Record<string, string | number> | undefined),
     train: (number: string) => `/trains/${number}`,
     trainMap: (number: string) => `/trains/${number}/map`,
+    journey: (params?: { from?: string; to?: string; lat?: number; lng?: number; q?: string }) =>
+        withQuery('/journey', params && (Object.fromEntries(Object.entries(params).filter(([, v]) => v !== undefined && v !== '')) as Record<string, string | number>)),
     map: () => '/map',
     settings: () => '/settings',
 };

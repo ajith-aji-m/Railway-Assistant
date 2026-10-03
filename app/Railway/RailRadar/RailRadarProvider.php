@@ -3,8 +3,10 @@
 namespace App\Railway\RailRadar;
 
 use App\Railway\Contracts\RailwayProvider;
+use App\Railway\Data\JourneyOption;
 use App\Railway\Data\LiveStatus;
 use App\Railway\Data\StationDetail;
+use App\Railway\Data\StationRef;
 use App\Railway\Data\TrainDetail;
 use App\Railway\Enums\BoardType;
 use App\Railway\Exceptions\RailwayDataException;
@@ -140,6 +142,74 @@ final class RailRadarProvider implements RailwayProvider
         }
 
         return $this->normalizer->fullDayBoard($scheduled, $live);
+    }
+
+    /**
+     * From → To: both stations' timetables (cached for a day, shared with the full-day
+     * station board) decide which trains serve the route in that order. Only when at
+     * least one does is the From station's live board loaded (the same 60-second cached
+     * request as its dashboard) for status, delay and platform. No other requests.
+     */
+    public function journeys(string $from, string $to): array
+    {
+        $from = strtoupper(trim($from));
+        $to = strtoupper(trim($to));
+        if ($from === $to) {
+            return [];
+        }
+
+        try {
+            $fromTimetable = $this->client->stationTrains($from);
+            $toTimetable = $this->client->stationTrains($to);
+        } catch (RailwayDataException $e) {
+            if ($e->reason === RailwayDataException::NOT_FOUND) {
+                return []; // unknown station → no trains for this route
+            }
+            throw $e;
+        }
+
+        $legs = $this->normalizer->journeyLegs($fromTimetable['data'], $toTimetable['data'], $fromTimetable['meta']);
+        if ($legs === []) {
+            return []; // no train serves From → To: the live board is not needed
+        }
+
+        // Today's departures from From (timetable run days), with live data where RailRadar has it.
+        $scheduled = $this->normalizer->stationTimetable($fromTimetable['data'], BoardType::Departures, $this->now(), $fromTimetable['meta']);
+        try {
+            $response = $this->client->stationLive($from, self::BOARD_HOURS);
+            $live = $this->normalizer->stationBoard($response['data'], BoardType::Departures, $response['meta'], $this->now());
+        } catch (RailwayDataException $e) {
+            report($e);
+            $live = []; // timetable only, never invented live data
+        }
+
+        $boarding = new StationRef($from, $this->stationName($fromTimetable['data'], $from));
+        $alighting = new StationRef($to, $this->stationName($toTimetable['data'], $to));
+        $options = [];
+
+        foreach ($this->normalizer->fullDayBoard($scheduled, $live) as $entry) {
+            $leg = $legs[$entry->trainNumber] ?? null;
+            if ($leg !== null) {
+                $options[] = new JourneyOption(
+                    departure: $entry,
+                    boarding: $boarding,
+                    alighting: $alighting,
+                    arrives: $leg['arrives'],
+                    expectedArrival: null, // RailRadar's board gives no live arrival time at To
+                    arrivalDayOffset: $leg['dayOffset'],
+                );
+            }
+        }
+
+        return $options;
+    }
+
+    /** Station name from a timetable response (`data.station.name`), else the code. */
+    private function stationName(array $data, string $code): string
+    {
+        $name = $data['station']['name'] ?? null;
+
+        return is_string($name) && $name !== '' ? $name : $code;
     }
 
     /**

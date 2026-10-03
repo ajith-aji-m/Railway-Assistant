@@ -56,6 +56,20 @@ export interface BoardEntry {
     phase: BoardPhase;
 }
 
+/** A train that calls at From and later at To (route order verified by the backend). */
+export interface JourneyOption {
+    /** The call at the From station today: departure time, status, delay, platform, phase. */
+    departure: BoardEntry;
+    boarding: StationRef;
+    alighting: StationRef;
+    /** Scheduled arrival at To ("HH:MM"); null when not in the timetable. */
+    arrives: string | null;
+    /** Expected arrival at To, only when backed by live data. */
+    expectedArrival: string | null;
+    /** Days between departing From and arriving at To (0 = same day). */
+    arrivalDayOffset: number;
+}
+
 // status / delayMinutes / times: null = unknown (lookup result without live status).
 export interface TrainSummary {
     number: string;

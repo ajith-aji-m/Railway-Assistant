@@ -9,7 +9,7 @@ import { StateCard } from '@/components/ui/StateCard';
 import { SearchField } from '@/components/ui/SearchField';
 import { DetectingState, LocationErrorState, NoStationsState, PermissionState } from '@/components/station/LocationStates';
 import { StationListItem } from '@/components/station/StationListItem';
-import { OrDivider, TrainSearchCard, UseLocationCard } from '@/components/station/UseLocationCard';
+import { JourneySearchCard, OrDivider, TrainSearchCard, UseLocationCard } from '@/components/station/UseLocationCard';
 import { hasLocationPermission, useGeolocation } from '@/hooks/useGeolocation';
 import { getLastLocation, setLastLocation } from '@/hooks/useLastLocation';
 import { useSettings } from '@/hooks/useSettings';
@@ -208,6 +208,7 @@ export default function StationsIndex({
                     )}
                 </div>
                 <InfoTip>Tap any railway hub to explore real-time platform allocations, train schedules, and live arrival updates.</InfoTip>
+                <JourneySearchCard />
                 <TrainSearchCard />
             </div>
         );

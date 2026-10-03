@@ -185,10 +185,10 @@ class StationDirectoryTest extends TestCase
     public function test_selecting_a_new_station_loads_its_dashboard_without_fabricated_trains(): void
     {
         // Mock mode has no timetable for directory-only stations: an honest empty board.
-        $this->get('/stations/NCJ')->assertOk()->assertInertia(fn (Assert $page) => $page
+        $this->get('/stations/CAPE')->assertOk()->assertInertia(fn (Assert $page) => $page
             ->component('Stations/Show')
-            ->where('station.code', 'NCJ')
-            ->where('station.name', 'Nagercoil Jn')
+            ->where('station.code', 'CAPE')
+            ->where('station.name', 'Kanyakumari')
             ->where('station.platforms', null)
             ->where('station.facilities', [])
             ->where('board', [])

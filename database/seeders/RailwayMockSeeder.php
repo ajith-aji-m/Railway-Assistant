@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 /**
- * Loads the mock railway network from database/data/*.json.
+ * Loads the mock railway network from database/data/*.json. Stops at stations
+ * that are not in stations.json use the station directory's row (seeded first by
+ * StationDirectorySeeder): identity and location only, nothing invented.
  */
 class RailwayMockSeeder extends Seeder
 {
@@ -19,7 +21,11 @@ class RailwayMockSeeder extends Seeder
             $stations = collect(File::json(database_path('data/stations.json')))
                 ->mapWithKeys(fn (array $row) => [$row['code'] => Station::updateOrCreate(['code' => $row['code']], $row)]);
 
-            foreach (File::json(database_path('data/trains.json'))['trains'] as $row) {
+            $trains = File::json(database_path('data/trains.json'))['trains'];
+            $missing = collect($trains)->flatMap(fn (array $t) => array_column($t['stops'], 0))->unique()->diff($stations->keys());
+            $stations = $stations->merge(Station::query()->whereIn('code', $missing->all())->get()->keyBy('code'));
+
+            foreach ($trains as $row) {
                 $stops = $row['stops'];
 
                 $train = Train::updateOrCreate(['number' => $row['number']], [

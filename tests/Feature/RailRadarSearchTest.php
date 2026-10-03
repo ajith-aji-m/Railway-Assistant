@@ -261,7 +261,7 @@ class RailRadarSearchTest extends TestCase
             ->where('liveData', false)
             ->where('searchOnSubmit', false)
             ->has('results', 2));
-        $this->get('/trains?all=1')->assertInertia(fn (Assert $page) => $page->where('showAll', true)->has('results', 14));
+        $this->get('/trains?all=1')->assertInertia(fn (Assert $page) => $page->where('showAll', true)->has('results', 16));
 
         Http::assertNothingSent();
     }

@@ -1,6 +1,7 @@
-import { Button } from '@/components/ui/Button';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { StateCard } from '@/components/ui/StateCard';
+import { urls } from '@/lib/urls';
 import { StationListSkeleton } from './StationListItem';
 
 export function PermissionState({ onAllow, onSearch }: { onAllow: () => void; onSearch: () => void }) {
@@ -36,6 +37,9 @@ export function PermissionState({ onAllow, onSearch }: { onAllow: () => void; on
                         <Button variant="soft" icon="search" onClick={onSearch}>
                             Search Station Manually
                         </Button>
+                        <ButtonLink variant="soft" icon="route" href={urls.journey()}>
+                            From → To / Destination
+                        </ButtonLink>
                     </div>
                 </div>
             </div>

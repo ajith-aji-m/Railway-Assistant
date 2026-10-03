@@ -7,6 +7,7 @@ use App\Models\Train;
 use App\Models\TrainStop;
 use App\Railway\Contracts\RailwayProvider;
 use App\Railway\Data\BoardEntry;
+use App\Railway\Data\JourneyOption;
 use App\Railway\Data\LiveStatus;
 use App\Railway\Data\StationDetail;
 use App\Railway\Data\StationRef;
@@ -158,6 +159,53 @@ final class MockRailwayProvider implements RailwayProvider
         $train = $this->trainQuery()->where('number', $number)->first();
 
         return $train ? $this->simulator->simulate($train, $this->now()) : null;
+    }
+
+    public function journeys(string $from, string $to): array
+    {
+        $from = strtoupper(trim($from));
+        $to = strtoupper(trim($to));
+        if ($from === $to) {
+            return [];
+        }
+
+        $now = $this->now();
+
+        return TrainStop::query()
+            ->whereHas('station', fn (Builder $q) => $q->where('code', $from))
+            ->whereNotNull('scheduled_departure')
+            ->with(['station', 'train.origin', 'train.destination', 'train.liveStatus', 'train.stops.station'])
+            ->get()
+            ->map(function (TrainStop $boarding) use ($to, $now): ?JourneyOption {
+                // The To station must come after the From station on the same run.
+                $alighting = $boarding->train->stops->first(fn (TrainStop $s) => $s->station->code === $to
+                    && $s->sequence > $boarding->sequence
+                    && $s->scheduled_arrival !== null);
+
+                return $alighting ? $this->journeyOption($boarding, $alighting, $now) : null;
+            })
+            ->filter()
+            ->sortBy(fn (JourneyOption $j) => $j->departure->scheduledTime)
+            ->values()
+            ->all();
+    }
+
+    private function journeyOption(TrainStop $boarding, TrainStop $alighting, CarbonImmutable $now): JourneyOption
+    {
+        $train = $boarding->train;
+        $cancelled = $train->liveStatus?->status === 'cancelled';
+        // Same run as the departure shown on the board (started `day_offset` days before today).
+        $base = $now->startOfDay()->subDays($boarding->day_offset);
+        $delay = $train->liveStatus?->delayAt($alighting->sequence) ?? 0;
+
+        return new JourneyOption(
+            departure: $this->boardEntry($boarding, BoardType::Departures, $now),
+            boarding: $this->ref($boarding->station),
+            alighting: $this->ref($alighting->station),
+            arrives: substr($alighting->scheduled_arrival, 0, 5),
+            expectedArrival: $cancelled ? null : $this->simulator->at($base, $alighting->scheduled_arrival, $alighting->day_offset, $delay)?->format('H:i'),
+            arrivalDayOffset: $alighting->day_offset - $boarding->day_offset,
+        );
     }
 
     private function trainQuery(): Builder

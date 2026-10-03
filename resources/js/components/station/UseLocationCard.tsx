@@ -41,6 +41,15 @@ export function TrainSearchCard() {
     );
 }
 
+/** Same card style, linking to From → To journey search (trains between two stations). */
+export function JourneySearchCard() {
+    return (
+        <Link href={urls.journey()} className={cardClass}>
+            <CardBody icon="route" title="From → To" subtitle="Find trains to your destination" />
+        </Link>
+    );
+}
+
 export function OrDivider() {
     return (
         <div className="relative flex items-center py-1">

@@ -1,5 +1,5 @@
 {
-    "_comment": "Mock timetable. stops: [stationCode, arrival, departure, platform, distanceKm, liveDelayMinutes, dayOffset]. Numbers/names are real Indian Railways services (except 06055, a demo special that finishes before the demo clock's 08:00 start, to show a completed trip); times are realistic approximations for the prototype.",
+    "_comment": "Mock timetable. stops: [stationCode, arrival, departure, platform, distanceKm, liveDelayMinutes, dayOffset]. Numbers/names are real Indian Railways services (except the demo specials: 06055, which finishes before the demo clock's 08:00 start, to show a completed trip, and 06425 / 06426 on the Thiruvananthapuram – Nagercoil line, for From → To journey search; their stations come from the station directory); times are realistic approximations for the prototype.",
     "trains": [
         {
             "number": "12675", "name": "Kovai Express", "type": "Superfast Express", "pantry": true, "zone": "SR",
@@ -160,6 +160,32 @@
                 ["MAS", null, "05:15", "4", 0, 0, 0],
                 ["AJJ", "06:10", "06:12", "2", 69, 0, 0],
                 ["KPD", "07:05", null, "1", 130, 0, 0]
+            ]
+        },
+        {
+            "number": "06425", "name": "Trivandrum - Nagercoil Special", "type": "Passenger", "pantry": false, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["TVC", null, "13:20", "4", 0, 0, 0],
+                ["NYY", "13:42", "13:43", "1", 19, 0, 0],
+                ["PASA", "13:55", "13:56", "1", 33, 0, 0],
+                ["KZT", "14:05", "14:06", "1", 41, 0, 0],
+                ["PYD", "14:14", "14:15", "1", 48, 0, 0],
+                ["ERL", "14:32", "14:33", "1", 57, 0, 0],
+                ["NCJ", "14:55", null, "2", 75, 0, 0]
+            ]
+        },
+        {
+            "number": "06426", "name": "Nagercoil - Trivandrum Special", "type": "Passenger", "pantry": false, "zone": "SR",
+            "live": { "status": "normal", "gps": "active" },
+            "stops": [
+                ["NCJ", null, "07:40", "1", 0, 0, 0],
+                ["ERL", "08:00", "08:01", "1", 18, 5, 0],
+                ["PYD", "08:15", "08:16", "1", 27, 5, 0],
+                ["KZT", "08:24", "08:25", "1", 34, 6, 0],
+                ["PASA", "08:35", "08:36", "1", 42, 6, 0],
+                ["NYY", "08:49", "08:50", "1", 56, 4, 0],
+                ["TVC", "09:15", null, "3", 75, 4, 0]
             ]
         }
     ]
